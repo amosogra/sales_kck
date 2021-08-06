@@ -6,7 +6,7 @@ class LoginButton extends StatefulWidget {
   String title;
   final VoidCallback onPressed;
   final bool isActive ;
-  LoginButton({required Key key, required this.title, required this.onPressed , this.isActive = true }) : super(key : key);
+  LoginButton({Key? key, required this.title, required this.onPressed , this.isActive = true }) : super(key : key);
 
   @override
   _LoginButtonState createState() => _LoginButtonState();

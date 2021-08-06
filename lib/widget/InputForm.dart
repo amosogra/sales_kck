@@ -11,7 +11,7 @@ class InputForm extends StatefulWidget {
   final TextInputType textInputTye;
   final bool secure;
 
-  InputForm({required Key key,
+  InputForm({Key? key,
     @required this.myHint,
     this.myFocusNode,
     this.nextFocusNode,

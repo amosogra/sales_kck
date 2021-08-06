@@ -5,6 +5,7 @@ import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/dimens.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/view/main/partial/SlideMenu.dart';
+import 'package:sales_kck/view/order/OrderFrame.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,21 +21,29 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(title: Text(Strings.title), backgroundColor: MyColors.primaryColor,),
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(15),
         child: Column(
           children: [
             Row(
               children: [
                 Flexible(
-                    child:Card(
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: Dimens.item_height,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image(image: AssetImage(Assets.iconSalesOrder) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                            Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
-                          ],
+                    child:InkWell(
+                      onTap: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => OrderFrame())
+                        );
+                      },
+                      child: Card(
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: Dimens.item_height,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(image: AssetImage(Assets.iconSalesOrder) , width: Dimens.iconSize, height: Dimens.iconSize, ),
+                              Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
+                            ],
+                          ),
                         ),
                       )
                     )
@@ -153,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.center,
                           height: Dimens.item_height,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAli                    gnment: MainAxisAlignment.center,
                             children: [
                               Image(image: AssetImage(Assets.iconMobilePrinter) , width: Dimens.iconSize, height: Dimens.iconSize, ),
                               Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)

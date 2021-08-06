@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/storage.dart';
+import 'package:sales_kck/constants/globals.dart';
 
 class AppBarOne extends StatefulWidget with PreferredSizeWidget {
 
   @override
   final Size preferredSize;
 
-  AppBarOne({ Key key,}) : preferredSize = Size.fromHeight(60.0),  super(key: key);
+  AppBarOne({ Key? key,}) : preferredSize = Size.fromHeight(60.0),  super(key: key);
 
   @override
   _AppBarOneState createState() => _AppBarOneState();
@@ -78,15 +80,14 @@ class _AppBarOneState extends State<AppBarOne> {
                   alignment: Alignment.centerRight,
                   child: InkResponse(
                     onTap: (){
-                      globals.showAlertDialog(context);
-                      //showAlertDialog(context);
+                      showAlertDialog(context);
                     },
                       child:Container(
                         width: 50,
                         height: 50,
                         alignment: Alignment.center,
                         decoration: new BoxDecoration(
-                          color: MedstreamColor.PRIMARY_COLOR,
+                          color: MyColors.primaryColor,
                           shape: BoxShape.circle,
                         ),
                         child: Text( this.name , style: TextStyle( color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),),

@@ -2,10 +2,10 @@ library globals;
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:sales_kck/view/user/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool isLoggedIn = false;
-String base_url = "medstreamline.com";
 String page = '';
 
 showAlertDialog(BuildContext context) {
@@ -162,10 +162,10 @@ showCompleteVisitDialog(BuildContext context) {
         Navigator.pop(context);
       }
 
-      Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => CompletedPage()
-          ));
+      // Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //         builder: (context) => CompletedPage()
+      //     ));
     },
   );
 
@@ -223,33 +223,4 @@ showToastMessage(BuildContext context, String message, String btnTitle){
   //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 
-Future<bool> isOnline() async{
-  var connectivityResult = await(Connectivity().checkConnectivity());
-  if(connectivityResult == ConnectivityResult.none){
-    return false;
-  }
-  if(connectivityResult == ConnectivityResult.mobile){
-    debugPrint("mobile connected");
-    return true;
-  }else if(connectivityResult == ConnectivityResult.wifi){
-    debugPrint("wifi connected");
-    return true;
-  }else{
-    debugPrint("no connection");
-    return false;
-  }
-
-  // try {
-  //   final result = await InternetAddress.lookup(Api.baseUrl);
-  //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-  //     print('connected');
-  //     return true;
-  //   }else{
-  //     return false;
-  //   }
-  // } on Exception catch (_) {
-  //   print('not connected');
-  //   return false;
-  // }
-}
 

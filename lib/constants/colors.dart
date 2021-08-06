@@ -13,6 +13,7 @@ class MyColors {
   static const whiteColor = Color(0xFFFFFFFF);
   static const blackColor = Color(0xFF000000);
   static const bgColor =  Color(0xfff2f9ff);
+  static const greyColor = Color(0xffdddddd);
 
   static const Map<int, Color> orange = const<int, Color>{
       100: const Color(0xFFFCF2E7),

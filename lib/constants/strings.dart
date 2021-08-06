@@ -28,6 +28,30 @@ class Strings {
   static const String sync = "Sync";
   static const String logout = "Log Out";
 
+  // setting page
+  static const String userName = "User Name";
+  static const String fullName = "Full Name";
+  static const String displayName = "Display Name";
+  static const String role = "Role";
+  static const String company = "Company";
+  static const String change_password = "Change Password";
 
+  // change password.
+  static const String old_password =  "Old Password";
+  static const String new_password = "New Password";
+  static const String confirm_password = "Confirm Password";
+
+  // sale order
+  static const String customer = "Customer";
+  static const String order = "Order";
+  static const String summary = "Summary";
+  static const String description = "Description";
+  static const String doc_number = "Doc Number";
+  static const String doc_date = "Doc Date";
+  static const String attention = "Attention";
+  static const String phone_number= "Phone Number";
+  static const String terms = "Terms";
+  static const String new_document = "New Document";
+  static const String today = "Today";
 
 }

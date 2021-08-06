@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/view/user/SplashPage.dart';
 
 void main() {
@@ -13,6 +14,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: const TextTheme(
+          headline1: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
+          headline2: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
+          headline3: TextStyle( fontSize: 12, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
+          bodyText1: TextStyle( fontSize: 16, color: MyColors.blackColor),
+          bodyText2: TextStyle( fontSize: 14, color: MyColors.blackColor),
+          bodyText3: TextStyle( fontSize: 12, color: MyColors.blackColor),
+        )
       ),
 
       home: SplashPage(),

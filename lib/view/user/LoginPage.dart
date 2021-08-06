@@ -145,7 +145,6 @@ class _LoginPageState extends State<LoginPage> {
                             Storage.setRemember(this.isRemember);
                             handleLogin();
                           },
-
                         ),
                       )
 
