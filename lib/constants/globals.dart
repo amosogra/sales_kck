@@ -76,12 +76,14 @@ showCloseDialog(BuildContext context) {
     ],
   );
   // show the dialog
-  return showDialog(
+
+  showDialog(
     context: context,
     builder: (BuildContext context) {
       return alert;
     },
-  ) ?? false;
+  );
+
 }
 
 showRetryTestDialog(BuildContext context , int count, bool isConnected) {
@@ -138,53 +140,12 @@ showRetryTestDialog(BuildContext context , int count, bool isConnected) {
     ],
   );
   // show the dialog
-  return showDialog(
+  showDialog(
     context: context,
     builder: (BuildContext context) {
       return alert;
     },
-  ) ?? false;
-}
-
-
-showCompleteVisitDialog(BuildContext context) {
-  // set up the buttons
-  Widget cancelButton = FlatButton(
-    child: Text("Cancel"),
-    onPressed:  () {
-      Navigator.pop(context);
-    },
   );
-  Widget continueButton = FlatButton(
-    child: Text("Continue"),
-    onPressed:  () {
-      if(Navigator.canPop(context)){
-        Navigator.pop(context);
-      }
-
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(
-      //         builder: (context) => CompletedPage()
-      //     ));
-    },
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    //title: Text("Do you want to logout"),
-    content: Text("Do you wish to complete the visit?"),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-  // show the dialog
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  ) ?? false;
 }
 
 dynamic setPatientName(String name) async {

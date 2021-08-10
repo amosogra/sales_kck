@@ -17,7 +17,6 @@ class CompanySelectorDialog extends StatefulWidget {
 class _CompanySelectorDialogState extends State<CompanySelectorDialog> {
 
   String selectedCompany  = "";
-
   @override
   void initState(){
     selectedCompany = widget.currentSelection;

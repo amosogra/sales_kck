@@ -37,9 +37,14 @@ class Strings {
   static const String change_password = "Change Password";
 
   // change password.
+  static const String edit_profile = "Edit Profile";
   static const String old_password =  "Old Password";
   static const String new_password = "New Password";
   static const String confirm_password = "Confirm Password";
+  static const String enter_old_password = "Enter Old Password";
+  static const String enter_new_password = "Enter New Password";
+  static const String enter_confirm_password = "Enter Confirm Password";
+
 
   // sale order
   static const String customer = "Customer";
@@ -53,5 +58,12 @@ class Strings {
   static const String terms = "Terms";
   static const String new_document = "New Document";
   static const String today = "Today";
+  static const String save = "Save";
+  static const String add_item = "Add Item";
+  static const String not_add_order = "Your haven't add any orders yet";
+  static const String no_pending_order = "No Pending Order";
+  static const String profile = "Profile";
+  static const String search = "Search";
+  static const String no_record =  "No Record";
 
 }

@@ -6,6 +6,9 @@ import 'package:sales_kck/constants/dimens.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/view/main/partial/SlideMenu.dart';
 import 'package:sales_kck/view/order/OrderFrame.dart';
+import 'package:sales_kck/view/price_history/PriceHistory.dart';
+import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
+import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -49,19 +52,25 @@ class _HomePageState extends State<HomePage> {
                     )
                 ),
 
+
                 Flexible(
-                    child:Card(
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: Dimens.item_height,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(image: AssetImage(Assets.iconSaleListingPending) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                              Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
-                            ],
-                          ),
-                        )
+                    child:InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SaleListingPending()));
+                      },
+                      child: Card(
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: Dimens.item_height,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image(image: AssetImage(Assets.iconSaleListingPending) , width: Dimens.iconSize, height: Dimens.iconSize, ),
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
+                              ],
+                            ),
+                          )
+                      ),
                     )
                 ),
               ],
@@ -70,33 +79,49 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Flexible(
-                    child:Card(
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: Dimens.item_height,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(image: AssetImage(Assets.iconSaleListingSynced) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                              Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
-                            ],
-                          ),
-                        )
+                    child:InkWell(
+
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SaleListingSynced() ));
+                      },
+
+                      child: Card(
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: Dimens.item_height,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image(image: AssetImage(Assets.iconSaleListingSynced) , width: Dimens.iconSize, height: Dimens.iconSize, ),
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
+                              ],
+                            ),
+                          )
+                      ),
                     )
                 ),
+
                 Flexible(
-                    child:Card(
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: Dimens.item_height,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(image: AssetImage(Assets.iconPriceHistory) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                              Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
-                            ],
-                          ),
-                        )
+                    child:InkWell(
+                      onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  PriceHistory() ));
+                      },
+                      child: Card(
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: Dimens.item_height,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+                                Image(image: AssetImage(Assets.iconPriceHistory) , width: Dimens.iconSize, height: Dimens.iconSize, ),
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
+
+                              ],
+                            ),
+                          )
+                      )
+
                     )
                 ),
               ],
@@ -162,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.center,
                           height: Dimens.item_height,
                           child: Column(
-                            mainAxisAli                    gnment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image(image: AssetImage(Assets.iconMobilePrinter) , width: Dimens.iconSize, height: Dimens.iconSize, ),
                               Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)

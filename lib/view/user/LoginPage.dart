@@ -5,6 +5,8 @@ import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/services/UserService.dart';
+import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/main/HomePage.dart';
 import 'package:sales_kck/widget/InputForm.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
@@ -17,12 +19,15 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  String email = 'salesman',password = 'admin!@#123';
+  TextEditingController emailController = TextEditingController(text: 'salesman');
+  TextEditingController passwordController = TextEditingController(text: 'admin!@#123');
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
-  var emailKey = GlobalKey<FormState>();
-  var passwordKey = GlobalKey<FormState>();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool isRemember = false;
 
   @override
@@ -46,62 +51,62 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  void showInSnackBar(String value) {
+    _scaffoldKey.currentState!.removeCurrentSnackBar();
+    _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(value)));
+  }
+
   void handleLogin() async{
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) => HomePage()
-        ),
-            (Route<dynamic> route) => false);
+
+    FormState? form = formKey.currentState;
+    form!.save();
+
+    if(!form.validate()){
+      showInSnackBar('Please fix the errors in red before submitting.');
+    }else{
+      //login(email, password);
+      bool response  = await login( emailController.text, passwordController.text);
+      if(response){ // Call Async Data
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => HomePage()
+            ),
+                (Route<dynamic> route) => false);
+      }
+      //showInSnackBar('Please fix the errors in red before submitting.');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset : true,
       body:SingleChildScrollView(
 
         child:Container(
           child: Stack(
             children: [
+
               Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: screenHeight / 2,
                 color:MyColors.primaryColor,
               ),
 
               Card(
-                margin: EdgeInsets.only(top: 100, left: 25 , right: 25 ),
+                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1 , vertical: screenHeight * 0.15),
                 child: Container(
-                  margin: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+                  margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.07, vertical: 30),
                   child: Column(
+
                     children: [
-                      Image(
-                          width: 156,
-                          height: 148,
-                          image: AssetImage(Assets.appLogo)
-                      ),
-
-                      Container(
-                          margin: EdgeInsets.only(top:0),
-                          child:InputForm(
-                            myHint: Strings.username,
-                            myFocusNode: focusEmail,
-                            nextFocusNode: focusPassword,
-                            controller: emailController,
-                            textInputTye: TextInputType.emailAddress,
-                            key: this.emailKey,
-                          )
-                      ),
-
-                      Container(
-                        margin: EdgeInsets.only(top:10),
-                        child: InputForm(
-                          controller: passwordController,
-                          myHint: Strings.password,
-                          myFocusNode: focusPassword,
-                          secure: true,
-                          key: this.passwordKey,
-                        ),
+                      Form(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        key: formKey,
+                        child: buildInputForm(),
                       ),
 
                       Container(
@@ -135,14 +140,13 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
 
-
                       Container(
                         margin: EdgeInsets.only(top: 30),
                         child: LoginButton(
-                          key: UniqueKey(),
                           title: Strings.login,
                           onPressed: (){
-                            Storage.setRemember(this.isRemember);
+
+                            //Storage.setRemember(this.isRemember);
                             handleLogin();
                           },
                         ),
@@ -155,11 +159,56 @@ class _LoginPageState extends State<LoginPage> {
 
             ],
           )
-
         )
 
       )
     );
   }
+
+
+
+  buildInputForm(){
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image(
+            width: 156,
+            height: 148,
+            image: AssetImage(Assets.appLogo)
+        ),
+
+        Container(
+            margin: EdgeInsets.only(top:0),
+            child:InputForm(
+              validateFunction: (value){
+                return Validations.validateName(value!);
+              },
+              controller: emailController,
+              myHint: Strings.email,
+              myFocusNode: focusEmail,
+              nextFocusNode: focusPassword,
+              secure: false,
+            ),
+        ),
+
+
+        Container(
+          margin: EdgeInsets.only(top:10),
+          child:InputForm(
+            validateFunction: (value){
+              return Validations.validatePassword(value!);
+            },
+            controller: passwordController,
+            myHint: Strings.password,
+            myFocusNode: focusPassword,
+            secure: true,
+          ),
+        ),
+
+      ],
+    );
+
+  }
+
 
 }

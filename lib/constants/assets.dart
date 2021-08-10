@@ -19,5 +19,7 @@ class Assets {
   static const String iconSync = "assets/icons/icon-sync@3x.png";
   static const String iconHome = "assets/icons/home.png";
   static const String iconLogout = "assets/icons/logout.png";
-
+  static const String iconEdit = "assets/icons/icon-edit.png";
+  static const String iconProfile = "assets/icons/profile.png";
+  
 }

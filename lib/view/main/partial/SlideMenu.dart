@@ -5,7 +5,9 @@ import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/dimens.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
+import 'package:sales_kck/view/user/Profile.dart';
 
 Widget showSlideMenu(BuildContext context){
   return Drawer(
@@ -40,6 +42,24 @@ Widget showSlideMenu(BuildContext context){
             Navigator.pop(context);
           },
         ),
+
+
+        ListTile(
+          title: Container(
+            child: Row(
+              children: [
+                Image(image: AssetImage(Assets.iconProfile) , width: Dimens.menuIconSize, height: Dimens.menuIconSize,),
+                Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.profile),)
+              ],
+            ),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Profile() ));
+          },
+        ),
+
+
 
         ListTile(
           title: Row(
@@ -125,6 +145,7 @@ Widget showSlideMenu(BuildContext context){
           },
         ),
 
+
         ListTile(
           title: Row(
             children: [
@@ -159,13 +180,18 @@ Widget showSlideMenu(BuildContext context){
           onTap: () {
 
             Navigator.pop(context);
-            Storage.setLogin(false);
-
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (context) => LoginPage()
-                ),
-                    (Route<dynamic> route) => false);
+            showDialog(context: context,
+                builder: (BuildContext context){
+                  Storage.setLogin(false);
+                  return ConfirmDialog(
+                      "Are you sure to logout?",
+                          (){
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>LoginPage()
+                        ), (Route<dynamic>route) => false);
+                      }
+                  );
+                }
+            );
 
           },
         ),

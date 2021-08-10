@@ -22,82 +22,69 @@ class _CustomerState extends State<Customer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Text(Strings.customer, style: Theme.of(context).textTheme.headline2 , ),
             Container(
               margin: EdgeInsets.only(top: 10) ,
               child: Row(
                 children: [
-                  Expanded(child:   Text(Strings.customer, style: TextStyle(color: MyColors.primaryColor, fontSize: 14),), ) ,
+                  Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
                   Icon(Icons.search)
                 ],
               ),
             ),
             Divider(color: MyColors.greyColor,),
 
+
             Row(
               children: [
-                Column(
-                  children: [
-                    Text(Strings.doc_number, style: Theme.of(context).textTheme.headline2 ),
-                    Text(Strings.new_document, style: TextStyle(color: MyColors.primaryColor, fontSize: 14 , fontWeight: FontWeight.bold ),),
-                    Divider(color: MyColors.greyColor,)
-                  ],
-                ),
-
-                Column(
-                  children: [
-                    Text(Strings.doc_date, style: Theme.of(context).textTheme.headline2 ),
-                    Row(
+                Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child:   Text(Strings.today, style: TextStyle(color: MyColors.primaryColor, fontSize: 14),), ) ,
-                        Icon(Icons.calendar_today)
+                        Text(Strings.doc_number, style: Theme.of(context).textTheme.headline2 ),
+                        Text(Strings.new_document, style: Theme.of(context).textTheme.bodyText2 ),
+                        Divider(color: MyColors.greyColor,)
                       ],
                     ),
-                    Divider(color: MyColors.greyColor,)
-                  ],
+                ),
+                Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(Strings.doc_date, style: Theme.of(context).textTheme.headline2 ),
+                        Row(
+                          children: [
+                            Expanded(child:   Text(Strings.today, style: Theme.of(context).textTheme.bodyText2 ), ) ,
+                            Icon(Icons.calendar_today)
+                          ],
+                        ),
+                        Divider(color: MyColors.greyColor,)
+                      ],
+                    )
                 )
               ],
             ),
 
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text(Strings.description, style:  Theme.of(context).textTheme.headline2 ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Address 1" ,  style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
 
-
-            Text(Strings.description, style:  Theme.of(context).textTheme.headline2 ),
             Container(
-              margin: EdgeInsets.only(top: 10) ,
+              margin: EdgeInsets.only(top: 5) ,
               child: Row(
                 children: [
-                  Expanded(child:   Text("Address 1" ,  style: TextStyle(color: MyColors.primaryColor, fontSize: 14),), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-            Divider(color: MyColors.greyColor,),
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text("Address 2", style: TextStyle(color: MyColors.primaryColor, fontSize: 14),), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-            Divider(color: MyColors.greyColor,),
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text("Address 3", style: TextStyle(color: MyColors.primaryColor, fontSize: 14),), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-            Divider(color: MyColors.greyColor,),
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text("Address 4", style: TextStyle(color: MyColors.primaryColor, fontSize: 14),), ) ,
+                  Expanded(child:   Text("Address 2", style: Theme.of(context).textTheme.bodyText2 ,), ) ,
                   Icon(Icons.search)
                 ],
               ),
@@ -105,19 +92,99 @@ class _CustomerState extends State<Customer> {
             Divider(color: MyColors.greyColor,),
 
 
+            Container(
+              margin: EdgeInsets.only(top: 5) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Address 3", style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
+            Container(
+              margin: EdgeInsets.only(top: 5) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Address 4", style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
 
-            Text(Strings.attention, style:  Theme.of(context).textTheme.headline1 ),
+
+            Container(
+              margin: EdgeInsets.only(top:15),
+              child: Text(Strings.attention, style:  Theme.of(context).textTheme.headline1 ),
+            ),
             Text(Strings.phone_number, style:  Theme.of(context).textTheme.headline2 ),
             Container(
+              margin: EdgeInsets.only(top: 10),
               child: Text(Strings.phone_number, style:  Theme.of(context).textTheme.bodyText2 ),
             ),
             Divider(color: MyColors.greyColor,),
 
-            Row(
-              children: [
-                Text(Strings.terms , style:  Theme.of(context).textTheme.headline1 ),
-              ],
-            )
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(Strings.terms , style:  Theme.of(context).textTheme.headline1 ),
+                  ),
+                  Text("Lst date sat")
+                ],
+              ),
+            ),
+
+
+
+            Container(
+              margin: EdgeInsets.only(top: 10) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Remarks 1" ,  style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
+
+            Container(
+              margin: EdgeInsets.only(top: 5) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Remarks 2", style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
+
+
+            Container(
+              margin: EdgeInsets.only(top: 5) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Remarks 3", style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
+            Container(
+              margin: EdgeInsets.only(top: 5) ,
+              child: Row(
+                children: [
+                  Expanded(child:   Text("Remarks 4", style: Theme.of(context).textTheme.bodyText2 ,), ) ,
+                  Icon(Icons.search)
+                ],
+              ),
+            ),
+            Divider(color: MyColors.greyColor,),
+
+
+
 
           ],
         ),

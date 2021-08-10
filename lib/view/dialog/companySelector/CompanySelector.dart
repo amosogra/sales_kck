@@ -44,6 +44,7 @@ class _CompanySelectorState extends State<CompanySelector> {
           height: 2,
         ),
 
+
       ],
     );
   }

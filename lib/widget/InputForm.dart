@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
-class InputForm extends StatefulWidget {
+class InputForm extends StatefulWidget{
 
   final String? myHint;
   final FocusNode? myFocusNode;
   final FocusNode? nextFocusNode;
   final TextEditingController? controller;
   final TextInputType textInputTye;
+  final String? initialValue;
   final bool secure;
+  final String? Function(String?) validateFunction;
 
   InputForm({Key? key,
     @required this.myHint,
@@ -17,7 +19,9 @@ class InputForm extends StatefulWidget {
     this.nextFocusNode,
     this.controller ,
     this.secure = false ,
-    this.textInputTye = TextInputType.text
+    this.textInputTye = TextInputType.text,
+    this.initialValue ,
+    required this.validateFunction
   }) : super(key : key);
 
   @override
@@ -32,17 +36,20 @@ class _InputFormState extends State<InputForm> {
         //icon: Icon(Icons.person),
         hintText: widget.myHint,
         hintStyle: TextStyle(fontSize: 16),
+
         //labelText: 'Name *',
-        enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.cyan),
-        ),
-        focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.red),
-      ),
+        //enabledBorder: UnderlineInputBorder(
+        // borderSide: BorderSide(color: Colors.cyan),
+        // ),
+        // focusedBorder: UnderlineInputBorder(
+        //   borderSide: BorderSide(color: Colors.red),
+        // ),
     );
 
     return Container(
         child:TextFormField(
+
+          initialValue: widget.initialValue,
           obscureText: widget.secure,
           focusNode: widget.myFocusNode,
           controller: widget.controller,
@@ -56,12 +63,14 @@ class _InputFormState extends State<InputForm> {
             // code when the user saves the form.
           },
           onFieldSubmitted: (String value) {
+
             FocusScope.of(context).requestFocus(widget.nextFocusNode);
           },
+          validator: widget.validateFunction,
+         //  validator: (value) {
+         //    return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
+         //  },
 
-          validator: (value) {
-            return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
-          },
         )
     );
   }

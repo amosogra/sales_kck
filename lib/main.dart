@@ -10,17 +10,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
+
       theme: ThemeData(
+
         primarySwatch: Colors.blue,
         textTheme: const TextTheme(
           headline1: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           headline2: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           headline3: TextStyle( fontSize: 12, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
-          bodyText1: TextStyle( fontSize: 16, color: MyColors.blackColor),
+          //bodyText1: TextStyle( fontSize: 16, color: MyColors.greyColor),
           bodyText2: TextStyle( fontSize: 14, color: MyColors.blackColor),
-          bodyText3: TextStyle( fontSize: 12, color: MyColors.blackColor),
+
         )
       ),
 
@@ -28,8 +31,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 
 class MyHomePage extends StatefulWidget {

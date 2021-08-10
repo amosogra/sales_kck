@@ -4,23 +4,23 @@
 class User {
 
   int? userId;
-  String? firstName;
-  String? lastName;
+  String? username;
   String? email;
+  String? name;
 
-  User({this.userId, this.firstName, this.lastName, this.email});
+  User({this.userId, this.username, this.name, this.email});
 
   factory User.fromMap(Map<String, dynamic> json) => User(
     userId: json["userId"],
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    email: json["email"]
+      username: json["username"],
+      name: json["name"],
+      email: json["email"]
   );
 
   Map<String, dynamic> toMap() => {
     "userId": userId,
-    "firstName": firstName,
-    "lastName" : lastName,
+    "username": username,
+    "name" : name,
     "email" : email
   };
 

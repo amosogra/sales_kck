@@ -17,6 +17,7 @@ class Storage {
     localStorage = await SharedPreferences.getInstance();
     localStorage!.setString('password', value);
   }
+
   static getPassword() async {
     localStorage = await SharedPreferences.getInstance();
     String? stringValue = localStorage!.getString('password');
@@ -30,6 +31,9 @@ class Storage {
   static getUser() async {
     localStorage = await SharedPreferences.getInstance();
     String? stringValue = localStorage!.getString('user');
+    if(stringValue == null){
+      return "";
+    }
     return stringValue;
   }
 
@@ -66,9 +70,16 @@ class Storage {
   }
 
   static isRemember() async {
-    localStorage = await SharedPreferences.getInstance();
-    bool? stringValue = localStorage!.getBool('remember');
-    return stringValue;
+    try{
+      localStorage = await SharedPreferences.getInstance();
+      bool? stringValue = localStorage!.getBool('remember');
+      if(stringValue == null){
+        return false;
+      }
+      return stringValue;
+    }catch(e){
+      return  false;
+    }
   }
 
   static setLogin(value) async {
@@ -77,9 +88,13 @@ class Storage {
   }
 
   static isLogin() async {
-    localStorage = await SharedPreferences.getInstance();
-    bool? stringValue = localStorage!.getBool('isLogin');
-    return stringValue;
+    try{
+      localStorage = await SharedPreferences.getInstance();
+      bool? stringValue = localStorage!.getBool('isLogin');
+      return stringValue;
+    }catch(e){
+      return false;
+    }
   }
 
 }

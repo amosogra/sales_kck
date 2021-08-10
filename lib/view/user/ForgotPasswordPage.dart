@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/main/HomePage.dart';
 import 'package:sales_kck/widget/InputForm.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
@@ -45,6 +46,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     return Scaffold(
         resizeToAvoidBottomInset : true,
+        appBar: AppBar(
+          backgroundColor: MyColors.primaryColor,
+        ),
         body:SingleChildScrollView(
 
             child:Container(
@@ -70,6 +74,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             Container(
                                 margin: EdgeInsets.only(top:0),
                                 child:InputForm(
+                                  validateFunction: (value){
+                                    Validations.validateName(value!);
+                                  },
                                   myHint: Strings.username,
                                   myFocusNode: focusUsername,
                                   controller: usernameController,
