@@ -27,4 +27,35 @@ class Validations {
     return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
   }
 
+  static String? validateNumber(String value) {
+
+    if(value == null) {
+      return null;
+    }
+    final n = num.tryParse(value);
+    if(n == null) {
+      return '"$value" is not a valid number';
+    }
+    return null;
+  }
+
+  static String? validateInt(String value) {
+
+    if(value == null) {
+      return null;
+    }
+    final n = int.tryParse(value);
+    if(n == null) {
+      return '"$value" is not a valid number';
+    }
+    return null;
+  }
+
+
+  static String? validateEmpty(String value){
+    return null;
+  }
+
+
+
 }

@@ -44,7 +44,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       Text(Strings.old_password),
                       InputForm(
                         validateFunction: (value){
-                          Validations.validateForm(value!);
+                          return Validations.validateForm(value!);
                         },
                         controller: oldPasswordController,
                         myHint: Strings.enter_old_password,
