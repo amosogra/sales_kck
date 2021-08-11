@@ -5,14 +5,15 @@ import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
 
-class Order extends StatefulWidget {
-  const Order({Key? key}) : super(key: key);
+class Draft extends StatefulWidget {
 
+  const Draft({Key? key}) : super(key: key);
   @override
-  _OrderState createState() => _OrderState();
+  _DraftState createState() => _DraftState();
+  
 }
 
-class _OrderState extends State<Order> {
+class _DraftState extends State<Draft> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +27,6 @@ class _OrderState extends State<Order> {
           ],
         )
       ),
-
 
       bottomNavigationBar: Container(
         child: LoginButton(

@@ -69,5 +69,22 @@ class Strings {
   static const String search = "Search";
   static const String no_record =  "No Record";
 
+  // temporary
+  static const String temporary_receipt_no = "Temporary Receipt No";
+  static const String receive_from = "Received From";
+  static const String company_name = "Company Name";
+  static const String received_date = "Received Date";
+  static const String payment_date = "Payment Date";
+  static const String payment_method = "Payment Method";
+  static const String cheque_no = "Cheque No";
+  static const String payment_amount = "Payment Amount";
+  static const String date = "Date";
+  static const String invoice_number = "Invoice Number";
+  static const String outstanding_amt = "Outstanding AMT";
+  static const String save_draft = "Save Draft";
+  static const String done_and_save =  "Done and Save";
+  static const String amount = "Amount";
+  static const String saved = "Saved";
+  static const String draft = "Draft";
 
 }
