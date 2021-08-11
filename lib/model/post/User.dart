@@ -3,12 +3,12 @@
 
 class User {
 
-  int? userId;
-  String? username;
-  String? email;
-  String? name;
+  int userId;
+  String username;
+  String email;
+  String name;
 
-  User({this.userId, this.username, this.name, this.email});
+  User({required this.userId, required this.username, required this.name, required this.email});
 
   factory User.fromMap(Map<String, dynamic> json) => User(
     userId: json["userId"],

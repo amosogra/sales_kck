@@ -18,12 +18,16 @@ class Strings {
   // slide menu
   static const String home = "HOME";
   static const String sales_order = "SALES ORDER";
-  static const String sales_listing_pending = "Sales Listing(Pending)";
-  static const String sales_list_synced = "Sales Listing(Synced)";
+  static const String sales_listing_pending = "Sales Listing \n  (Pending)";
+  static const String sales_listing_pending_title = "Sales Listing (Pending)";
+  static const String sales_list_synced = "Sales Listing\n  (Synced)";
+  static const String sales_list_synced_title = "Sales Listing  (Synced)";
   static const String price_history = "Price History";
   static const String temporary_receipt = "Temporary Receipt";
-  static const String temp_receipt_pending = "Temp Receipt(Pending)";
-  static const String temp_receipt_synced = "Temp Receipt(Synced)";
+  static const String temp_receipt_pending = "Temp Receipt\n  (Pending)";
+  static const String temp_receipt_pending_title = "Temp Receipt  (Pending)";
+  static const String temp_receipt_synced = "Temp Receipt\n  (Synced)";
+  static const String temp_receipt_synced_title = "Temp Receipt  (Synced)";
   static const String mobile_printer = "Mobile Printer";
   static const String sync = "Sync";
   static const String logout = "Log Out";
@@ -45,7 +49,6 @@ class Strings {
   static const String enter_new_password = "Enter New Password";
   static const String enter_confirm_password = "Enter Confirm Password";
 
-
   // sale order
   static const String customer = "Customer";
   static const String order = "Order";
@@ -65,5 +68,6 @@ class Strings {
   static const String profile = "Profile";
   static const String search = "Search";
   static const String no_record =  "No Record";
+
 
 }

@@ -20,7 +20,7 @@ class _SaleListingPendingState extends State<SaleListingPending> {
 
       appBar: AppBar(
         backgroundColor: MyColors.primaryColor,
-        title: Text(Strings.sales_listing_pending),
+        title: Text(Strings.sales_listing_pending_title),
       ),
 
       body: Container(

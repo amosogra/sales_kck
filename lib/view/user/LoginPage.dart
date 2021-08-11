@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/services/UserService.dart';
@@ -65,13 +66,15 @@ class _LoginPageState extends State<LoginPage> {
       showInSnackBar('Please fix the errors in red before submitting.');
     }else{
       //login(email, password);
-      bool response  = await login( emailController.text, passwordController.text);
+      bool response  = await login(context, emailController.text, passwordController.text);
       if(response){ // Call Async Data
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => HomePage()
             ),
                 (Route<dynamic> route) => false);
+      }else{
+        showToastMessage(context, "Login failed", "Ok");
       }
       //showInSnackBar('Please fix the errors in red before submitting.');
     }

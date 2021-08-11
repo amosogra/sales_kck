@@ -19,7 +19,7 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.primaryColor,
-        title: Text(Strings.sales_list_synced),
+        title: Text(Strings.sales_list_synced_title),
       ),
       body: Container(
           alignment: Alignment.center,
