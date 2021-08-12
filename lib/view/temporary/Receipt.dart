@@ -20,27 +20,40 @@ class _ReceiptState extends State<Receipt> {
         backgroundColor: MyColors.primaryColor,
         title: Text(Strings.temporary_receipt),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
+
             buildForm(),
             buildList(),
-            Container(
-              child: Row(
-                children: [
-                  Expanded(child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
-                    onPressed: (){
 
-                    },
-                    child: Text("Save Draft"),
-                  ),),
-                  Expanded(child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
-                    onPressed: (){
-                    },
-                    child: Text("Done and Save"),
-                  ),)
+            Container(
+              margin: EdgeInsets.only(left: 25, right:25 , top: 50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 5,right: 5),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
+                        onPressed: (){
+                        },
+                        child: Text("Save Draft"),
+                      ),
+                    )
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 5,right: 5),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
+                        onPressed: (){
+                        },
+                        child: Text("Done and Save"),
+                      ),
+                    )
+                  )
                 ],
               ),
             )
@@ -115,11 +128,28 @@ class _ReceiptState extends State<Receipt> {
   buildList(){
     return Container(
       color: MyColors.primaryColor,
+      padding: EdgeInsets.only(top: 20, bottom: 20),
       child: Row(
         children: [
-          Expanded(child: Text(Strings.date),),
-          Expanded(child: Text(Strings.invoice_number),),
-          Expanded(child: Text(Strings.outstanding_amt),)
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(Strings.date , style: TextStyle(color: MyColors.whiteColor, fontSize: 14),),
+            )
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(Strings.invoice_number , style: TextStyle(color: MyColors.whiteColor, fontSize: 14)),
+            )
+          ),
+
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(Strings.outstanding_amt , style: TextStyle(color: MyColors.whiteColor, fontSize: 14)),
+            )
+          )
         ],
       ),
     );

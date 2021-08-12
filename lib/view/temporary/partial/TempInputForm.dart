@@ -25,6 +25,7 @@ class _TempInputFormState extends State<TempInputForm> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.title),
           InputForm(
@@ -33,9 +34,7 @@ class _TempInputFormState extends State<TempInputForm> {
                 return Validations.validateEmpty(value!);
               }
           ),
-
           Divider(color: MyColors.greyColor,)
-
         ],
       ),
     );

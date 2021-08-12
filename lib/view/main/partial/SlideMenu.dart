@@ -77,7 +77,7 @@ Widget showSlideMenu(BuildContext context){
           title: Row(
             children: [
               Image(image: AssetImage(Assets.iconSaleListingPending) , width: Dimens.menuIconSize, height: Dimens.menuIconSize,),
-              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.sales_listing_pending),)
+              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.sales_listing_pending_title),)
             ],
           ),
           onTap: () {
@@ -89,7 +89,7 @@ Widget showSlideMenu(BuildContext context){
           title: Row(
             children: [
               Image(image: AssetImage(Assets.iconSaleListingSynced) , width: Dimens.menuIconSize, height: Dimens.menuIconSize,),
-              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.sales_list_synced),)
+              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.sales_list_synced_title),)
             ],
           ),
           onTap: () {
@@ -125,7 +125,7 @@ Widget showSlideMenu(BuildContext context){
           title: Row(
             children: [
               Image(image: AssetImage(Assets.iconTemporaryRecipePending) , width: Dimens.menuIconSize, height: Dimens.menuIconSize,),
-              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.temp_receipt_pending),)
+              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.temp_receipt_pending_title),)
             ],
           ),
           onTap: () {
@@ -137,7 +137,7 @@ Widget showSlideMenu(BuildContext context){
           title: Row(
             children: [
               Image(image: AssetImage(Assets.iconTemporaryRecipeSync) , width: Dimens.menuIconSize, height: Dimens.menuIconSize,),
-              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.temp_receipt_synced),)
+              Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.temp_receipt_synced_title),)
             ],
           ),
           onTap: () {

@@ -19,7 +19,7 @@ class _ReceiptPendingState extends State<ReceiptPending> {
   Widget build(BuildContext context) {
     return Container(
       child: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
 
           appBar: AppBar(
@@ -31,7 +31,7 @@ class _ReceiptPendingState extends State<ReceiptPending> {
                 Tab( text: Strings.draft ),
               ],
             ),
-            title: const Text(Strings.sales_order),
+            title: const Text(Strings.temp_receipt_pending_title),
           ),
 
           body:  const TabBarView(

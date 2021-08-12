@@ -45,9 +45,26 @@ class _SyncState extends State<Sync> {
         title: Text(Strings.sync),
       ),
       body: Container(
-        child:  Flexible(
-            flex: 1,
-            child: Container(
+        margin: EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 25,right: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text("Full Sync"),
+                  ),
+                  Switch(
+                      value: true,
+                      onChanged: (value){
+                      }
+                  )
+                ],
+              ),
+            ),
+
+            Container(
                 margin: EdgeInsets.only(top:0),
                 child:ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -57,10 +74,10 @@ class _SyncState extends State<Sync> {
                     return _buildItem(index);
                   },
                 )
-
             )
-        ),
 
+          ],
+        )
       ),
 
     );
@@ -70,23 +87,29 @@ class _SyncState extends State<Sync> {
     return InkResponse(
       onTap: (){
       },
-      child: Container(
-        child: Row(
-          children: [
-            Expanded(
+
+      child: Card(
+        child: Container(
+          margin: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+          child: Row(
+            children: [
+              Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(this.models[index].title),
-                    Text(this.models[index].total.toString()),
-                    Text(this.models[index].date),
+                    Text("Total Customer: " + this.models[index].total.toString()),
+                    Text("Last Synced: " + this.models[index].date),
                   ],
                 ),
-            ),
-            Icon(Icons.sync)
-          ],
-        ),
+              ),
+              Icon(Icons.sync)
+            ],
+          ),
+        )
       ),
-    )
+    );
+
   }
 }
 
