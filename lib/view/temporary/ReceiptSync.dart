@@ -17,6 +17,7 @@ class _ReceiptSyncState extends State<ReceiptSync> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.temp_receipt_synced_title),

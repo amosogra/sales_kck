@@ -64,9 +64,13 @@ class Storage {
     return stringValue;
   }
 
+
   static setRemember(value) async {
-    localStorage = await SharedPreferences.getInstance();
-    localStorage!.setString('remember', value);
+    try{
+      localStorage = await SharedPreferences.getInstance();
+      localStorage!.setBool('remember', value);
+    }catch(e){
+    }
   }
 
   static isRemember() async {

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/view/user/SplashPage.dart';

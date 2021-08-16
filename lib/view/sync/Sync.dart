@@ -36,7 +36,6 @@ class _SyncState extends State<Sync> {
 
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +54,7 @@ class _SyncState extends State<Sync> {
                   Expanded(
                     child: Text("Full Sync"),
                   ),
+
                   Switch(
                       value: true,
                       onChanged: (value){
@@ -79,13 +79,15 @@ class _SyncState extends State<Sync> {
           ],
         )
       ),
-
     );
   }
 
   Widget _buildItem(int index){
+
     return InkResponse(
+
       onTap: (){
+
       },
 
       child: Card(

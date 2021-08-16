@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/view/customer/CustomerList.dart';
 
 
 class Customer extends StatefulWidget {
@@ -22,18 +23,24 @@ class _CustomerState extends State<Customer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+
             Text(Strings.customer, style: Theme.of(context).textTheme.headline2 , ),
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
-                  Icon(Icons.search)
-                ],
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList() ));
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 10) ,
+                child: Row(
+                  children: [
+                    Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
+                    Icon(Icons.search)
+                  ],
+                ),
               ),
             ),
             Divider(color: MyColors.greyColor,),
-
 
             Row(
               children: [

@@ -6,6 +6,14 @@ import 'package:sales_kck/constants/dimens.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
+import 'package:sales_kck/view/order/OrderFrame.dart';
+import 'package:sales_kck/view/price_history/PriceHistory.dart';
+import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
+import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
+import 'package:sales_kck/view/sync/Sync.dart';
+import 'package:sales_kck/view/temporary/Receipt.dart';
+import 'package:sales_kck/view/temporary/ReceiptPending.dart';
+import 'package:sales_kck/view/temporary/ReceiptSync.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
 import 'package:sales_kck/view/user/Profile.dart';
 
@@ -70,6 +78,10 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => OrderFrame())
+            );
+            
           },
         ),
 
@@ -82,6 +94,10 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SaleListingPending())
+            );
           },
         ),
 
@@ -94,6 +110,9 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SaleListingSynced())
+            );
           },
         ),
 
@@ -106,6 +125,10 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PriceHistory())
+            );
+
           },
         ),
 
@@ -118,6 +141,9 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Receipt())
+            );
           },
         ),
 
@@ -130,6 +156,9 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ReceiptPending())
+            );
           },
         ),
 
@@ -142,9 +171,11 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ReceiptSync())
+            );
           },
         ),
-
 
         ListTile(
           title: Row(
@@ -155,9 +186,11 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ReceiptSync())
+            );
           },
         ),
-
         ListTile(
           title: Row(
             children: [
@@ -167,9 +200,11 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Sync())
+            );
           },
         ),
-
         ListTile(
           title: Row(
             children: [
@@ -177,8 +212,8 @@ Widget showSlideMenu(BuildContext context){
               Container( margin: EdgeInsets.only(left: 10), child: Text(Strings.logout),)
             ],
           ),
-          onTap: () {
 
+          onTap: () {
             Navigator.pop(context);
             showDialog(context: context,
                 builder: (BuildContext context){
@@ -192,13 +227,11 @@ Widget showSlideMenu(BuildContext context){
                   );
                 }
             );
-
           },
         ),
-
-
       ],
     ),
+
   );
 
 }

@@ -11,7 +11,6 @@ import 'package:sales_kck/constants/storage.dart';
 import 'package:dio/dio.dart';
 
 Future<bool> login(BuildContext context,  String username, String password) async {
-
   ProgressDialog pr;// = new ProgressDialog(context);
   pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
   try {
@@ -24,6 +23,7 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
     var response = await Dio().post(Api.baseUrl + "/api/v1/login", queryParameters: queryParameters );
     if(jsonDecode(response.toString())['error'] != null){
       print("error");
+
     }else{
       print(response);
       Storage.saveUser(response.toString());
@@ -34,6 +34,7 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
     debugPrint("error -- " + e.toString());
     print(e);
   }
+  
   await pr.hide();
   return false;
 }
@@ -100,7 +101,6 @@ Future<bool> template(String email) async {
   }on Exception catch(_){
     return false;
   }
-
 
 }
 

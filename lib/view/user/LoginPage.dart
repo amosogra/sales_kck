@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool isRemember = false;
 
   @override
@@ -148,8 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: LoginButton(
                           title: Strings.login,
                           onPressed: (){
-
-                            //Storage.setRemember(this.isRemember);
+                            Storage.setRemember(this.isRemember);
                             handleLogin();
                           },
                         ),
