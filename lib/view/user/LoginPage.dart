@@ -20,8 +20,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  String email = 'salesman',password = 'admin!@#123';
-  TextEditingController emailController = TextEditingController(text: 'salesman');
+  String email = 'test_sales',password = 'admin!@#123';
+  TextEditingController emailController = TextEditingController(text: 'test_sales');
   TextEditingController passwordController = TextEditingController(text: 'admin!@#123');
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
@@ -57,10 +57,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void handleLogin() async{
-
     FormState? form = formKey.currentState;
     form!.save();
-
     if(!form.validate()){
       showInSnackBar('Please fix the errors in red before submitting.');
     }else{
@@ -78,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
       //showInSnackBar('Please fix the errors in red before submitting.');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

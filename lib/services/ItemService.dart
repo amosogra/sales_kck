@@ -6,9 +6,11 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:dio/dio.dart';
-import 'package:sales_kck/model/post/CustomerModel.dart';
+import 'package:sales_kck/model/post/ItemModel.dart';
+import 'package:sales_kck/model/post/UomModel.dart';
 
-Future<List<CustomerModel>> getCustomers(BuildContext context) async {
+
+Future<List<ItemModel>> getItems(BuildContext context) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
   pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
@@ -22,25 +24,29 @@ Future<List<CustomerModel>> getCustomers(BuildContext context) async {
     String token = jsonDecode(user)['token'];
 
     debugPrint("my token"+  token);
-
     Map<String, dynamic>? queryParameters = { 'token': token };
-    var response = await Dio().post(Api.baseUrl + "/api/v1/customers", queryParameters: queryParameters );
-    List<CustomerModel> customers = [];
+    var response = await Dio().post(Api.baseUrl + "/api/v1/items", queryParameters: queryParameters );
 
     debugPrint(response.toString());
 
+    List<ItemModel> items = [];
     final jsonRes = json.decode(response.toString());
     if(jsonRes['status']){
 
 
       debugPrint("called");
-      for(var customerJson in jsonRes["customers"]) {
-        CustomerModel customer = CustomerModel.fromMap(customerJson);
-        customers.add(customer);
+      for(var customerJson in jsonRes["items"]) {
+        // List<UomModel> uoms = [];
+        // for(var item in customerJson['uom']){
+        //   UomModel uomModel = UomModel.fromMap(item);
+        //   uoms.add(uomModel);
+        // }
+        ItemModel customer = ItemModel.fromMap(customerJson);
+        items.add(customer);
       }
       await pr.hide();
-      debugPrint(customers.length.toString());
-      return customers;
+      debugPrint(items.length.toString());
+      return items;
     }else{
       await pr.hide();
       return [];

@@ -55,7 +55,7 @@ class _InputFormState extends State<InputForm> {
           controller: widget.controller,
           keyboardType: widget.textInputTye,
           style: new TextStyle(
-            fontFamily: 'Verdana'
+            fontFamily: 'Verdana',
           ),
           decoration: inputDecoration,
           onSaved: (value) {

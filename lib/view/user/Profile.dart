@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/storage.dart';
@@ -9,9 +8,7 @@ import 'package:sales_kck/model/post/User.dart';
 import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/view/user/ChangePassword.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
-import 'package:sales_kck/widget/AppBarOne.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
-
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -20,9 +17,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   late User myUser;
-
   @override
   void initState(){
     super.initState();
@@ -33,13 +28,13 @@ class _ProfileState extends State<Profile> {
 
   void initView () async{
     String user = await Storage.getUser();
-    if(user != null){
-      myUser = User.fromMap(jsonDecode(user));
+    if(user.isNotEmpty){
+      myUser = User.fromMap(jsonDecode(user)['user']);
     }
   }
 
   final Future<String> _calculation = Future<String>.delayed(
-    const Duration(milliseconds: 100),
+    const Duration(milliseconds: 1000),
         () => 'Data Loaded',
   );
 

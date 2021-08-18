@@ -29,29 +29,33 @@ class _PriceHistoryState extends State<PriceHistory> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(Strings.customer, style: Theme.of(context).textTheme.headline2 , ),
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
-                  Icon(Icons.search)
-                ],
+
+            InkWell(
+              child: Container(
+                margin: EdgeInsets.only(top: 10) ,
+                child: Row(
+                  children: [
+                    Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
+                    Icon(Icons.search)
+                  ],
+                ),
               ),
             ),
             Divider(color: MyColors.greyColor,),
 
             Text(Strings.customer, style: Theme.of(context).textTheme.headline2 , ),
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
+            InkWell(
+              child: Container(
+                margin: EdgeInsets.only(top: 10) ,
+                child: Row(
+                  children: [
+                    Expanded(child:   Text(Strings.customer, style: Theme.of(context).textTheme.bodyText2 ), ) ,
+                    Icon(Icons.search)
+                  ],
+                ),
+              )
             ),
             Divider(color: MyColors.greyColor,),
-
 
             Container(
               child: LoginButton(
@@ -70,7 +74,7 @@ class _PriceHistoryState extends State<PriceHistory> {
                   Text(Strings.no_record, style: Theme.of(context).textTheme.bodyText1,)
                 ],
               ),
-            )
+            ),
 
           ],
         ),

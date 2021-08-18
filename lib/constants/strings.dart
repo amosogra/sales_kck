@@ -86,5 +86,5 @@ class Strings {
   static const String amount = "Amount";
   static const String saved = "Saved";
   static const String draft = "Draft";
-
+  static const String item_listing = "Item Listing";
 }

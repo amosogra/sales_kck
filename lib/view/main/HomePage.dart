@@ -117,12 +117,12 @@ class _HomePageState extends State<HomePage> {
                             height: Dimens.item_height,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
 
+                              children: [
                                 Image(image: AssetImage(Assets.iconPriceHistory) , width: Dimens.iconSize, height: Dimens.iconSize, ),
                                 Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.price_history, style: TextStyle(fontSize: 16,),),)
-
                               ],
+
                             ),
                           )
                       )
@@ -178,7 +178,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
 
-
             Row(
               children: [
                 Flexible(
@@ -201,6 +200,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )
                 ),
+
                 Flexible(
                     child:InkWell(
                       onTap: (){

@@ -7,12 +7,12 @@ import 'package:sales_kck/view/temporary/partial/TempInputForm.dart';
 
 class Receipt extends StatefulWidget {
   const Receipt({Key? key}) : super(key: key);
-
   @override
   _ReceiptState createState() => _ReceiptState();
 }
 
 class _ReceiptState extends State<Receipt> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,18 +20,19 @@ class _ReceiptState extends State<Receipt> {
         backgroundColor: MyColors.primaryColor,
         title: Text(Strings.temporary_receipt),
       ),
+
       body: SingleChildScrollView(
+
         child: Column(
           children: [
-
             buildForm(),
             buildList(),
-
             Container(
               margin: EdgeInsets.only(left: 25, right:25 , top: 50),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(left: 5,right: 5),
@@ -43,6 +44,7 @@ class _ReceiptState extends State<Receipt> {
                       ),
                     )
                   ),
+
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(left: 5,right: 5),
