@@ -73,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
       }else{
         showToastMessage(context, "Login failed", "Ok");
       }
-      //showInSnackBar('Please fix the errors in red before submitting.');
+      //showInSnackBar('Please fix the errors in red before submitti
+      // ng.');
     }
   }
 
@@ -86,19 +87,18 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset : true,
+      backgroundColor: MyColors.bgColor,
       body:SingleChildScrollView(
-
         child:Container(
           child: Stack(
             children: [
-
               Container(
                 height: screenHeight / 2,
                 color:MyColors.primaryColor,
               ),
 
               Card(
-                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1 , vertical: screenHeight * 0.15),
+                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.08 , vertical: screenHeight * 0.15),
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.07, vertical: 30),
                   child: Column(
@@ -160,55 +160,93 @@ class _LoginPageState extends State<LoginPage> {
             ],
           )
         )
-
       )
     );
   }
-
-
 
   buildInputForm(){
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Image(
-            width: 156,
-            height: 148,
+            // width: 156,
+            // height: 148,
             image: AssetImage(Assets.appLogo)
         ),
 
         Container(
-            margin: EdgeInsets.only(top:0),
-            child:InputForm(
-              validateFunction: (value){
-                return Validations.validateName(value!);
-              },
-              controller: emailController,
-              myHint: Strings.email,
-              myFocusNode: focusEmail,
-              nextFocusNode: focusPassword,
-              secure: false,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: MyColors.textBorderColor
             ),
+            borderRadius: BorderRadius.all(Radius.circular(5))
+          ),
+            margin: EdgeInsets.only(top:0),
+            padding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
+            child:Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(Strings.userName, style: TextStyle(color: MyColors.textBorderColor),),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InputForm(
+                        validateFunction: (value){
+                          return Validations.validateName(value!);
+                        },
+                        controller: emailController,
+                        myHint: Strings.userName,
+                        myFocusNode: focusEmail,
+                        nextFocusNode: focusPassword,
+                        secure: false,
+                      ),
+                    ),
+                    Image(image: AssetImage(Assets.iconUser) , width: 20,)
+                  ],
+                )
+              ],
+            )
         ),
 
 
         Container(
-          margin: EdgeInsets.only(top:10),
-          child:InputForm(
-            validateFunction: (value){
-              return Validations.validatePassword(value!);
-            },
-            controller: passwordController,
-            myHint: Strings.password,
-            myFocusNode: focusPassword,
-            secure: true,
-          ),
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: MyColors.textBorderColor
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(5))
+            ),
+            margin: EdgeInsets.only(top:10),
+            padding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
+            child:Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(Strings.password, style: TextStyle(color: MyColors.textBorderColor),),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InputForm(
+                        validateFunction: (value){
+                          return Validations.validatePassword(value!);
+                        },
+                        controller: passwordController,
+                        myHint: Strings.password,
+                        myFocusNode: focusPassword,
+                        secure: true,
+                      ),
+                    ),
+                    Image(image: AssetImage(Assets.iconPassword) , width: 20,)
+                  ],
+                )
+              ],
+            )
         ),
+
+
+
 
       ],
     );
-
   }
-
 
 }

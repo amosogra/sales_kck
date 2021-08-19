@@ -7,8 +7,9 @@ import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:dio/dio.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
+import 'package:sales_kck/model/post/TermModel.dart';
 
-Future<List<ItemModel>> getItems(BuildContext context) async {
+Future<List<TermModel>> getTerms(BuildContext context, String companyCode, ) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
   pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
@@ -20,30 +21,22 @@ Future<List<ItemModel>> getItems(BuildContext context) async {
 
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
+    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode, 'fromTS' : 'fromTS'};
 
-    debugPrint("my token"+  token);
-    Map<String, dynamic>? queryParameters = { 'token': token };
-    var response = await Dio().post(Api.baseUrl + "/api/v1/items", queryParameters: queryParameters );
+    debugPrint(queryParameters.toString());
+    var response = await Dio().post(Api.baseUrl + "/api/v1/terms", queryParameters: queryParameters );
 
     debugPrint(response.toString());
 
-    List<ItemModel> items = [];
+    List<TermModel> items = [];
     final jsonRes = json.decode(response.toString());
     if(jsonRes['status']){
 
-
-      debugPrint("called");
-      for(var customerJson in jsonRes["items"]) {
-        // List<UomModel> uoms = [];
-        // for(var item in customerJson['uom']){
-        //   UomModel uomModel = UomModel.fromMap(item);
-        //   uoms.add(uomModel);
-        // }
-        ItemModel customer = ItemModel.fromMap(customerJson);
-        items.add(customer);
+      for(var termsJson in jsonRes["terms"]) {
+        TermModel termModel = TermModel.fromMap(termsJson);
+        items.add(termModel);
       }
       await pr.hide();
-      debugPrint(items.length.toString());
       return items;
     }else{
       await pr.hide();

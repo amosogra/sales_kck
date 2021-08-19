@@ -3,10 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
-import 'package:sales_kck/view/order/partial/Customer.dart';
-import 'package:sales_kck/view/order/partial/Order.dart';
-import 'package:sales_kck/view/order/partial/Summary.dart';
-
+import 'package:sales_kck/view/order/fragments/Customer.dart';
+import 'package:sales_kck/view/order/fragments/Order.dart';
+import 'package:sales_kck/view/order/fragments/Summary.dart';
 
 class OrderFrame extends StatefulWidget {
 

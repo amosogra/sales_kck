@@ -32,6 +32,7 @@ dependencies:
   syncfusion_flutter_charts: ^18.4.46
   progress_dialog: ^1.2.0
   dio: ^4.0.0
+  flutter_material_pickers: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -86,7 +87,9 @@ flutter:
     - family: RobotoRegular
       fonts:
         - asset: assets/fonts/roboto-regular.woff
-
+    - family: Verdana
+      fonts:
+        - asset: assets/fonts/Verdana.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -8,6 +8,7 @@ import 'package:sales_kck/model/post/User.dart';
 import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/view/user/ChangePassword.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
+import 'package:sales_kck/view/user/partial/ProfileItemView.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
 
 class Profile extends StatefulWidget {
@@ -109,139 +110,17 @@ class _ProfileState extends State<Profile> {
   }
 
 
-
   buildForm(){
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.only(top: 7, bottom: 7),
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    child: Text(Strings.userName),
-                  )
-              ),
-              Expanded(
-                  flex: 3,
-                  child: Container(
-                    child: Text(myUser.username),
-                  )
-              )
-            ],
-          ),
-        ),
-        Divider(color: MyColors.greyColor,),
-
-        Container(
-          margin: EdgeInsets.only(top: 7, bottom: 7),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                  child: Container(
-                    child: Text(Strings.fullName),
-                  )
-              ),
-              Expanded(
-                flex: 3,
-                  child: Container(
-                    child: Text(myUser.name),
-                  )
-              )
-            ],
-          ),
-        ),
-        Divider(color: MyColors.greyColor,),
-
-        Container(
-          margin: EdgeInsets.only(top: 7, bottom: 7),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                  child: Container(
-                    child: Text(Strings.displayName),
-                  )
-              ),
-              Expanded(
-                flex: 3,
-                  child: Container(
-                    child: Text(myUser.name),
-                  )
-              )
-            ],
-          ),
-        ),
-        Divider(color: MyColors.greyColor,),
-
-
-        Container(
-          margin: EdgeInsets.only(top: 7, bottom: 7),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                  child: Container(
-                    child: Text(Strings.email),
-                  )
-              ),
-              Expanded(
-                flex: 3,
-                  child: Container(
-                    child: Text(myUser.email),
-                  )
-              )
-            ],
-          ),
-        ),
-        Divider(color: MyColors.greyColor,),
-
-
-        Container(
-          margin: EdgeInsets.only(top: 7, bottom: 7),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                  child: Container(
-                    child: Text(Strings.role),
-                  )
-              ),
-              Expanded(
-                flex: 3,
-                  child: Container(
-                    child: Text(
-                        "Role"
-                    ),
-                  )
-              )
-            ],
-          ),
-        ),
-        Divider(color: MyColors.greyColor,),
-
-        Container(
-          margin: EdgeInsets.only(top: 7, bottom: 7),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                  child: Container(
-                    child: Text(Strings.company),
-                  )
-              ),
-              Expanded(
-                flex: 3,
-                  child: Container(
-                    child: Text(Strings.userName),
-                  )
-              )
-            ],
-          ),
-        ),
-        Divider(color: MyColors.greyColor,),
+        Text(Strings.personal_info, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+        ProfileItemView(title: Strings.userName, content: myUser.username),
+        ProfileItemView(title: Strings.fullName, content: myUser.name),
+        ProfileItemView(title: Strings.displayName, content: myUser.name),
+        ProfileItemView(title: Strings.email, content: myUser.email),
+        ProfileItemView(title: Strings.role, content: "Role"),
+        ProfileItemView(title: Strings.company, content: "Company"),
 
       ],
     );

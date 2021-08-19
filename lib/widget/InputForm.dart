@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sales_kck/constants/colors.dart';
 
 
 class InputForm extends StatefulWidget{
@@ -35,12 +36,16 @@ class _InputFormState extends State<InputForm> {
     final inputDecoration =  InputDecoration(
         //icon: Icon(Icons.person),
         hintText: widget.myHint,
-        hintStyle: TextStyle(fontSize: 16),
-
+        hintStyle: TextStyle(fontSize: 14),
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
+        isDense: true,
+        //fillColor: MyColors.greenColor, filled: true
         //labelText: 'Name *',
-        //enabledBorder: UnderlineInputBorder(
-        // borderSide: BorderSide(color: Colors.cyan),
+        // enabledBorder: UnderlineInputBorder(
+        //   borderSide: BorderSide(color: Colors.cyan),
         // ),
+
         // focusedBorder: UnderlineInputBorder(
         //   borderSide: BorderSide(color: Colors.red),
         // ),

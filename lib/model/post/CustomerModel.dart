@@ -7,6 +7,8 @@ class CustomerModel {
   String  companyCode;
   String  accNo;
   String  name;
+  String  docNumber = '';
+  String  docDate = '';
   String  addr1;
   String  addr2;
   String  addr3;
@@ -36,6 +38,7 @@ class CustomerModel {
     required this.isActive,
     required this.rev,
     required this.deleted,
+
   });
 
   factory CustomerModel.fromMap(Map<String, dynamic> json) => CustomerModel(

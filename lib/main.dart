@@ -14,21 +14,22 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Flutter Demo',
-
       theme: ThemeData(
 
-        primarySwatch: Colors.blue,
+        primarySwatch: MyColors.materialPrimaryColor,
+        fontFamily: "Verdana",
         textTheme: const TextTheme(
           headline1: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           headline2: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           headline3: TextStyle( fontSize: 12, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           //bodyText1: TextStyle( fontSize: 16, color: MyColors.greyColor),
-          bodyText2: TextStyle( fontSize: 14, color: MyColors.blackColor),
+          bodyText2: TextStyle( fontSize: 14, color: MyColors.textColor, fontFamily: 'Ionicons',),
 
         )
       ),
 
       home: SplashPage(),
+
     );
   }
 }

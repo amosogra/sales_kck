@@ -35,7 +35,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   void handleForgotPassword(BuildContext context) async{
     bool response = await forgotPassword(context, usernameController.text);
-
   }
 
   @override
@@ -43,6 +42,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     return Scaffold(
         resizeToAvoidBottomInset : true,
+        backgroundColor: MyColors.bgColor,
         appBar: AppBar(
           backgroundColor: MyColors.primaryColor,
           title: Text(Strings.forgot_password),
@@ -53,7 +53,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 child: Stack(
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height / 2,
+                      height: MediaQuery.of(context).size.height / 2 - 30,
                       color:MyColors.primaryColor,
                     ),
 
@@ -69,19 +69,56 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 image: AssetImage(Assets.appLogo)
                             ),
 
+
+
                             Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: MyColors.textBorderColor
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(5))
+                                ),
                                 margin: EdgeInsets.only(top:0),
-                                child:InputForm(
-                                  validateFunction: (value){
-                                    Validations.validateName(value!);
-                                  },
-                                  myHint: Strings.username,
-                                  myFocusNode: focusUsername,
-                                  controller: usernameController,
-                                  textInputTye: TextInputType.emailAddress,
-                                  key: this.usernameKey,
+                                padding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
+                                child:Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(Strings.userName, style: TextStyle(color: MyColors.textBorderColor),),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: InputForm(
+                                            validateFunction: (value){
+                                              Validations.validateName(value!);
+                                            },
+                                            controller: usernameController,
+                                            myHint: Strings.userName,
+                                            myFocusNode: focusUsername,
+                                            secure: false,
+                                            key: this.usernameKey,
+                                          ),
+                                        ),
+                                        Image(image: AssetImage(Assets.iconUser) , width: 20,)
+                                      ],
+                                    )
+                                  ],
                                 )
                             ),
+
+
+                            // Container(
+                            //     margin: EdgeInsets.only(top:0),
+                            //     child:InputForm(
+                            //       validateFunction: (value){
+                            //         Validations.validateName(value!);
+                            //       },
+                            //       myHint: Strings.username,
+                            //       myFocusNode: focusUsername,
+                            //       controller: usernameController,
+                            //       textInputTye: TextInputType.emailAddress,
+                            //       key: this.usernameKey,
+                            //     )
+                            // ),
 
                             Container(
                               margin: EdgeInsets.only(top: 40),
