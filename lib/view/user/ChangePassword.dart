@@ -59,6 +59,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validateFunction: (value){
                                   return Validations.validatePassword(value!);
                                 },
+                                onChange: (value){},
                                 controller: oldPasswordController,
                                 myHint: Strings.enter_old_password,
                                 myFocusNode: focusOldPassword,
@@ -95,6 +96,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validateFunction: (value){
                                   return Validations.validatePassword(value!);
                                 },
+                                onChange: (value){},
                                 controller: newPasswordController,
                                 myHint: Strings.enter_new_password,
                                 myFocusNode: focusNewPassword,
@@ -132,6 +134,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validateFunction: (value){
                                   return Validations.validatePassword(value!);
                                 },
+                                onChange: (value){},
                                 controller: confirmPasswordController,
                                 myHint: Strings.enter_confirm_password,
                                 myFocusNode: focusConfirmPassword,

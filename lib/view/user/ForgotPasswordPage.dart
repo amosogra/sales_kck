@@ -91,6 +91,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                             validateFunction: (value){
                                               Validations.validateName(value!);
                                             },
+                                            onChange: (value){},
                                             controller: usernameController,
                                             myHint: Strings.userName,
                                             myFocusNode: focusUsername,

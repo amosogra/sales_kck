@@ -55,7 +55,9 @@ class _ItemListState extends State<ItemList> {
                         children: [
                           InputForm(myHint: "Search Item", validateFunction: (value){
                             return Validations.validateEmpty(value!);
-                          }),
+                          },
+                            onChange: (value){},
+                          ),
                           Divider(color: MyColors.greyColor,)
                         ],
                       )

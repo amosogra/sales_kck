@@ -29,7 +29,9 @@ class _TempInputFormState extends State<TempInputForm> {
               myHint: widget.hint,
               validateFunction: (value){
                 return Validations.validateEmpty(value!);
-              }
+              },
+            onChange: (value){},
+
           ),
           Divider(color: MyColors.greyColor,)
         ],

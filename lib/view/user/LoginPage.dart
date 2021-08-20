@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
               Card(
                 margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.08 , vertical: screenHeight * 0.15),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.07, vertical: 30),
+                  margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: 30),
                   child: Column(
 
                     children: [
@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Container(
                           margin: EdgeInsets.only(top:5),
                           alignment: Alignment.centerRight,
-                          child: Text( Strings.forgot_password , style: TextStyle(fontSize: 16, fontFamily: 'Verdana', color: MyColors.primaryColor ),),
+                          child: Text( Strings.forgot_password , style: TextStyle(fontSize: 14, fontFamily: 'Verdana', color: MyColors.primaryColor ),),
                         ),
                       ),
 
@@ -194,6 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                         validateFunction: (value){
                           return Validations.validateName(value!);
                         },
+                        onChange: (value){},
                         controller: emailController,
                         myHint: Strings.userName,
                         myFocusNode: focusEmail,
@@ -229,6 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                         validateFunction: (value){
                           return Validations.validatePassword(value!);
                         },
+                        onChange: (value){},
                         controller: passwordController,
                         myHint: Strings.password,
                         myFocusNode: focusPassword,

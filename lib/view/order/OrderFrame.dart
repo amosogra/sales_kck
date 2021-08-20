@@ -10,13 +10,34 @@ import 'package:sales_kck/view/order/fragments/Summary.dart';
 class OrderFrame extends StatefulWidget {
 
   const OrderFrame({Key? key}) : super(key: key);
-
   @override
   _OrderFrameState createState() => _OrderFrameState();
 
 }
 
-class _OrderFrameState extends State<OrderFrame> {
+class _OrderFrameState extends State<OrderFrame> with SingleTickerProviderStateMixin{
+
+  final List<Tab> myTabs = <Tab>[
+    Tab( text: Strings.customer,), // icon: Icon(Icons.directions_car) ,
+    Tab( text: Strings.order ),
+    Tab( text: Strings.summary ),
+  ];
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = new TabController(length: myTabs.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,24 +46,20 @@ class _OrderFrameState extends State<OrderFrame> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: MyColors.primaryColor,
-            bottom: const TabBar(
+            bottom:   TabBar(
               indicatorColor: MyColors.whiteColor,
-              tabs: [
-                Tab( text: Strings.customer,), // icon: Icon(Icons.directions_car) ,
-                Tab( text: Strings.order ),
-                Tab( text: Strings.summary ),
-              ],
+              tabs: this.myTabs,
+              controller: _tabController,
             ),
             title: const Text(Strings.sales_order),
           ),
-          body:  const TabBarView(
+          body:  TabBarView(
             children: [
-              Customer(),
+              Customer(tabController: _tabController,),
               Order(),
               Summary()
             ],
           ),
-
 
         ),
       ),

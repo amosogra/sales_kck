@@ -21,23 +21,21 @@ Future<List<TermModel>> getTerms(BuildContext context, String companyCode, ) asy
 
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
-    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode, 'fromTS' : 'fromTS'};
+    Map<String, dynamic>? queryParameters = { 'token': token }; //'companyCode' : companyCode, 'fromTS' : 'fromTS'
 
     debugPrint(queryParameters.toString());
     var response = await Dio().post(Api.baseUrl + "/api/v1/terms", queryParameters: queryParameters );
-
     debugPrint(response.toString());
-
     List<TermModel> items = [];
     final jsonRes = json.decode(response.toString());
     if(jsonRes['status']){
-
       for(var termsJson in jsonRes["terms"]) {
         TermModel termModel = TermModel.fromMap(termsJson);
         items.add(termModel);
       }
       await pr.hide();
       return items;
+
     }else{
       await pr.hide();
       return [];

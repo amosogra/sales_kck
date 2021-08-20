@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: MyColors.materialPrimaryColor,
         fontFamily: "Verdana",
         textTheme: const TextTheme(
-          headline1: TextStyle( fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
-          headline2: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
+          headline1: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor, fontFamily: 'Verdana'),
+          headline2: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.textGreyColor),
           headline3: TextStyle( fontSize: 12, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           //bodyText1: TextStyle( fontSize: 16, color: MyColors.greyColor),
           bodyText2: TextStyle( fontSize: 14, color: MyColors.textColor, fontFamily: 'Ionicons',),

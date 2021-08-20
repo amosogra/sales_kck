@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: MyColors.bgColor,
       appBar: AppBar(title: Text(Strings.title), backgroundColor: MyColors.primaryColor,),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image(image: AssetImage(Assets.iconSalesOrder) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                              Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: TextStyle(fontSize: 16,),),)
+                              Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_order, style: Theme.of(context).textTheme.headline1 ),)
                             ],
                           ),
                         ),
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconSaleListingPending) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_listing_pending, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_listing_pending, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconSaleListingSynced) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_list_synced, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sales_list_synced, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )
@@ -120,7 +121,7 @@ class _HomePageState extends State<HomePage> {
 
                               children: [
                                 Image(image: AssetImage(Assets.iconPriceHistory) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.price_history, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.price_history, style: Theme.of(context).textTheme.headline1 ),),
                               ],
 
                             ),
@@ -147,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconTemporaryRecipe) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.temporary_receipt, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.temporary_receipt, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )
@@ -168,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconTemporaryRecipePending) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.temp_receipt_pending, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.temp_receipt_pending, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )
@@ -193,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconTemporaryRecipeSync) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.temp_receipt_synced, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.temp_receipt_synced, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )
@@ -214,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconMobilePrinter) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.mobile_printer, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.mobile_printer, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )
@@ -239,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(image: AssetImage(Assets.iconSync) , width: Dimens.iconSize, height: Dimens.iconSize, ),
-                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sync, style: TextStyle(fontSize: 16,),),)
+                                Container( margin: EdgeInsets.only(top: 10), child: Text(Strings.sync, style: Theme.of(context).textTheme.headline1 ),),
                               ],
                             ),
                           )

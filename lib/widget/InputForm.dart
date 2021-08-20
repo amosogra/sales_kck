@@ -13,6 +13,7 @@ class InputForm extends StatefulWidget{
   final String? initialValue;
   final bool secure;
   final String? Function(String?) validateFunction;
+  void Function(String?) onChange;
 
   InputForm({Key? key,
     @required this.myHint,
@@ -22,7 +23,8 @@ class InputForm extends StatefulWidget{
     this.secure = false ,
     this.textInputTye = TextInputType.text,
     this.initialValue ,
-    required this.validateFunction
+    required this.validateFunction,
+    required this.onChange
   }) : super(key : key);
 
   @override
@@ -67,15 +69,19 @@ class _InputFormState extends State<InputForm> {
             // This optional block of code can be used to run
             // code when the user saves the form.
           },
+          onChanged: widget.onChange,
           onFieldSubmitted: (String value) {
 
-            FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            if(widget.myFocusNode != widget.nextFocusNode){
+              FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            }else{
+              FocusScope.of(context).requestFocus(FocusNode());
+            }
           },
           validator: widget.validateFunction,
          //  validator: (value) {
          //    return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
          //  },
-
         )
     );
   }

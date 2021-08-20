@@ -10,8 +10,8 @@ class Strings {
   static const String email = "Email";
   static const String username = "Username";
   static const String password = "Password";
-  static const String forgot_password = "Forgot Password";
-  static const String remember_username = "Remember my user name";
+  static const String forgot_password = "Forgot Password?";
+  static const String remember_username = "Remember me";
   static const String confirm = "Confirm";
   static const String choose_company = "Please choose  your default company";
 
@@ -88,4 +88,6 @@ class Strings {
   static const String draft = "Draft";
   static const String item_listing = "Item Listing";
   static const String personal_info = "Personal Info";
+  static const String next = "Next";
+
 }

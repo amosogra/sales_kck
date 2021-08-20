@@ -1,18 +1,25 @@
+import 'package:blinking_text/blinking_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/pickers/radio_picker.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
 import 'package:sales_kck/services/TermService.dart';
+import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/customer/CustomerList.dart';
+import 'package:sales_kck/view/order/partial/CustomerItemInput.dart';
 import 'package:sales_kck/view/order/partial/CustomerItemView.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:sales_kck/widget/InputForm.dart';
+import 'package:sales_kck/widget/LoginButton.dart';
 
 class Customer extends StatefulWidget {
-  const Customer({Key? key}) : super(key: key);
+
+  TabController tabController;
   @override
   _CustomerState createState() => _CustomerState();
+  Customer({Key? key , required this.tabController}) : super(key: key);
+
 }
 
 class _CustomerState extends State<Customer> {
@@ -24,6 +31,16 @@ class _CustomerState extends State<Customer> {
   late String remark2 = '';
   late String remark3 = '';
   late String remark4 = '';
+
+  TextEditingController remark1Controller = TextEditingController();
+  TextEditingController remark2Controller = TextEditingController();
+  TextEditingController remark3Controller = TextEditingController();
+  TextEditingController remark4Controller = TextEditingController();
+  FocusNode remark1FocusNode = FocusNode();
+  FocusNode remark2FocusNode = FocusNode();
+  FocusNode remark3FocusNode = FocusNode();
+  FocusNode remark4FocusNode = FocusNode();
+
   TermModel termModel = new TermModel(
       termId: 0,
       companyCode: '',
@@ -53,7 +70,6 @@ class _CustomerState extends State<Customer> {
       });
     }
   }
-
 
   @override
   void initState() {
@@ -146,7 +162,7 @@ class _CustomerState extends State<Customer> {
 
             Container(
               margin: EdgeInsets.only(top:15),
-              child: Text(Strings.attention, style:  Theme.of(context).textTheme.headline1 ),
+              child: Text(Strings.attention, style:  Theme.of(context).textTheme.headline2 ),
             ),
 
             Text(Strings.phone_number , style:  Theme.of(context).textTheme.headline2 ),
@@ -163,7 +179,7 @@ class _CustomerState extends State<Customer> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(Strings.terms , style:  Theme.of(context).textTheme.headline1 ),
+                    child: Text(Strings.terms , style:  Theme.of(context).textTheme.headline2 ),
                   ),
                   InkWell(
                     onTap: (){
@@ -176,64 +192,48 @@ class _CustomerState extends State<Customer> {
                         onChanged: (value) => setState(() => termModel = value),
                       );
                     },
-                    child: Text(termModel.displayTerm.isEmpty? 'Select Term': termModel.displayTerm)
+                    child: termModel.termId == 0 && customerModel.custId != 0 ?
+                    BlinkText(
+                      termModel.displayTerm.isEmpty? 'Select Term': termModel.displayTerm,
+                      beginColor: MyColors.textBorderColor,
+                      endColor: MyColors.primaryColor,
+                      times: 10,
+                      duration: Duration(seconds: 1),
+                      style: TextStyle(
+                          color: termModel.displayTerm.isEmpty ? MyColors.textGreyColor: MyColors.textColor
+                      ),
+                    ):
+                    Text(
+                      termModel.displayTerm.isEmpty? 'Select Term': termModel.displayTerm,
+                      style: TextStyle(color: termModel.displayTerm.isEmpty ? MyColors.textGreyColor: MyColors.textColor),
+                    )
                   )
-
                 ],
               ),
             ),
 
-            Container(
-              margin: EdgeInsets.only(top: 10) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text( remark1 ,  style: Theme.of(context).textTheme.bodyText2 ,), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-            Divider(color: MyColors.greyColor,),
+            CustomerItemInput(controller: remark1Controller, focusNode: remark1FocusNode, nextFocusNode: remark2FocusNode, hint: "Remark 1", onChange: (value){remark1 = value!;},),
+            CustomerItemInput(controller: remark2Controller, focusNode: remark2FocusNode, nextFocusNode: remark3FocusNode, hint: "Remark 2", onChange: (value){}),
+            CustomerItemInput(controller: remark3Controller, focusNode: remark3FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 3", onChange: (value){}),
+            CustomerItemInput(controller: remark4Controller, focusNode: remark4FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 4", onChange: (value){}),
 
-            Container(
-              margin: EdgeInsets.only(top: 5) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text(  remark2 , style: Theme.of(context).textTheme.bodyText2 ,), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-            Divider(color: MyColors.greyColor,),
-
-
-            Container(
-              margin: EdgeInsets.only(top: 5) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text( remark3 , style: Theme.of(context).textTheme.bodyText2 ,), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-
-            Divider(color: MyColors.greyColor,),
-            Container(
-              margin: EdgeInsets.only(top: 5) ,
-              child: Row(
-                children: [
-                  Expanded(child:   Text( remark4 , style: Theme.of(context).textTheme.bodyText2 ,), ) ,
-                  Icon(Icons.search)
-                ],
-              ),
-            ),
-            Divider(color: MyColors.greyColor,),
-
-            //
             // showMaterialRadioPicker<TermModel>(
             //     context: context,
             //     items: terms
             // ),
 
+            remark1.isNotEmpty && customerModel.custId != 0 && termModel.termId != 0 ?
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              child: LoginButton(
+                title: Strings.next,
+                onPressed: (){
+                  widget.tabController.animateTo(2);
+                },
+              ),
+            )
+                :
+            Container()
           ],
         ),
       )
