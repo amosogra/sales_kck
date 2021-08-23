@@ -43,12 +43,20 @@ Future<List<ItemModel>> saveOrder(BuildContext context
       'attention': customerModel.attention,
       'displayTerm': customerModel.defDisplayTerm,
       'inclusiveTax': customerModel.taxType,
-      'subtotalAmt':customerModel.
+      'remark1': remark1,
+      'remark2': remark2,
+      'remark3': remark3,
+      'remark4': remark4,
+      //'items':items.toString()
     };
+
+    debugPrint(queryParameters.toString());
+
     var response = await Dio().post(Api.baseUrl + "/api/v1/createSalesOrder", queryParameters: queryParameters );
 
     List<ItemModel> items = [];
     final jsonRes = json.decode(response.toString());
+    debugPrint(jsonRes);
     if(jsonRes['status']){
       for(var customerJson in jsonRes["items"]) {
         ItemModel customer = ItemModel.fromMap(customerJson);

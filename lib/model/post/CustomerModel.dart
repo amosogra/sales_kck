@@ -60,7 +60,7 @@ class CustomerModel {
   );
 
   Map<String, dynamic> toMap() => {
-    "usercustIdId": custId,
+    "custId": custId,
     "companyCode": companyCode,
     "accNo": accNo,
     "name" : name,

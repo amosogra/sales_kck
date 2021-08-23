@@ -5,6 +5,7 @@ import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
+import 'package:sales_kck/services/OrderService.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
 
 class Summary extends StatefulWidget {
@@ -94,6 +95,16 @@ class _SummaryState extends State<Summary> {
                 child: LoginButton(
                   title: Strings.save,
                   onPressed: (){
+                    saveOrder(context,
+                        widget.customerModel,
+                        widget.termModel,
+                        widget.remark1,
+                        widget.remark2,
+                        widget.remark3,
+                        widget.remark4,
+                        widget.itemModels
+                    );
+
                   },
                 ),
               )
