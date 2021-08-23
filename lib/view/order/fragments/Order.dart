@@ -23,8 +23,11 @@ class _OrderState extends State<Order> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(image: AssetImage(Assets.iconEdit) , width: 70,),
-            Text(Strings.not_add_order, style: Theme.of(context).textTheme.bodyText2,),
+            Image(image: AssetImage(Assets.iconEdit) , width: 70, ),
+            Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(Strings.not_add_order, style: Theme.of(context).textTheme.headline2,),
+            )
           ],
         )
       ),

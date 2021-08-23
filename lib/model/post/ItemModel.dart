@@ -36,6 +36,17 @@ class ItemModel {
     return uoms;
   }
 
+
+  static List<Map<String, dynamic>> getToMap(List<UomModel> uoms){
+    List<Map<String, dynamic>> uoms_str = [];
+    for(var item in uoms){
+      var res  = item.toMap();
+      uoms_str.add(res);
+    }
+    return uoms_str;
+  }
+
+
   factory ItemModel.fromMap(Map<String, dynamic> json) => ItemModel(
     itemId: json["itemId"],
     companyCode: json["companyCode"],
@@ -57,7 +68,7 @@ class ItemModel {
     "isActive": isActive,
     "rev" : rev,
     "deleted" : deleted,
-    "uom" : uom,
+    "uom" : getToMap(uom),
   };
 
 

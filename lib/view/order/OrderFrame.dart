@@ -28,13 +28,13 @@ class _OrderFrameState extends State<OrderFrame> with SingleTickerProviderStateM
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = new TabController(length: myTabs.length, vsync: this);
+    //_tabController = new TabController(length: myTabs.length, vsync: this);
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    _tabController.dispose();
+    //_tabController.dispose();
     super.dispose();
   }
 
@@ -48,14 +48,18 @@ class _OrderFrameState extends State<OrderFrame> with SingleTickerProviderStateM
             backgroundColor: MyColors.primaryColor,
             bottom:   TabBar(
               indicatorColor: MyColors.whiteColor,
-              tabs: this.myTabs,
-              controller: _tabController,
+              tabs: [
+                Tab( text: Strings.customer,), // icon: Icon(Icons.directions_car) ,
+                Tab( text: Strings.order ),
+                Tab( text: Strings.summary ),
+              ],
+              //controller: _tabController,
             ),
             title: const Text(Strings.sales_order),
           ),
           body:  TabBarView(
             children: [
-              Customer(tabController: _tabController,),
+              Customer(),
               Order(),
               Summary()
             ],

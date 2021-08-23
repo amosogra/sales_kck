@@ -23,11 +23,17 @@ class _CustomerItemInputState extends State<CustomerItemInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top:5 , bottom: 0),
+      padding: EdgeInsets.only(left: 10, bottom: 5, top: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        border: Border.all(
+          color:MyColors.textBorderColor
+        )
+      ),
       child: Column(
         children: [
-
           Container(
-            margin: EdgeInsets.only(top: 5) ,
             child: Row(
               children: [
                 Expanded(
@@ -43,11 +49,11 @@ class _CustomerItemInputState extends State<CustomerItemInput> {
                     secure: false,
                   )
                 ) ,
-                Icon(Icons.search, color: MyColors.greyColor,)
+                Icon(Icons.description, color: MyColors.greyColor,)
               ],
             ),
           ),
-          Divider(color: MyColors.greyColor,),
+          //Divider(color: MyColors.greyColor,),
 
         ],
       ),

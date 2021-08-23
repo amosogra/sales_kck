@@ -7,6 +7,7 @@ import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/view/main/partial/SlideMenu.dart';
 import 'package:sales_kck/view/mobile_printer/Printer.dart';
 import 'package:sales_kck/view/order/OrderFrame.dart';
+import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'package:sales_kck/view/price_history/PriceHistory.dart';
 import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
 import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                     child:InkWell(
                       onTap: (){
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => OrderFrame())
+                            MaterialPageRoute(builder: (context) => Customer())
                         );
                       },
                       child: Card(

@@ -92,6 +92,9 @@ class _ItemListState extends State<ItemList> {
 
     return InkResponse(
       onTap: () async{
+        debugPrint(item.toMap().toString());
+        debugPrint(item.uom.toList().toString());
+        Navigator.pop(context, item.toMap());
       },
       child: Container(
         padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),
