@@ -52,7 +52,7 @@ class _SyncState extends State<Sync> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text("Full Sync"),
+                    child: Text("Full Sync" , style: Theme.of(context).textTheme.headline2,),
                   ),
 
                   Switch(
@@ -82,12 +82,11 @@ class _SyncState extends State<Sync> {
     );
   }
 
+
   Widget _buildItem(int index){
 
     return InkResponse(
-
       onTap: (){
-
       },
 
       child: Card(
@@ -99,9 +98,9 @@ class _SyncState extends State<Sync> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(this.models[index].title),
-                    Text("Total Customer: " + this.models[index].total.toString()),
-                    Text("Last Synced: " + this.models[index].date),
+                    Text(this.models[index].title , style: TextStyle(color: MyColors.textColor)),
+                    Text("Total Customer: " + this.models[index].total.toString() , style: TextStyle(color: MyColors.textColor)),
+                    Text("Last Synced: " + this.models[index].date , style: TextStyle(color: MyColors.textGreyColor),),
                   ],
                 ),
               ),

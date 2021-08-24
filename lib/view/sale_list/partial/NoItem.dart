@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
+import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
 Widget showNoItem(BuildContext context){
 
@@ -10,7 +11,7 @@ Widget showNoItem(BuildContext context){
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image(image: AssetImage(Assets.iconEdit) , width: 70,),
-        Text(Strings.no_pending_order, style: Theme.of(context).textTheme.bodyText1,)
+        Text(Strings.no_pending_order, style: TextStyle(color: MyColors.textBorderColor),)
       ],
     ),
   );

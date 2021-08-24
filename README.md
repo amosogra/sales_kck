@@ -16,8 +16,8 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 
-
 # Generate  App icons automatically ( run below commands one by one.)
     flutter pub get
     flutter pub run flutter_launcher_icons:main
+
 

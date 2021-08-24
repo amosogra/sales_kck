@@ -71,7 +71,7 @@ class _CustomerListState extends State<CustomerList> {
               alignment: Alignment.centerLeft,
               child: Text(
                 item.name + "  -  " + item.accNo,
-                style: TextStyle(fontSize: 14),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
 

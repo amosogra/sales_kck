@@ -48,7 +48,7 @@ class _OrderState extends State<Order> {
                   Image(image: AssetImage(Assets.iconEdit) , width: 70, ),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text(Strings.not_add_order, style: Theme.of(context).textTheme.headline2,),
+                    child: Text(Strings.not_add_order, style: TextStyle(color: MyColors.textBorderColor)),
                   )
                 ],
               ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sales_kck/constants/colors.dart';
-
 
 class InputForm extends StatefulWidget{
 
@@ -24,7 +22,7 @@ class InputForm extends StatefulWidget{
     this.textInputTye = TextInputType.text,
     this.initialValue ,
     required this.validateFunction,
-    required this.onChange
+    required this.onChange,
   }) : super(key : key);
 
   @override
@@ -71,7 +69,6 @@ class _InputFormState extends State<InputForm> {
           },
           onChanged: widget.onChange,
           onFieldSubmitted: (String value) {
-
             if(widget.myFocusNode != widget.nextFocusNode){
               FocusScope.of(context).requestFocus(widget.nextFocusNode);
             }else{

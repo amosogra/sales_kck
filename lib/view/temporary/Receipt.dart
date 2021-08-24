@@ -84,17 +84,17 @@ class _ReceiptState extends State<Receipt> {
               Expanded(
                   child:TempInputForm(Strings.receive_from , Strings.company_name)
               ),
-              Icon(Icons.search),
+              Icon(Icons.search , color: MyColors.textBorderColor ,),
             ],
           ),
 
           Row(
             children: [
               Expanded(
-                  child:TempInputForm(Strings.received_date , "")
+                  child:TempInputForm(Strings.received_date , "Received Date")
               ),
               Expanded(
-                  child:TempInputForm(Strings.payment_date , "")
+                  child:TempInputForm(Strings.payment_date , "Payment Date")
               )
             ],
           ),
@@ -102,7 +102,7 @@ class _ReceiptState extends State<Receipt> {
           Row(
             children: [
               Expanded(
-                  child:TempInputForm(Strings.payment_method , "")
+                  child:TempInputForm(Strings.payment_method , "Payment method")
               ),
               Expanded(
                   child:TempInputForm(Strings.cheque_no , Strings.cheque_no)
@@ -121,7 +121,6 @@ class _ReceiptState extends State<Receipt> {
             ],
           ),
 
-
         ],
       ),
     );
@@ -134,24 +133,28 @@ class _ReceiptState extends State<Receipt> {
       child: Row(
         children: [
           Expanded(
+            flex: 2,
             child: Container(
               alignment: Alignment.center,
-              child: Text(Strings.date , style: TextStyle(color: MyColors.whiteColor, fontSize: 14),),
+              child: Text(Strings.date , style: TextStyle(color: MyColors.whiteColor, fontSize: 13),),
             )
           ),
           Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(Strings.invoice_number , style: TextStyle(color: MyColors.whiteColor, fontSize: 14)),
-            )
+              flex: 3,
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(Strings.invoice_number , style: TextStyle(color: MyColors.whiteColor, fontSize: 13)),
+              )
           ),
 
           Expanded(
+              flex: 3,
             child: Container(
               alignment: Alignment.center,
-              child: Text(Strings.outstanding_amt , style: TextStyle(color: MyColors.whiteColor, fontSize: 14)),
+              child: Text(Strings.outstanding_amt , style: TextStyle(color: MyColors.whiteColor, fontSize: 13)),
             )
           )
+
         ],
       ),
     );

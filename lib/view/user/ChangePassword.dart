@@ -25,6 +25,10 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  String oldPassword = '';
+  String newPassword = '';
+  String confirmPassword = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +63,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validateFunction: (value){
                                   return Validations.validatePassword(value!);
                                 },
-                                onChange: (value){},
+                                onChange: (value){
+                                  setState(() {
+                                    oldPassword = value!;
+                                  });
+                                },
                                 controller: oldPasswordController,
                                 myHint: Strings.enter_old_password,
                                 myFocusNode: focusOldPassword,
@@ -73,8 +81,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                       ],
                     )
                 ),
-
-
 
                 Container(
                     decoration: BoxDecoration(
@@ -96,7 +102,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validateFunction: (value){
                                   return Validations.validatePassword(value!);
                                 },
-                                onChange: (value){},
+                                onChange: (value){
+                                  newPassword = value!;
+                                },
                                 controller: newPasswordController,
                                 myHint: Strings.enter_new_password,
                                 myFocusNode: focusNewPassword,
@@ -110,9 +118,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                       ],
                     )
                 ),
-
-
-
 
                 Container(
                     decoration: BoxDecoration(
@@ -134,7 +139,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validateFunction: (value){
                                   return Validations.validatePassword(value!);
                                 },
-                                onChange: (value){},
+                                onChange: (value){
+                                  confirmPassword = value!;
+                                },
                                 controller: confirmPasswordController,
                                 myHint: Strings.enter_confirm_password,
                                 myFocusNode: focusConfirmPassword,
@@ -148,17 +155,23 @@ class _ChangePasswordState extends State<ChangePassword> {
                     )
                 ),
 
-
                 Container(
                   margin: EdgeInsets.only(top: 25),
                   child: LoginButton(
                     title: Strings.confirm,
+                    isActive: oldPassword.isEmpty &&  newPassword.isEmpty && confirmPassword.isEmpty ? false : true
+                    ,
                     onPressed: (){
-                      Navigator.pop(context);
+                      if( oldPassword.isEmpty &&  newPassword.isEmpty && confirmPassword.isEmpty ){
+
+                      }else{
+                        Navigator.pop(context);
+                      }
+
                     },
                   ),
                 )
-                
+
               ],
             )
         ),

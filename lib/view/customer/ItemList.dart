@@ -53,7 +53,8 @@ class _ItemListState extends State<ItemList> {
                   Expanded(
                       child: Column(
                         children: [
-                          InputForm(myHint: "Search Item", validateFunction: (value){
+                          InputForm(
+                            myHint: "Search Item", validateFunction: (value){
                             return Validations.validateEmpty(value!);
                           },
                             onChange: (value){},
@@ -62,7 +63,7 @@ class _ItemListState extends State<ItemList> {
                         ],
                       )
                   ),
-                  searchKey == '' ? Icon(Icons.search) : Icon(Icons.close)
+                  searchKey == '' ? Icon(Icons.search, color: MyColors.textGreyColor,) : Icon(Icons.close)
                 ],
               ),
             ),

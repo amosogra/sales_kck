@@ -36,7 +36,7 @@ class _SummaryState extends State<Summary> {
               Row(
                 children: [
                   Expanded(child: Text("Document", style: Theme.of(context).textTheme.bodyText2 ,)),
-                  Text("sale order" , style: Theme.of(context).textTheme.bodyText2 )
+                  Text("Sale Order" , style: Theme.of(context).textTheme.bodyText1 )
                 ],
               ),
 
@@ -45,7 +45,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Document", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("sale order" , style: Theme.of(context).textTheme.bodyText2 )
+                    Text("Document" , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -55,7 +55,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Sub Total(ex)", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("0.00" , style: Theme.of(context).textTheme.bodyText2 )
+                    Text("100.00" , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -65,7 +65,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("GST", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("0.00" , style: Theme.of(context).textTheme.bodyText2 )
+                    Text("10.00" , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -75,7 +75,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Total(inc)", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("0.00" , style: Theme.of(context).textTheme.bodyText2 )
+                    Text("110.00" , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -85,7 +85,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Final Total", style: Theme.of(context).textTheme.headline2 ,)),
-                    Text("0.00" , style: Theme.of(context).textTheme.headline2 )
+                    Text("110.00" , style: Theme.of(context).textTheme.headline2 )
                   ],
                 ),
               ),
@@ -95,6 +95,8 @@ class _SummaryState extends State<Summary> {
                 child: LoginButton(
                   title: Strings.save,
                   onPressed: (){
+
+
                     saveOrder(context,
                         widget.customerModel,
                         widget.termModel,
@@ -105,12 +107,19 @@ class _SummaryState extends State<Summary> {
                         widget.itemModels
                     );
 
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                 ),
               )
+
             ],
           )
       )
     );
+
   }
+
 }

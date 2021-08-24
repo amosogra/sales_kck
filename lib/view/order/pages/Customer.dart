@@ -223,16 +223,17 @@ class _CustomerState extends State<Customer> {
                         remark1 = value!;
                       });
                     },),
+
                   CustomerItemInput(controller: remark2Controller, focusNode: remark2FocusNode, nextFocusNode: remark3FocusNode, hint: "Remark 2", onChange: (value){}),
                   CustomerItemInput(controller: remark3Controller, focusNode: remark3FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 3", onChange: (value){}),
                   CustomerItemInput(controller: remark4Controller, focusNode: remark4FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 4", onChange: (value){}),
-
 
                   if (remark1.isNotEmpty && customerModel.custId != 0 && termModel.termId != 0) Container(
                     margin: EdgeInsets.only(top: 30),
                     child: LoginButton(
                       title: Strings.next,
                       onPressed: (){
+
                         //widget.tabController.animateTo(1);
                         //widget.tabController.animateTo((widget.tabController.index + 1) % 2);
                         //DefaultTabController.of(context)!.animateTo(1);
@@ -257,6 +258,6 @@ class _CustomerState extends State<Customer> {
         ),
       ),
     );
-
+    
   }
 }

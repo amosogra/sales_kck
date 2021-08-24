@@ -26,7 +26,7 @@ class _LoginButtonState extends State<LoginButton> {
           child: Text(widget.title, style: TextStyle(fontSize: 16),),
           onPressed: widget.onPressed,
           style: ElevatedButton.styleFrom(
-            primary: widget.isActive ? MyColors.primaryColor :  MyColors.primaryColor ,
+            primary: widget.isActive ? MyColors.primaryColor :  MyColors.textBorderColor ,
             //onPrimary: MedstreamColor.PRIMARY_COLOR,
             textStyle: TextStyle(
                 fontFamily: 'Verdana'

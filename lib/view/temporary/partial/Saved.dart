@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
+import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
 
@@ -23,12 +24,13 @@ class _SavedState extends State<Saved> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image(image: AssetImage(Assets.iconEdit) , width: 70,),
-            Text(Strings.not_add_order, style: Theme.of(context).textTheme.bodyText2,),
+            Text(Strings.not_add_order, style: TextStyle(color: MyColors.textBorderColor),),
           ],
         )
       ),
 
       bottomNavigationBar: Container(
+        margin: EdgeInsets.only(left: 30, right: 30),
         child: LoginButton(
           title: Strings.add_item,
           onPressed: (){

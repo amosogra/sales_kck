@@ -90,4 +90,6 @@ class Strings {
   static const String personal_info = "Personal Info";
   static const String next = "Next";
 
+  static const String item = "Item";
+
 }

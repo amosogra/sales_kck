@@ -29,12 +29,13 @@ class _ReceiptSyncState extends State<ReceiptSync> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(image: AssetImage(Assets.iconEdit) , width: 70,),
-              Text(Strings.not_add_order, style: Theme.of(context).textTheme.bodyText2,),
+              Text(Strings.not_add_order, style:  TextStyle(color: MyColors.textBorderColor ) ),
             ],
           )
       ),
 
       bottomNavigationBar: Container(
+        margin: EdgeInsets.only(left: 30, right: 30),
         child: LoginButton(
           title: Strings.add_item,
           onPressed: (){

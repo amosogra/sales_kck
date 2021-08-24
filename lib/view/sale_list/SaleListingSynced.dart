@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/sale_list/partial/NoItem.dart';
+import 'package:sales_kck/widget/InputForm.dart';
 
 class SaleListingSynced extends StatefulWidget {
 
@@ -27,23 +29,37 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
             children: [
               Container(
                 margin: EdgeInsets.all(20),
-                child: Row(
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text("Search Item" , style: Theme.of(context).textTheme.bodyText1,),
-                          Divider(color: MyColors.greyColor,)
-                        ],
-                      ),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              InputForm(
+                                myHint: "Search Item", validateFunction: (value){
+                                return Validations.validateEmpty(value!);
+                              },
+                                onChange: (value){},
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.search, color: MyColors.textGreyColor,),
+                      ],
                     ),
-                    Icon(Icons.search),
-                    Icon(Icons.close),
+                    Divider(color: MyColors.greyColor,)
                   ],
-                ),
+                )
               ),
 
-              showNoItem(context),
+              Container(
+                margin: EdgeInsets.only(top: 100),
+                child: showNoItem(context),
+              )
 
             ],
           )

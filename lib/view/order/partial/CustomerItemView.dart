@@ -21,7 +21,7 @@ class CustomerItemView extends StatefulWidget {
 class _CustomerItemViewState extends State<CustomerItemView> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return InkResponse(
       onTap: widget.onTap,
       child: Container(
         child: Column(
