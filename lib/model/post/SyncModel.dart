@@ -13,7 +13,6 @@ class SyncModel {
       date: json["date"]
   );
 
-
   Map<String, dynamic> toMap() => {
     "title": title,
     "total": total,

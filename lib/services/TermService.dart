@@ -6,7 +6,6 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:dio/dio.dart';
-import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
 
 Future<List<TermModel>> getTerms(BuildContext context, String companyCode, ) async {

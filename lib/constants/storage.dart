@@ -1,12 +1,9 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Storage {
 
   Storage._();
-
   static SharedPreferences? localStorage;
 
   static Future init() async {
@@ -51,19 +48,6 @@ class Storage {
     }
     return "";
   }
-
-
-  static saveSession(value) async {
-    localStorage = await SharedPreferences.getInstance();
-    localStorage!.setString('session', value);
-  }
-
-  static getSession() async {
-    localStorage = await SharedPreferences.getInstance();
-    String? stringValue = localStorage!.getString('session');
-    return stringValue;
-  }
-
 
   static setRemember(value) async {
     try{

@@ -1,10 +1,7 @@
-
-
-
-
 import 'package:flutter/material.dart';
 
 class MyColors {
+
   MyColors._(); // this basically make it so you can't instantiate this class.
 
   //static const primaryColor = Color(0xFF008BA2);
@@ -40,6 +37,5 @@ class MyColors {
       900: const Color(0xFFFF6700),//100%
     },
   );
-
 
 }

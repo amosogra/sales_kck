@@ -1,6 +1,5 @@
 library globals;
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,18 +42,6 @@ showAlertDialog(BuildContext context) {
     },
   );
 }
-
-dynamic setPatientName(String name) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  prefs.setString('patient_name', name);
-}
-
-dynamic getPatientName() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return  prefs.getString('patient_name');
-}
-
 
 showToastMessage(BuildContext context, String message, String btnTitle){
   Widget continueButton = FlatButton(

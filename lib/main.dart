@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/font_family.dart';
 import 'package:sales_kck/view/user/SplashPage.dart';
 
 void main() {
@@ -13,14 +14,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'KCK Sales',
       theme: ThemeData(
 
         primarySwatch: MyColors.materialPrimaryColor,
-        fontFamily: "Verdana",
+        fontFamily: FontFamily.verdana,
 
         textTheme: const TextTheme(
-          headline1: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor, fontFamily: 'Verdana'),
+          headline1: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           headline2: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: MyColors.textGreyColor),
           headline3: TextStyle( fontSize: 12, fontWeight: FontWeight.bold, color: MyColors.primaryColor),
           //bodyText1: TextStyle( fontSize: 14, color: MyColors.textColor, fontFamily: 'Ionicons' ),

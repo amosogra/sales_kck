@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/font_family.dart';
 
 class AppBarTwo extends StatefulWidget with PreferredSizeWidget {
 
@@ -63,7 +64,7 @@ class _AppBarTwoState extends State<AppBarTwo> {
                 child: Container(
 
                   alignment: Alignment.center,
-                  child:Text(widget.title, style: TextStyle(color: MyColors.primaryColor, fontSize: Device.get().isTablet ? 20 : 18 , fontFamily: 'Verdana'),),
+                  child:Text(widget.title, style: TextStyle(color: MyColors.primaryColor, fontSize: Device.get().isTablet ? 20 : 18 , fontFamily: FontFamily.verdana),),
                 )
               ),
 

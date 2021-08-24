@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/font_family.dart';
 
 class LoginButton extends StatefulWidget {
 
@@ -29,7 +30,7 @@ class _LoginButtonState extends State<LoginButton> {
             primary: widget.isActive ? MyColors.primaryColor :  MyColors.textBorderColor ,
             //onPrimary: MedstreamColor.PRIMARY_COLOR,
             textStyle: TextStyle(
-                fontFamily: 'Verdana'
+                fontFamily: FontFamily.verdana
             )
           ),
         //backgroundColor: MaterialStateProperty.all<Color>(MedstreamColor.PRIMARY_COLOR),

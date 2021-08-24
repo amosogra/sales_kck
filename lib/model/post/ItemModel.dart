@@ -27,7 +27,7 @@ class ItemModel {
     required this.uom,
   });
 
-  static List<UomModel> parseData(uomJson){
+  static List<UomModel> jsonToArray(uomJson){
     List<UomModel> uoms = [];
     for(var item in uomJson){
       UomModel uomModel = UomModel.fromMap(item);
@@ -37,7 +37,7 @@ class ItemModel {
   }
 
 
-  static List<Map<String, dynamic>> getToMap(List<UomModel> uoms){
+  static List<Map<String, dynamic>> arrayToJson(List<UomModel> uoms){
     List<Map<String, dynamic>> uoms_str = [];
     for(var item in uoms){
       var res  = item.toMap();
@@ -56,7 +56,7 @@ class ItemModel {
     isActive: json["isActive"],
     rev: json["rev"],
     deleted: json["deleted"],
-    uom: parseData(json["uom"]),
+    uom: jsonToArray(json["uom"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -68,8 +68,7 @@ class ItemModel {
     "isActive": isActive,
     "rev" : rev,
     "deleted" : deleted,
-    "uom" : getToMap(uom),
+    "uom" : arrayToJson(uom),
   };
-
 
 }

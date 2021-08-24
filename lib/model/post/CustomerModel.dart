@@ -1,6 +1,3 @@
-
-
-
 class CustomerModel {
 
   int custId;

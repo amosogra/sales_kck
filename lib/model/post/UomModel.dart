@@ -1,7 +1,3 @@
-
-
-
-
 class UomModel {
 
   int uomId;

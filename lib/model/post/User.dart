@@ -1,6 +1,4 @@
 
-
-
 class User {
 
   int userId;

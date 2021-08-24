@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/font_family.dart';
 import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:sales_kck/constants/strings.dart';
@@ -122,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               },
                             ),
-                            Text( Strings.remember_username , style:TextStyle(fontFamily: 'Verdana')),
+                            Text( Strings.remember_username , style:TextStyle(fontFamily: FontFamily.verdana)),
                           ],
                         ),
                       ),
@@ -137,7 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                         child: Container(
                           margin: EdgeInsets.only(top:5),
                           alignment: Alignment.centerRight,
-                          child: Text( Strings.forgot_password , style: TextStyle(fontSize: 14, fontFamily: 'Verdana', color: MyColors.primaryColor ),),
+                          child: Text( Strings.forgot_password ,
+                            style: TextStyle(fontSize: 14, fontFamily: FontFamily.verdana, color: MyColors.primaryColor ),
+                          ),
                         ),
                       ),
 

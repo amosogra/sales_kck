@@ -1,8 +1,5 @@
 
-
-
 class Dimens {
-
   Dimens._();
   static const double page_padding = 12;
   static const double horizontal_padding = 12.0;

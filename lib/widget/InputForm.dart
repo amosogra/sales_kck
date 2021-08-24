@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sales_kck/constants/font_family.dart';
 
 class InputForm extends StatefulWidget{
 
@@ -60,7 +61,7 @@ class _InputFormState extends State<InputForm> {
           controller: widget.controller,
           keyboardType: widget.textInputTye,
           style: new TextStyle(
-            fontFamily: 'Verdana',
+            fontFamily: FontFamily.verdana,
           ),
           decoration: inputDecoration,
           onSaved: (value) {

@@ -30,15 +30,8 @@ Future<List<ItemModel>> getItems(BuildContext context) async {
     List<ItemModel> items = [];
     final jsonRes = json.decode(response.toString());
     if(jsonRes['status']){
-
-
       debugPrint("called");
       for(var customerJson in jsonRes["items"]) {
-        // List<UomModel> uoms = [];
-        // for(var item in customerJson['uom']){
-        //   UomModel uomModel = UomModel.fromMap(item);
-        //   uoms.add(uomModel);
-        // }
         ItemModel customer = ItemModel.fromMap(customerJson);
         items.add(customer);
       }
