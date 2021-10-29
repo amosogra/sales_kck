@@ -16,6 +16,8 @@ class _CustomerListState extends State<CustomerList> {
 
   void loadCustomers() async{
     List<CustomerModel> response = await getCustomers(context);
+    debugPrint("length");
+    debugPrint(response.length.toString());
     if(response.length > 0){
       debugPrint(customers.length.toString());
       setState(() {

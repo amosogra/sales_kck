@@ -53,7 +53,8 @@ class CustomerModel {
       phone2: json["phone2"],
       isActive: json["isActive" ],
       rev: json["rev"],
-      deleted: json["deleted"], companyCode: json['companyCode'],
+      deleted: json["deleted"],
+      companyCode: json['companyCode'],
   );
 
   Map<String, dynamic> toMap() => {

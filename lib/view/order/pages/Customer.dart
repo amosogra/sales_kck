@@ -34,6 +34,7 @@ class _CustomerState extends State<Customer> {
   TextEditingController remark2Controller = TextEditingController();
   TextEditingController remark3Controller = TextEditingController();
   TextEditingController remark4Controller = TextEditingController();
+
   FocusNode remark1FocusNode = FocusNode();
   FocusNode remark2FocusNode = FocusNode();
   FocusNode remark3FocusNode = FocusNode();
@@ -50,7 +51,6 @@ class _CustomerState extends State<Customer> {
   goToCustomerLists() async{
     var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList() ));
     if(result != null){
-
       setState(() {
         customerModel = CustomerModel.fromMap(result);
         this.loadTerms(customerModel.companyCode);

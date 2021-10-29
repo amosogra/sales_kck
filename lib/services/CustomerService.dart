@@ -30,8 +30,7 @@ Future<List<CustomerModel>> getCustomers(BuildContext context) async {
     debugPrint(response.toString());
 
     final jsonRes = json.decode(response.toString());
-    if(jsonRes['status']){
-
+    if(jsonRes['result']){
 
       debugPrint("called");
       for(var customerJson in jsonRes["customers"]) {

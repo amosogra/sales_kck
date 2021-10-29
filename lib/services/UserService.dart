@@ -51,13 +51,14 @@ Future<bool> forgotPassword(BuildContext context,  String username) async {
     await pr.show();
     Map<String, dynamic>? queryParameters = { 'username': username };
     var response = await Dio().post(Api.baseUrl + "/api/v1/reset", queryParameters: queryParameters );
-    if(jsonDecode(response.toString())['status']){
+    debugPrint(response.toString());
+    if(jsonDecode(response.toString())['result']){
       await pr.hide();
-      showToastMessage(context, jsonDecode(response.toString())['message'], "Ok");
+      showToastMessage(context, "Check your email address used in this account.", "Ok");
       return true;
     }else{
       await pr.hide();
-      showToastMessage(context, jsonDecode(response.toString())['message'], "Ok");
+      showToastMessage(context, jsonDecode(response.toString())['error'], "Ok");
       return false;
     }
   } catch (e) {

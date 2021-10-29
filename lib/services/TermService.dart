@@ -27,7 +27,7 @@ Future<List<TermModel>> getTerms(BuildContext context, String companyCode, ) asy
     debugPrint(response.toString());
     List<TermModel> items = [];
     final jsonRes = json.decode(response.toString());
-    if(jsonRes['status']){
+    if(jsonRes['result']){
       for(var termsJson in jsonRes["terms"]) {
         TermModel termModel = TermModel.fromMap(termsJson);
         items.add(termModel);

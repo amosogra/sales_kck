@@ -1,11 +1,13 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
 import 'package:sales_kck/services/OrderService.dart';
+import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/widget/LoginButton.dart';
 
 class Summary extends StatefulWidget {
@@ -23,6 +25,15 @@ class Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<Summary> {
+
+  String getTotalPrice() {
+    double total = 0;
+    for(var i = 0;i < widget.itemModels.length; i++){
+      total += double.parse(widget.itemModels[i].uom[0].price);
+    }
+    return total.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +66,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Sub Total(ex)", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("100.00" , style: Theme.of(context).textTheme.bodyText1 )
+                    Text(getTotalPrice() , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -65,7 +76,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("GST", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("10.00" , style: Theme.of(context).textTheme.bodyText1 )
+                    Text(getTotalPrice() , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -75,7 +86,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Total(inc)", style: Theme.of(context).textTheme.bodyText2 ,)),
-                    Text("110.00" , style: Theme.of(context).textTheme.bodyText1 )
+                    Text(getTotalPrice() , style: Theme.of(context).textTheme.bodyText1 )
                   ],
                 ),
               ),
@@ -85,7 +96,7 @@ class _SummaryState extends State<Summary> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Final Total", style: Theme.of(context).textTheme.headline2 ,)),
-                    Text("110.00" , style: Theme.of(context).textTheme.headline2 )
+                    Text(getTotalPrice() , style: Theme.of(context).textTheme.headline2 )
                   ],
                 ),
               ),
@@ -94,10 +105,9 @@ class _SummaryState extends State<Summary> {
                 margin: EdgeInsets.only(top: 20),
                 child: LoginButton(
                   title: Strings.save,
-                  onPressed: (){
+                  onPressed: () async{
 
-
-                    saveOrder(context,
+                    bool flag = await saveOrder(context,
                         widget.customerModel,
                         widget.termModel,
                         widget.remark1,
@@ -107,10 +117,27 @@ class _SummaryState extends State<Summary> {
                         widget.itemModels
                     );
 
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+
+                    if(flag){
+
+                      showDialog(context: context,
+                          builder: (BuildContext context){
+                            return ConfirmDialog(
+                                "Success",
+                                    (){
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                }
+                            );
+                          }
+                      );
+
+                    }else{
+                      showToastMessage(context, "Failed", "Ok");
+                    }
+
                   },
                 ),
               )

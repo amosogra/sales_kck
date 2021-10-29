@@ -29,7 +29,7 @@ Future<List<ItemModel>> getItems(BuildContext context) async {
 
     List<ItemModel> items = [];
     final jsonRes = json.decode(response.toString());
-    if(jsonRes['status']){
+    if(jsonRes['result']){
       debugPrint("called");
       for(var customerJson in jsonRes["items"]) {
         ItemModel customer = ItemModel.fromMap(customerJson);
