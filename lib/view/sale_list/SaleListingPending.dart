@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
@@ -19,7 +20,11 @@ class _SaleListingPendingState extends State<SaleListingPending> {
 
   List<SaleOrderModel> items = <SaleOrderModel>[];
   void loadItems() async{
-    List<SaleOrderModel> response = await getSaleOrders(context);
+
+    //List<SaleOrderModel> response = await getSaleOrders(context);
+    OrderDBHelper orderDBHelper = new OrderDBHelper();
+    List<SaleOrderModel> response = orderDBHelper.retrieveOrders() as List<SaleOrderModel>;
+
     if(response.length > 0){
       setState(() {
         items = response;

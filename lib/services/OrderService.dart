@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
+import 'package:sales_kck/constants/DBHelper/ItemDBHelper.dart';
+import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:dio/dio.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
@@ -18,6 +20,7 @@ Future<bool> saveOrder(BuildContext context
     ,  TermModel termModel
     ,  String remark1, String remark2, String remark3, String remark4
     ,  List<ItemModel> itemModels
+    , String type
     ) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
@@ -45,10 +48,12 @@ Future<bool> saveOrder(BuildContext context
       ) ;
       solists.add(so);
     }
+
 //    List<SoList> dataList = solists.map((i) => SoList.fromJson(i)).toList();
     var uuid = Uuid();
+    var doc_number = uuid.v4().substring(0,10).toString();
     Map<String, dynamic>? data = {
-      "docno":uuid.v4().substring(0,10).toString(),
+      "docno":doc_number,
       "docdate":"2021-10-27",
       "debtorcode":customerModel.accNo,
       "debtorname":customerModel.name,
@@ -72,30 +77,55 @@ Future<bool> saveOrder(BuildContext context
       //'items':items.toString()
     };
 
+
     debugPrint(jsonEncode(data));
+    if(type.endsWith("draft")){
+      SaleOrderModel saleOrderModel = new SaleOrderModel(soId: 0, companyCode: customerModel.accNo, custAccNo: "custAccNo", custName: customerModel.name,
+          docNo: doc_number, docDate: "2021-10-27", invAddr1: customerModel.addr1, invAddr2: customerModel.addr2, invAddr3: customerModel.addr3, invAddr4: customerModel.addr4,
+          branchCode: customerModel.companyCode, salesLocation: "HQ", shipVia: "", shipInfo: "", attention: "attention",
+          displayTerm: termModel.displayTerm , salesAgent: "SOON (F)", inclusiveTax: 0, subtotalAmt: "0", taxAmt: "0", totalAmt: "0",
+          remark1: remark1, remark2: remark2, remark3: remark3, remark4: remark4,
+          cancelled: 0, rev: 0, deleted: 0);
 
-    var response = await Dio().post(Api.baseUrl + "/api/v1/createSalesOrder",
-        queryParameters: queryParameters,
-      data: data,
-      options: Options(headers: {"Content-Type":"application/json"})
-    );
 
-    List<ItemModel> items = [];
-    final jsonRes = json.decode(response.toString());
-    debugPrint(jsonRes);
-    if(jsonRes['result']){
-      await pr.hide();
-      return true;
-    }else{
+      List<SaleOrderModel> saleOrders = <SaleOrderModel>[];
+      saleOrders.add(saleOrderModel);
+
+      OrderDBHelper orderDBHelper = new OrderDBHelper();
+      orderDBHelper.insertOrders(saleOrders);
+
+      ItemDBHelper itemDBHelper = new  ItemDBHelper();
+      itemDBHelper.insertItems(solists);
       await pr.hide();
       return false;
+
+    }else{
+      var response = await Dio().post(Api.baseUrl + "/api/v1/createSalesOrder",
+          queryParameters: queryParameters,
+          data: data,
+          options: Options(headers: {"Content-Type":"application/json"})
+      );
+
+      List<ItemModel> items = [];
+      final jsonRes = json.decode(response.toString());
+      debugPrint(jsonRes);
+      if(jsonRes['result']){
+        await pr.hide();
+        return true;
+      }else{
+        await pr.hide();
+        return false;
+      }
     }
+
   } catch (e) {
     print(e);
     await pr.hide();
     return false;
   }
+
 }
+
 
 Future<List<SaleOrderModel>> getSaleOrders(BuildContext context) async {
 
@@ -115,6 +145,7 @@ Future<List<SaleOrderModel>> getSaleOrders(BuildContext context) async {
     debugPrint(response.toString());
     List<SaleOrderModel> saleOrderLists = [];
     final jsonRes = json.decode(response.toString());
+
     if(jsonRes['result']){
       for(var saleOrder in jsonRes["salesOrders"]) {
         SaleOrderModel saleOrderModel = SaleOrderModel.fromMap(saleOrder);
@@ -122,10 +153,12 @@ Future<List<SaleOrderModel>> getSaleOrders(BuildContext context) async {
       }
       await pr.hide();
       return saleOrderLists;
+
     }else{
       await pr.hide();
       return [];
     }
+
   } catch (e) {
     debugPrint("error -- " + e.toString());
     print(e);

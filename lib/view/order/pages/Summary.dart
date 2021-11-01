@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/DBHelper/ItemDBHelper.dart';
+import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
@@ -103,43 +105,78 @@ class _SummaryState extends State<Summary> {
 
               Container(
                 margin: EdgeInsets.only(top: 20),
-                child: LoginButton(
-                  title: Strings.save,
-                  onPressed: () async{
+                child: Row(
+                  children: [
+                    LoginButton(
+                      title: Strings.save,
+                      onPressed: () async{
 
-                    bool flag = await saveOrder(context,
-                        widget.customerModel,
-                        widget.termModel,
-                        widget.remark1,
-                        widget.remark2,
-                        widget.remark3,
-                        widget.remark4,
-                        widget.itemModels
-                    );
+                        bool flag = await saveOrder(context,
+                            widget.customerModel,
+                            widget.termModel,
+                            widget.remark1,
+                            widget.remark2,
+                            widget.remark3,
+                            widget.remark4,
+                            widget.itemModels,
+                          "save"
+                        );
 
-
-                    if(flag){
-
-                      showDialog(context: context,
-                          builder: (BuildContext context){
-                            return ConfirmDialog(
-                                "Success",
-                                    (){
+                        if(flag){
+                          showDialog(context: context,
+                              builder: (BuildContext context){
+                                return ConfirmDialog(
+                                    "Success",
+                                        (){
                                       Navigator.pop(context);
                                       Navigator.pop(context);
                                       Navigator.pop(context);
                                       Navigator.pop(context);
-                                }
-                            );
-                          }
-                      );
+                                    }
+                                );
+                              }
+                          );
 
-                    }else{
-                      showToastMessage(context, "Failed", "Ok");
-                    }
+                        }else{
+                          showToastMessage(context, "Failed", "Ok");
+                        }
 
-                  },
-                ),
+                      },
+                    ),
+                    LoginButton(
+                      title: Strings.draft,
+                      onPressed: () async{
+
+                        bool flag = await saveOrder(context,
+                            widget.customerModel,
+                            widget.termModel,
+                            widget.remark1,
+                            widget.remark2,
+                            widget.remark3,
+                            widget.remark4,
+                            widget.itemModels,
+                          "draft"
+                        );
+
+                        showDialog(context: context,
+                            builder: (BuildContext context){
+                              return ConfirmDialog(
+                                  "Success",
+                                      (){
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  }
+                              );
+                            }
+                        );
+
+                      },
+                    ),
+
+                  ],
+                )
               )
 
             ],

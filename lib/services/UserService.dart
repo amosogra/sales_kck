@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
+import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +27,13 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
 
     }else{
       print(response);
+
+      String user = Storage.getUser();
+      if(user.isEmpty){
+        OrderDBHelper orderDBHelper = new OrderDBHelper();
+        orderDBHelper.initializeTotalDB();
+      }
+
       Storage.saveUser(response.toString());
       await pr.hide();
       return true;
