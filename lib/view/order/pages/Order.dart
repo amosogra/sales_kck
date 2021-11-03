@@ -77,7 +77,6 @@ class _OrderState extends State<Order> {
                     },
                   ),
 
-
                   items.length > 0 ?
                   LoginButton(
                     title: items.length > 0 ? "Next" : Strings.add_item,

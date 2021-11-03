@@ -16,7 +16,7 @@ Future<List<ItemModel>> getItems(BuildContext context) async {
     pr.style(
         message: "Please wait..."
     );
-    await pr.show();
+    pr.show();
 
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];

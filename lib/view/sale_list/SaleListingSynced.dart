@@ -34,7 +34,12 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadItems();
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      loadItems();
+    });
+
+
   }
 
   @override
@@ -45,21 +50,21 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
         title: Text(Strings.sales_list_synced_title),
       ),
       body: Container(
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                margin: EdgeInsets.all(20),
+                margin: EdgeInsets.only(top: 20, left: 20, right: 20),
                 child: Column(
                   children: [
-
                     Row(
                       children: [
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
                               InputForm(
                                 myHint: "Search Item", validateFunction: (value){
                                 return Validations.validateEmpty(value!);
@@ -78,25 +83,21 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 100),
+                margin: EdgeInsets.only(top: 0),
                 child: items.length == 0 ?
                 showNoItem(context)
                     :
                 Container(
-                  alignment: Alignment.topCenter,
-                  child: Flexible(
-                      flex: 1,
-                      child: Container(
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: items.length,
-                            itemBuilder: (context, index){
-                              return _buildItem(items[index], index);
-                            },
-                          )
+                  child: Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index){
+                          return _buildItem(items[index], index);
+                        },
                       )
-                  ),
+                  )
                 )
 
               )
@@ -107,13 +108,11 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
     );
   }
 
-
-
   Widget _buildItem(SaleOrderModel item, int index) {
 
     return InkResponse(
       onTap: () async{
-        Navigator.pop(context, item.toMap());
+        //Navigator.pop(context, item.toMap());
       },
       child: Container(
         padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),

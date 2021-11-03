@@ -31,6 +31,7 @@ class SaleOrderModel{
   int rev;
   int deleted;
 
+
   SaleOrderModel({
     required this.soId,
     required this.companyCode,
@@ -80,7 +81,7 @@ class SaleOrderModel{
     attention: json["attention"],
     displayTerm: json["displayTerm"],
     salesAgent: json["salesAgent"],
-    inclusiveTax: json["inclusiveTax"],
+    inclusiveTax: int.parse(json["inclusiveTax"].toString()),
     subtotalAmt: json["subtotalAmt"],
     taxAmt: json["taxAmt"],
     totalAmt: json["totalAmt"],
@@ -88,10 +89,58 @@ class SaleOrderModel{
     remark2: json["remark2"],
     remark3: json["remark3"],
     remark4: json["remark4"],
-    cancelled: json["cancelled"],
-    rev: json["rev"],
-    deleted: json["deleted"]
+    cancelled: int.parse(json["cancelled"].toString()) ,
+    rev: int.parse(json["rev"].toString()) ,
+    deleted: int.parse(json["deleted"].toString())
   );
+
+
+  factory SaleOrderModel.fromDBMap(Map<String, dynamic> json) => SaleOrderModel(
+      soId: json["soId"],
+      companyCode: json["companyCode"],
+      custAccNo: json["custAccNo"],
+      custName: json["custName"],
+      docNo: json["docNo"],
+      docDate: json["docDate"],
+      invAddr1: json["invAddr1"],
+      invAddr2: json["invAddr2"],
+      invAddr3: json["invAddr3"],
+      invAddr4: json["invAddr4"],
+      branchCode: json["branchCode"],
+      salesLocation: json["salesLocation"],
+      shipVia: json["shipVia"],
+      shipInfo: json["shipInfo"],
+      attention: json["attention"],
+      displayTerm: json["displayTerm"],
+      salesAgent: json["salesAgent"],
+      inclusiveTax: int.parse(json["inclusiveTax"].toString()),
+      subtotalAmt: json["subtotalAmt"],
+      taxAmt: json["taxAmt"],
+      totalAmt: json["totalAmt"],
+      remark1: json["remark1"],
+      remark2: json["remark2"],
+      remark3: json["remark3"],
+      remark4: json["remark4"],
+      cancelled: int.parse(json["cancelled"].toString()) ,
+      rev: int.parse(json["rev"].toString()) ,
+      deleted: json["deleted"] != null ? int.parse(json["deleted"].toString()) : 0
+  );
+
+
+
+  bool isInteger(String string) {
+    // Null or empty string is not a number
+    if (string == null || string.isEmpty) {
+      return false;
+    }
+    final number = num.tryParse(string);
+    if (number == null) {
+      return false;
+    }
+    return true;
+  }
+
+
   Map<String, dynamic> toMap() => {
     "soId": soId,
     "companyCode": companyCode,
@@ -122,5 +171,36 @@ class SaleOrderModel{
     "rev" : rev,
     "deleted" : deleted,
   };
+
+
+  Map<String, dynamic> toDBMap() => {
+    "companyCode": companyCode,
+    "custAccNo" : custAccNo,
+    "custName" : custName,
+    "docNo" : docNo,
+    "docDate": docDate,
+    "invAddr1" : invAddr1,
+    "invAddr2" : invAddr2,
+    "invAddr3" : invAddr3,
+    "invAddr4" : invAddr4,
+    "branchCode" : branchCode,
+    "salesLocation" : salesLocation,
+    "shipVia" : shipVia,
+    "shipInfo" : shipInfo,
+    "attention" : attention,
+    "displayTerm" : displayTerm,
+    "salesAgent" : salesAgent,
+    "inclusiveTax" : inclusiveTax,
+    "subtotalAmt" : subtotalAmt,
+    "taxAmt" : taxAmt,
+    "totalAmt" : totalAmt,
+    "remark1" : remark1,
+    "remark2" : remark2,
+    "remark3" : remark3,
+    "remark4" : remark4,
+    "cancelled" : cancelled,
+    "rev" : rev,
+  };
+
 
 }

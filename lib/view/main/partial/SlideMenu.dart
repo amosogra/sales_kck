@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/dimens.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/storage.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/view/order/OrderFrame.dart';
+import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'package:sales_kck/view/price_history/PriceHistory.dart';
 import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
 import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
@@ -77,9 +80,15 @@ Widget showSlideMenu(BuildContext context){
           ),
           onTap: () {
             Navigator.pop(context);
+
+            SaleOrderModel saleOrderModel = initializeSaleOrder();
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => OrderFrame())
+                MaterialPageRoute(builder: (context) => Customer(saleOrderModel: saleOrderModel,))
             );
+
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => OrderFrame())
+            // );
             
           },
         ),

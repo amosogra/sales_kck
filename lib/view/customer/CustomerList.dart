@@ -30,7 +30,9 @@ class _CustomerListState extends State<CustomerList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadCustomers();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        loadCustomers();
+    });
   }
 
 

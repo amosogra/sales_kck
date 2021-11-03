@@ -22,14 +22,11 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
 
     Map<String, dynamic>? queryParameters = { 'username': username, 'password': password};
     var response = await Dio().post(Api.baseUrl + "/api/v1/login", queryParameters: queryParameters );
-    if(jsonDecode(response.toString())['error'] != null){
-      print("error");
 
-    }else{
+    if(jsonDecode(response.toString())['result'] ){
       print(response);
-
-      String user = Storage.getUser();
-      if(user.isEmpty){
+      String user = await Storage.getUser();
+      if(user.isEmpty || user == ""){
         OrderDBHelper orderDBHelper = new OrderDBHelper();
         orderDBHelper.initializeTotalDB();
       }
@@ -37,6 +34,9 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
       Storage.saveUser(response.toString());
       await pr.hide();
       return true;
+
+    }else{
+
     }
   } catch (e) {
     debugPrint("error -- " + e.toString());

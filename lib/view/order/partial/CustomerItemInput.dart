@@ -12,7 +12,7 @@ class CustomerItemInput extends StatefulWidget {
   String hint;
   Function(String?) onChange;
   //final focusEmail = FocusNode();
-  CustomerItemInput({required this.controller, required this.focusNode, required this.nextFocusNode, required this.hint, required this.onChange});
+  CustomerItemInput({ required this.controller, required this.focusNode, required this.nextFocusNode, required this.hint, required this.onChange});
   //const CustomerItemInput({Key? key}) : super(key: key);
 
   @override
@@ -38,6 +38,7 @@ class _CustomerItemInputState extends State<CustomerItemInput> {
               children: [
                 Expanded(
                   child: InputForm(
+
                     validateFunction: (value){
                       Validations.validateEmpty(value!);
                     },

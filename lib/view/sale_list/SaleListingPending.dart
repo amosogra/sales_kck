@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
-import 'package:sales_kck/services/OrderService.dart';
+import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'partial/NoItem.dart';
 
 
@@ -23,7 +24,7 @@ class _SaleListingPendingState extends State<SaleListingPending> {
 
     //List<SaleOrderModel> response = await getSaleOrders(context);
     OrderDBHelper orderDBHelper = new OrderDBHelper();
-    List<SaleOrderModel> response = orderDBHelper.retrieveOrders() as List<SaleOrderModel>;
+    List<SaleOrderModel> response = await orderDBHelper.retrieveOrders() as List<SaleOrderModel>;
 
     if(response.length > 0){
       setState(() {
@@ -54,20 +55,18 @@ class _SaleListingPendingState extends State<SaleListingPending> {
         showNoItem(context)
             :
         Container(
+          margin: EdgeInsets.only(top: 20),
           alignment: Alignment.topCenter,
-          child: Flexible(
-              flex: 1,
-              child: Container(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (context, index){
-                      return _buildItem(items[index], index);
-                    },
-                  )
+          child: Container(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: items.length,
+                itemBuilder: (context, index){
+                  return _buildItem(items[index], index);
+                },
               )
-          ),
+          )
         )
 
       ),
@@ -75,12 +74,16 @@ class _SaleListingPendingState extends State<SaleListingPending> {
     );
   }
 
-
   Widget _buildItem(SaleOrderModel item, int index) {
 
     return InkResponse(
       onTap: () async{
+
         Navigator.pop(context, item.toMap());
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
+        );
+
       },
       child: Container(
         padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),

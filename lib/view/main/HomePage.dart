@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/dimens.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/view/main/partial/SlideMenu.dart';
 import 'package:sales_kck/view/mobile_printer/Printer.dart';
 import 'package:sales_kck/view/order/OrderFrame.dart';
@@ -39,8 +41,9 @@ class _HomePageState extends State<HomePage> {
                 Flexible(
                     child:InkWell(
                       onTap: (){
+                        SaleOrderModel saleOrderModel = initializeSaleOrder();
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Customer())
+                            MaterialPageRoute(builder: (context) => Customer(saleOrderModel: saleOrderModel,))
                         );
                       },
                       child: Card(

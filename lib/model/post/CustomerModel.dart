@@ -35,8 +35,10 @@ class CustomerModel {
     required this.isActive,
     required this.rev,
     required this.deleted,
-
+    required this.docNumber,
+    required this.docDate,
   });
+
 
   factory CustomerModel.fromMap(Map<String, dynamic> json) => CustomerModel(
     custId: json["custId"],
@@ -55,7 +57,10 @@ class CustomerModel {
       rev: json["rev"],
       deleted: json["deleted"],
       companyCode: json['companyCode'],
+      docNumber: json['docNumber'],
+      docDate: json['docDate'],
   );
+
 
   Map<String, dynamic> toMap() => {
     "custId": custId,

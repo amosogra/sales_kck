@@ -22,7 +22,7 @@ class Customer extends StatefulWidget {
 class _CustomerState extends State<Customer> {
   late CustomerModel customerModel = new CustomerModel(
     companyCode: '',accNo: '',name: '', addr1: '',addr2: '',addr3: '',addr4: '',
-    attention: '', defDisplayTerm: '', taxType: '', phone1: '', phone2: '', isActive: 1,rev: 0,deleted: 0, custId: 0
+    attention: '', defDisplayTerm: '', taxType: '', phone1: '', phone2: '', isActive: 1,rev: 0,deleted: 0, custId: 0, docNumber: '', docDate: ''
   );
   late String remark1 = '';
   late String remark2 = '';

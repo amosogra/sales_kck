@@ -9,7 +9,6 @@ import 'package:sqflite/sqflite.dart';
 
 class ItemDBHelper{
 
-
   Future<Database> initializeTotalDB() async {
     String path = await getDatabasesPath();
     return openDatabase(

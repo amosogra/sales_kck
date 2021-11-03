@@ -14,7 +14,7 @@ class OrderDBHelper{
       onCreate: (database, version) async {
 
         await database.execute(
-          'CREATE TABLE order(id INTEGER PRIMARY KEY, companyCode TEXT, custAccNo TEXT, custName TEXT , docNo TEXT '
+          'CREATE TABLE orders(id INTEGER PRIMARY KEY, companyCode TEXT, custAccNo TEXT, custName TEXT , docNo TEXT '
               + ' , docDate TEXT , invAddr1 TEXT , invAddr2 TEXT , invAddr3 TEXT , invAddr4 TEXT '
               + ' , branchCode TEXT , salesLocation TEXT , shipVia TEXT , shipInfo TEXT , attention TEXT '
               + ' , displayTerm TEXT , salesAgent TEXT , inclusiveTax TEXT , subtotalAmt TEXT , taxAmt TEXT '
@@ -22,11 +22,10 @@ class OrderDBHelper{
         );
 
         await database.execute(
-          'CREATE TABLE item(id INTEGER PRIMARY KEY, itemcode TEXT, location TEXT, description TEXT '
+          'CREATE TABLE item(id INTEGER PRIMARY KEY, order_id TEXT, itemcode TEXT, location TEXT, description TEXT '
               + ' , furtherdescription TEXT , uom TEXT , rate TEXT , qty TEXT , focqty TEXT '
               + ' , smallestunitprice TEXT , unitprice TEXT, discount TEXT,  discountamt TEXT , taxtype TEXT , taxrate TEXT, tempid TEXT )',
         );
-
       },
 
       version: 1,
@@ -43,13 +42,12 @@ class OrderDBHelper{
     return database;
   }
 
-
   Future<int> insertOrders(List<SaleOrderModel> orders) async {
     int result = 0;
     final Database db = await initializeDB();
     for(var order in orders){
       try{
-        result = await db.insert('order', order.toMap());
+        result = await db.insert('orders', order.toDBMap());
       }catch(e){
         debugPrint(e.toString());
       }
@@ -59,21 +57,21 @@ class OrderDBHelper{
 
   Future<List<SaleOrderModel>> retrieveOrders() async {
     final Database db = await initializeDB();
-    final List<Map<String, dynamic>> queryResult = await db.query('order', orderBy: 'id', );
-    return queryResult.map((e) => SaleOrderModel.fromMap(e)).toList();
+    final List<Map<String, dynamic>> queryResult = await db.query('orders', orderBy: 'id', );
+    return queryResult.map((e) => SaleOrderModel.fromDBMap(e)).toList();
   }
 
   Future<void> deleteOrders() async {
     final db = await initializeDB();
     await db.delete(
-      'order',
+      'orders',
     );
   }
 
   Future<void> updateOrder(SaleOrderModel order) async {
     final db = await initializeDB();
     await db.update(
-      'order',
+      'orders',
       order.toMap(),
       where: 'id = ?',
       whereArgs: [order.soId],
@@ -83,11 +81,10 @@ class OrderDBHelper{
   Future<void> deleteOrder(int id) async {
     final db = await initializeDB();
     await db.delete(
-      'order',
+      'orders',
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 }
-
 

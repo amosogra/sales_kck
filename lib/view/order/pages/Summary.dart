@@ -1,8 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:sales_kck/constants/DBHelper/ItemDBHelper.dart';
-import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
@@ -105,12 +103,11 @@ class _SummaryState extends State<Summary> {
 
               Container(
                 margin: EdgeInsets.only(top: 20),
-                child: Row(
+                child: Column(
                   children: [
                     LoginButton(
                       title: Strings.save,
                       onPressed: () async{
-
                         bool flag = await saveOrder(context,
                             widget.customerModel,
                             widget.termModel,

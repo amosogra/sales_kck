@@ -44,17 +44,19 @@ Future<bool> saveOrder(BuildContext context
     for(var item in itemModels){
       SoList so = SoList(itemcode: "FM-INDIAN(BULK)-MT", location: "HQ", description: item.description, furtherdescription: item.description,
           uom: "MT" , rate: "1.0000000", qty: "150.0000000", focqty: item.rev, smallestunitprice: item.uom[0].price,
-          unitprice: item.uom[0].price, discount: item.uom[0].price, discountamt: item.rev, taxtype: item.companyCode, taxrate: item.rev, tempid: item.itemId
+          unitprice: item.uom[0].price, discount: item.uom[0].price, discountamt: item.rev, taxtype: item.companyCode, taxrate: item.rev, tempid: item.itemId ,
+          orderId: 0
       ) ;
       solists.add(so);
     }
 
 //    List<SoList> dataList = solists.map((i) => SoList.fromJson(i)).toList();
     var uuid = Uuid();
-    var doc_number = uuid.v4().substring(0,10).toString();
+    var doc_number = customerModel.docNumber;
+    termModel.displayTerm = "CASH";
     Map<String, dynamic>? data = {
       "docno":doc_number,
-      "docdate":"2021-10-27",
+      "docdate":customerModel.docDate,
       "debtorcode":customerModel.accNo,
       "debtorname":customerModel.name,
       "invadd1":customerModel.addr1,
@@ -158,7 +160,7 @@ Future<List<SaleOrderModel>> getSaleOrders(BuildContext context) async {
       await pr.hide();
       return [];
     }
-
+  //
   } catch (e) {
     debugPrint("error -- " + e.toString());
     print(e);

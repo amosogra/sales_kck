@@ -1,5 +1,8 @@
 
+import 'package:sales_kck/constants/strings.dart';
+
 class SoList {
+
 
   String itemcode;
   String location;
@@ -16,6 +19,7 @@ class SoList {
   String taxtype;
   int taxrate;
   int tempid;
+  int orderId;
 
   SoList({
     required this.itemcode,
@@ -32,7 +36,8 @@ class SoList {
     required this.discountamt,
     required this.taxtype,
     required this.taxrate,
-    required this.tempid
+    required this.tempid,
+    required this.orderId,
   });
 
 
@@ -52,6 +57,7 @@ class SoList {
     taxtype: json["taxtype"],
     taxrate: json["taxrate"],
     tempid: json["tempid"],
+    orderId: json["order_id"],
   );
 
 
@@ -72,6 +78,7 @@ class SoList {
     "taxtype" : taxtype,
     "taxrate" : taxrate,
     "tempid" : tempid,
+    "order_id" : orderId,
   };
 
 }

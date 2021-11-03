@@ -1,11 +1,27 @@
 library globals;
 
 import 'package:flutter/material.dart';
+import 'package:sales_kck/model/post/ItemModel.dart';
+import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool isLoggedIn = false;
 String page = '';
+List<ItemModel> items = <ItemModel>[];
+
+
+
+initializeSaleOrder(){
+
+  return  new SaleOrderModel(soId: 0, companyCode: "", custAccNo: "", custName: "",
+      docNo: "", docDate: "", invAddr1: "", invAddr2: "", invAddr3: "", invAddr4: "",
+      branchCode: "", salesLocation: "", shipVia: "", shipInfo: "", attention: "",
+      displayTerm: "" , salesAgent: "", inclusiveTax: 0, subtotalAmt: "0", taxAmt: "0", totalAmt: "0",
+      remark1: "", remark2: "", remark3: "", remark4: "",
+      cancelled: 0, rev: 0, deleted: 0);
+
+}
 
 showAlertDialog(BuildContext context) {
   // set up the buttons

@@ -6,6 +6,8 @@ import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/services/ItemService.dart';
 import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/widget/InputForm.dart';
+import 'package:sales_kck/constants/globals.dart' as globals;
+
 
 class ItemList extends StatefulWidget {
   const ItemList({Key? key}) : super(key: key);
@@ -16,21 +18,63 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
 
   String searchKey = '';
+  final myController = TextEditingController();
+
+  List<ItemModel> originalItems = <ItemModel>[];
   List<ItemModel> items = <ItemModel>[];
+
+  void _printLatestValue() {
+    searchItem('${myController.text}');
+  }
+
   void loadItems() async{
     List<ItemModel> response = await getItems(context);
     if(response.length > 0){
       setState(() {
+        originalItems = response;
         items = response;
+        globals.items = response;
       });
     }
   }
+
+  void searchItem(String key) {
+
+    List<ItemModel> tmp = <ItemModel>[];
+    originalItems.forEach((element) {
+      if(element.companyCode.toLowerCase().contains(key.toLowerCase()) || element.code.toLowerCase().contains(key.toLowerCase())  || element.description.toLowerCase().contains(key.toLowerCase()) ){
+        tmp.add(element);
+      }
+    });
+    setState(() {
+      items = tmp;
+    });
+  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadItems();
+    myController.addListener(_printLatestValue);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+
+      if(globals.items.length == 0){
+        loadItems();
+      }else{
+        setState(() {
+          originalItems =  globals.items;
+          items = globals.items;
+        });
+      }
+
+    });
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,6 +98,7 @@ class _ItemListState extends State<ItemList> {
                       child: Column(
                         children: [
                           InputForm(
+                            controller: myController,
                             myHint: "Search Item", validateFunction: (value){
                             return Validations.validateEmpty(value!);
                           },
