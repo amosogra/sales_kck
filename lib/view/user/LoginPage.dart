@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/font_family.dart';
@@ -31,11 +32,26 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isRemember = false;
 
+  Future<void> requestPermission() async {
+
+    var status = await Permission.location.status;
+   if(status.isDenied){
+
+     Map<Permission, PermissionStatus> statuses = await [
+       Permission.location,
+     ].request();
+   }
+
+
+  }
+
   @override
   void initState(){
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       initView();
+      requestPermission();
+
     });
   }
 

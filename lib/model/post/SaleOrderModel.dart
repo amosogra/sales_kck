@@ -96,7 +96,7 @@ class SaleOrderModel{
 
 
   factory SaleOrderModel.fromDBMap(Map<String, dynamic> json) => SaleOrderModel(
-      soId: json["soId"],
+      soId: json["id"],
       companyCode: json["companyCode"],
       custAccNo: json["custAccNo"],
       custName: json["custName"],

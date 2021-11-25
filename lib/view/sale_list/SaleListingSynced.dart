@@ -6,6 +6,7 @@ import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/services/OrderService.dart';
 import 'package:sales_kck/utils/Validations.dart';
+import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'package:sales_kck/view/sale_list/partial/NoItem.dart';
 import 'package:sales_kck/widget/InputForm.dart';
 
@@ -19,14 +20,35 @@ class SaleListingSynced extends StatefulWidget {
 
 class _SaleListingSyncedState extends State<SaleListingSynced> {
 
+  String searchKey = '';
+  final myController = TextEditingController();
+
+  List<SaleOrderModel> originalItems = <SaleOrderModel>[];
   List<SaleOrderModel> items = <SaleOrderModel>[];
   void loadItems() async{
     List<SaleOrderModel> response = await getSaleOrders(context);
     if(response.length > 0){
       setState(() {
         items = response;
+        originalItems = response;
       });
     }
+  }
+
+  void _printLatestValue() {
+    searchItem('${myController.text}');
+  }
+
+  void searchItem(String key) {
+    List<SaleOrderModel> tmp = <SaleOrderModel>[];
+    originalItems.forEach((element) {
+      if(element.companyCode.toLowerCase().contains(key.toLowerCase()) || element.custName.toLowerCase().contains(key.toLowerCase())  || element.custAccNo.toLowerCase().contains(key.toLowerCase()) ){
+        tmp.add(element);
+      }
+    });
+    setState(() {
+      items = tmp;
+    });
   }
 
 
@@ -34,12 +56,16 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    myController.addListener(_printLatestValue);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       loadItems();
     });
+  }
 
-
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,6 +92,7 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               InputForm(
+                                controller: myController,
                                 myHint: "Search Item", validateFunction: (value){
                                 return Validations.validateEmpty(value!);
                               },
@@ -110,37 +137,65 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
 
   Widget _buildItem(SaleOrderModel item, int index) {
 
-    return InkResponse(
-      onTap: () async{
-        //Navigator.pop(context, item.toMap());
-      },
-      child: Container(
-        padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),
-        //color: customers[index].isSelected  == true ? MyColors.greyColor : Colors.white,
-        child: Row(
-          children: [
-            Expanded(
-                flex: 2,
-                child: Container(
-                  child: Text(
-                    item.custName,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                )
+
+    return GestureDetector(
+        onTap: () => {
+
+        },
+        child: InkResponse(
+          onTap: (){
+            debugPrint("render..");
+            Navigator.pop(context, item.toMap());
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
+            );
+          },
+          child: Container(
+            color: Colors.white,
+            child: ListTile(
+              leading: CircleAvatar(
+                child: Text('S'),
+                foregroundColor: Colors.white,
+              ),
+              title: Text(item.custName),
+              subtitle: Text(item.companyCode),
             ),
-            Expanded(
-                flex: 1,
-                child: Container(
-                  child: Text(
-                    item.companyCode,
-                    style: TextStyle(fontSize: 12),
-                  ),
-                )
-            ),
-          ],
-        ),
-      ),
+          ),
+        )
     );
+
+
+    // return InkResponse(
+    //   onTap: () async{
+    //     //Navigator.pop(context, item.toMap());
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),
+    //     //color: customers[index].isSelected  == true ? MyColors.greyColor : Colors.white,
+    //     child: Row(
+    //       children: [
+    //         Expanded(
+    //             flex: 2,
+    //             child: Container(
+    //               child: Text(
+    //                 item.custName,
+    //                 style: TextStyle(fontSize: 14),
+    //               ),
+    //             )
+    //         ),
+    //         Expanded(
+    //             flex: 1,
+    //             child: Container(
+    //               child: Text(
+    //                 item.companyCode,
+    //                 style: TextStyle(fontSize: 12),
+    //               ),
+    //             )
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 
 

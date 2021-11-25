@@ -26,6 +26,19 @@ class OrderDBHelper{
               + ' , furtherdescription TEXT , uom TEXT , rate TEXT , qty TEXT , focqty TEXT '
               + ' , smallestunitprice TEXT , unitprice TEXT, discount TEXT,  discountamt TEXT , taxtype TEXT , taxrate TEXT, tempid TEXT )',
         );
+
+        await database.execute(
+          'CREATE TABLE temp(id INTEGER PRIMARY KEY, docno TEXT, debtorcode TEXT, projectcode TEXT, departmentcode TEXT '
+              + ' , currencycode TEXT , description TEXT , secondreceiptno TEXT , salesagent TEXT , receiveddate TEXT '
+              + ' , chequedate TEXT )',
+        );
+
+
+        await database.execute(
+          'CREATE TABLE temp_draft(id INTEGER PRIMARY KEY, receipt_no TEXT, receipt_from TEXT, receipt_date TEXT, payment_date TEXT '
+              + ' , payment_method TEXT , cheque_no TEXT , payment_amount TEXT )',
+        );
+
       },
 
       version: 1,
@@ -86,5 +99,8 @@ class OrderDBHelper{
       whereArgs: [id],
     );
   }
+
+
+
 }
 

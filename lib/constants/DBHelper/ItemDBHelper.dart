@@ -80,5 +80,14 @@ class ItemDBHelper{
     );
   }
 
+  Future<void> deleteByOrder(int id) async {
+    final db = await initializeDB();
+    await db.delete(
+      'item',
+      where: 'order_id = ?',
+      whereArgs: [id],
+    );
+  }
+
 
 }

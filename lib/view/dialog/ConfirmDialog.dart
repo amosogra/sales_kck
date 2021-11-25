@@ -12,7 +12,6 @@ class ConfirmDialog extends StatefulWidget {
 
 }
 
-
 class _ConfirmDialogState extends State<ConfirmDialog> {
 
   contentBox(context){

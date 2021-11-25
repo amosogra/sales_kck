@@ -5,6 +5,7 @@ import 'package:sales_kck/constants/strings.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/services/ItemService.dart';
 import 'package:sales_kck/utils/Validations.dart';
+import 'package:sales_kck/view/dialog/ItemListConfirmDialog.dart';
 import 'package:sales_kck/widget/InputForm.dart';
 import 'package:sales_kck/constants/globals.dart' as globals;
 
@@ -138,27 +139,72 @@ class _ItemListState extends State<ItemList> {
 
     return InkResponse(
       onTap: () async{
-        debugPrint(item.toMap().toString());
-        debugPrint(item.uom.toList().toString());
-        Navigator.pop(context, item.toMap());
-      },
-      child: Container(
-        padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),
-        //color: customers[index].isSelected  == true ? MyColors.greyColor : Colors.white,
-        child: Row(
-          children: [
 
-            Expanded(
-                child: Container(
-                  child: Text(
-                    item.code,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                )
-            ),
-          ],
+
+        showDialog(context: context,
+            builder: (BuildContext context){
+              List<String> uoms = <String>[];
+              item.uom.forEach((element) {
+                uoms.add(element.uom);
+              });
+
+              return ItemListConfirmDialog(
+                  uoms,
+                  item,
+                  "Success",
+                      (value){
+
+                    Navigator.pop(context);
+                    debugPrint(item.toMap().toString());
+                    item.qty = int.parse(value);
+                    debugPrint(item.toMap().toString());
+
+                    Navigator.pop(context, item.toMap() );
+
+                  }
+              );
+            }
+        );
+
+        // debugPrint(item.toMap().toString());
+        // debugPrint(item.uom.toList().toString());
+        // Navigator.pop(context, item.toMap());
+
+      },
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),
+          //color: customers[index].isSelected  == true ? MyColors.greyColor : Colors.white,
+          child: Row(
+            children: [
+              Expanded(
+                  child: Container(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            child: Text(
+                              item.description.trimLeft(),
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              item.code,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          )
+
+                        ],
+                      )
+                  )
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 

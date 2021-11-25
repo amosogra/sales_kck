@@ -25,7 +25,11 @@ class Customer extends StatefulWidget {
 
 class _CustomerState extends State<Customer> {
 
-  late CustomerModel customerModel;
+  late CustomerModel customerModel = new CustomerModel(
+  companyCode: '',accNo: '',name: '', addr1: '',addr2: '',addr3: '',addr4: '',
+  attention: '', defDisplayTerm: '', taxType: '', phone1: '', phone2: '', isActive: 1,rev: 0,deleted: 0, custId: 0,
+  docNumber: '', docDate: ''
+  );
 
 
   late String docNo;
@@ -36,10 +40,10 @@ class _CustomerState extends State<Customer> {
   late String remark3 = '';
   late String remark4 = '';
 
-  late TextEditingController remark1Controller; //= TextEditingController(text: remark1);
-  late TextEditingController remark2Controller;// = TextEditingController(text: remark2);
-  late TextEditingController remark3Controller;// = TextEditingController();
-  late TextEditingController remark4Controller;// = TextEditingController();
+  late TextEditingController remark1Controller = TextEditingController(text: remark1);
+  late TextEditingController remark2Controller = TextEditingController(text: remark2);
+  late TextEditingController remark3Controller = TextEditingController(text: remark3);
+  late TextEditingController remark4Controller = TextEditingController(text: remark4);
 
   FocusNode remark1FocusNode = FocusNode();
   FocusNode remark2FocusNode = FocusNode();
@@ -62,7 +66,7 @@ class _CustomerState extends State<Customer> {
         var date = new DateTime.now().toString();
         var dateParse = DateTime.parse(date);
         customerModel = CustomerModel.fromMap(result);
-        customerModel.docNumber = "SO" + "${dateParse.year}${dateParse.month}${dateParse.day}${customerModel.accNo}";
+        customerModel.docNumber = "SO" + "${dateParse.year}${dateParse.month}${dateParse.day}";
         customerModel.docDate = "${dateParse.year}-${dateParse.month}-${dateParse.day}";
 
         this.loadTerms(customerModel.companyCode);
@@ -96,14 +100,15 @@ class _CustomerState extends State<Customer> {
               docNumber: '', docDate: ''
           );
         }else{
-          customerModel = new CustomerModel(custId: widget.saleOrderModel.soId, companyCode: widget.saleOrderModel.companyCode, accNo: widget.saleOrderModel.custAccNo,
+          customerModel = new CustomerModel(custId: widget.saleOrderModel.soId, companyCode: widget.saleOrderModel.companyCode, accNo: widget.saleOrderModel.companyCode,
               name: widget.saleOrderModel.custName, addr1: widget.saleOrderModel.invAddr1, addr2: widget.saleOrderModel.invAddr2, addr3: widget.saleOrderModel.invAddr3,
               addr4: widget.saleOrderModel.invAddr4, attention: widget.saleOrderModel.attention, defDisplayTerm: widget.saleOrderModel.displayTerm, taxType: widget.saleOrderModel.taxAmt,
               phone1: "", phone2: "", isActive: 1, rev: 0, deleted: 0, docNumber: widget.saleOrderModel.docNo, docDate: widget.saleOrderModel.docDate);
-          remark1 = widget.saleOrderModel.remark1;
-          remark2 = widget.saleOrderModel.remark2;
-          remark3 = widget.saleOrderModel.remark3;
-          remark4 = widget.saleOrderModel.remark4;
+          remark1 = widget.saleOrderModel.remark1 != null ? widget.saleOrderModel.remark1 : '';
+          remark2 = widget.saleOrderModel.remark2 != null ? widget.saleOrderModel.remark2 : '' ;
+          remark3 = widget.saleOrderModel.remark3 != null ? widget.saleOrderModel.remark3 : '' ;
+          remark4 = widget.saleOrderModel.remark4 != null ? widget.saleOrderModel.remark1 : '' ;
+
         }
 
         remark1Controller = TextEditingController(text: remark1);
@@ -111,6 +116,8 @@ class _CustomerState extends State<Customer> {
         remark3Controller = TextEditingController(text: remark3);
         remark4Controller = TextEditingController(text: remark4);
 
+        termModel.termId = 1;
+        termModel.displayTerm = widget.saleOrderModel.displayTerm;
 
       });
     });
@@ -260,26 +267,31 @@ class _CustomerState extends State<Customer> {
                   ),
 
                   CustomerItemInput( controller: remark1Controller, focusNode: remark1FocusNode, nextFocusNode: remark2FocusNode, hint: "Remark 1",
-
                     onChange: (value){
                       setState(() {
                         remark1 = value!;
                       });
-                    },),
+                    },
+                  ),
 
                   CustomerItemInput(controller: remark2Controller, focusNode: remark2FocusNode, nextFocusNode: remark3FocusNode, hint: "Remark 2",
                       onChange: (value){
                         remark2 = value!;
                       }),
+
                   CustomerItemInput(controller: remark3Controller, focusNode: remark3FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 3", onChange: (value){
                     remark3 = value!;
                   }),
-                  CustomerItemInput(controller: remark4Controller, focusNode: remark4FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 4", onChange: (value){
-                    remark4 = value!;
-                  }),
+
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: CustomerItemInput(controller: remark4Controller, focusNode: remark4FocusNode, nextFocusNode: remark4FocusNode, hint: "Remark 4", onChange: (value){
+                      remark4 = value!;
+                    }),
+                  ),
 
                   if (remark1.isNotEmpty && customerModel.custId != 0 && termModel.termId != 0) Container(
-                    margin: EdgeInsets.only(top: 30),
+                    margin: EdgeInsets.only(top: 10),
                     child: LoginButton(
                       title: Strings.next,
                       onPressed: (){

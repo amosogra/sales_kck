@@ -14,6 +14,7 @@ class ItemModel {
   int rev;
   int deleted;
   List<UomModel> uom;
+  int qty;
 
   ItemModel({
     required this.itemId,
@@ -25,6 +26,7 @@ class ItemModel {
     required this.rev,
     required this.deleted,
     required this.uom,
+    this.qty = 0
   });
 
   static List<UomModel> jsonToArray(uomJson){
@@ -57,6 +59,7 @@ class ItemModel {
     rev: json["rev"],
     deleted: json["deleted"],
     uom: jsonToArray(json["uom"]),
+    qty: json["qty"]
   );
 
   Map<String, dynamic> toMap() => {
@@ -69,6 +72,7 @@ class ItemModel {
     "rev" : rev,
     "deleted" : deleted,
     "uom" : arrayToJson(uom),
+    "qty" : qty
   };
 
 }

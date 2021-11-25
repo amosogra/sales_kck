@@ -7,14 +7,23 @@ class TempInputForm extends StatefulWidget {
 
   final String title;
   final String hint;
+  final FocusNode currentNode;
+  final FocusNode nextFocusNode;
+  final TextEditingController? controller;
+
   TempInputForm(
       this.title ,
-      this.hint
+      this.hint ,
+      this.currentNode,
+      this.nextFocusNode,
+      this.controller
       );
+
   //const TempInputForm({Key? key}) : super(key: key);
 
   @override
   _TempInputFormState createState() => _TempInputFormState();
+
 }
 
 class _TempInputFormState extends State<TempInputForm> {
@@ -26,6 +35,9 @@ class _TempInputFormState extends State<TempInputForm> {
         children: [
           Text(widget.title),
           InputForm(
+              myFocusNode: widget.currentNode,
+              nextFocusNode: widget.nextFocusNode,
+              controller: widget.controller,
               myHint: widget.hint,
               validateFunction: (value){
                 return Validations.validateEmpty(value!);

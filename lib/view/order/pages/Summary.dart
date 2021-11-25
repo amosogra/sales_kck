@@ -29,7 +29,7 @@ class _SummaryState extends State<Summary> {
   String getTotalPrice() {
     double total = 0;
     for(var i = 0;i < widget.itemModels.length; i++){
-      total += double.parse(widget.itemModels[i].uom[0].price);
+      total += double.parse(widget.itemModels[i].uom[0].price) * widget.itemModels[i].qty ;
     }
     return total.toString();
   }
@@ -123,7 +123,7 @@ class _SummaryState extends State<Summary> {
                           showDialog(context: context,
                               builder: (BuildContext context){
                                 return ConfirmDialog(
-                                    "Success",
+                                    "Your order has been saved",
                                         (){
                                       Navigator.pop(context);
                                       Navigator.pop(context);
@@ -158,7 +158,7 @@ class _SummaryState extends State<Summary> {
                         showDialog(context: context,
                             builder: (BuildContext context){
                               return ConfirmDialog(
-                                  "Success",
+                                  "Your order has been saved",
                                       (){
                                     Navigator.pop(context);
                                     Navigator.pop(context);

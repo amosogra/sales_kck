@@ -10,9 +10,11 @@ class CustomerItemInput extends StatefulWidget {
   FocusNode focusNode;
   FocusNode nextFocusNode;
   String hint;
+  TextInputType textInputType;
   Function(String?) onChange;
   //final focusEmail = FocusNode();
-  CustomerItemInput({ required this.controller, required this.focusNode, required this.nextFocusNode, required this.hint, required this.onChange});
+  CustomerItemInput({ required this.controller, required this.focusNode, required this.nextFocusNode, required this.hint, required this.onChange
+    , this.textInputType = TextInputType.text });
   //const CustomerItemInput({Key? key}) : super(key: key);
 
   @override
@@ -47,6 +49,7 @@ class _CustomerItemInputState extends State<CustomerItemInput> {
                     myHint: widget.hint,
                     myFocusNode: widget.focusNode,
                     nextFocusNode: widget.nextFocusNode,
+                    textInputTye: widget.textInputType,
                     secure: false,
                   )
                 ) ,

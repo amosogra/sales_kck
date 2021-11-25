@@ -12,10 +12,11 @@ import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/model/post/SoList.dart';
+import 'package:sales_kck/model/post/TemporaryReceiptModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
 import 'package:uuid/uuid.dart';
 
-Future<bool> saveOrder(BuildContext context
+Future<bool> saveTemporaryReceipt(BuildContext context
     ,  CustomerModel customerModel
     ,  TermModel termModel
     ,  String remark1, String remark2, String remark3, String remark4
@@ -52,7 +53,7 @@ Future<bool> saveOrder(BuildContext context
 
 //    List<SoList> dataList = solists.map((i) => SoList.fromJson(i)).toList();
     var uuid = Uuid();
-    var doc_number = customerModel.docNumber + uuid.v4().toString().substring(0,6);
+    var doc_number = customerModel.docNumber;
     termModel.displayTerm = "CASH";
     Map<String, dynamic>? data = {
       "docno":doc_number,
@@ -89,6 +90,7 @@ Future<bool> saveOrder(BuildContext context
           remark1: remark1, remark2: remark2, remark3: remark3, remark4: remark4,
           cancelled: 0, rev: 0, deleted: 0);
 
+
       List<SaleOrderModel> saleOrders = <SaleOrderModel>[];
       saleOrders.add(saleOrderModel);
 
@@ -101,7 +103,7 @@ Future<bool> saveOrder(BuildContext context
       return false;
 
     }else{
-      var response = await Dio().post(Api.baseUrl + "/api/v1/createSalesOrder",
+      var response = await Dio().post(Api.baseUrl + "/api/v1/createTemporaryReceipt",
           queryParameters: queryParameters,
           data: data,
           options: Options(headers: {"Content-Type":"application/json"})
@@ -124,11 +126,9 @@ Future<bool> saveOrder(BuildContext context
     await pr.hide();
     return false;
   }
-
 }
 
-
-Future<List<SaleOrderModel>> getSaleOrders(BuildContext context) async {
+Future<List<TemporaryReceiptModel>> getTemporaryReceipt(BuildContext context) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
   pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
@@ -142,18 +142,18 @@ Future<List<SaleOrderModel>> getSaleOrders(BuildContext context) async {
 
     debugPrint("my token"+  token);
     Map<String, dynamic>? queryParameters = { 'token': token };
-    var response = await Dio().post(Api.baseUrl + "/api/v1/salesOrders", queryParameters: queryParameters );
+    var response = await Dio().post(Api.baseUrl + "/api/v1/temporaryReceipts", queryParameters: queryParameters );
     debugPrint(response.toString());
-    List<SaleOrderModel> saleOrderLists = [];
+    List<TemporaryReceiptModel> lists = [];
     final jsonRes = json.decode(response.toString());
 
     if(jsonRes['result']){
-      for(var saleOrder in jsonRes["salesOrders"]) {
-        SaleOrderModel saleOrderModel = SaleOrderModel.fromMap(saleOrder);
-        saleOrderLists.add(saleOrderModel);
+      for(var saleOrder in jsonRes["tempReceipts"]) {
+        TemporaryReceiptModel model = TemporaryReceiptModel.fromMap(saleOrder);
+        lists.add(model);
       }
       await pr.hide();
-      return saleOrderLists;
+      return lists;
 
     }else{
       await pr.hide();

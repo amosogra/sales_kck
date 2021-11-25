@@ -1,8 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
 import 'package:sales_kck/constants/colors.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/model/post/TempDraftModel.dart';
 import 'package:sales_kck/view/temporary/partial/TempInputForm.dart';
 
 class Receipt extends StatefulWidget {
@@ -12,6 +15,22 @@ class Receipt extends StatefulWidget {
 }
 
 class _ReceiptState extends State<Receipt> {
+
+  late TextEditingController receiptNoController = TextEditingController();
+  late TextEditingController receiptFromController = TextEditingController();
+  late TextEditingController receiptDateController = TextEditingController();
+  late TextEditingController paymentDateController = TextEditingController();
+  late TextEditingController paymentMethodController = TextEditingController();
+  late TextEditingController chequeNoController = TextEditingController();
+  late TextEditingController paymentAmountController = TextEditingController();
+
+  FocusNode receiptNoFocusNode = FocusNode();
+  FocusNode receiptFromFocusNode = FocusNode();
+  FocusNode receiptDateFocusNode = FocusNode();
+  FocusNode paymentDateFocusNode = FocusNode();
+  FocusNode paymentMethodFocusNode = FocusNode();
+  FocusNode chequeNoFocusNode =  FocusNode();
+  FocusNode paymentAmountFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +58,29 @@ class _ReceiptState extends State<Receipt> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
                         onPressed: (){
+
+                          if(receiptNoController.text.isEmpty || receiptFromController.text.isEmpty || receiptDateController.text.isEmpty
+                          || paymentDateController.text.isEmpty || paymentMethodController.text.isEmpty || chequeNoController.text.isEmpty
+                          || paymentAmountController.text.isEmpty){
+
+                            showToastMessage(context, "Input Data", "Ok");
+
+                          }else{
+
+                            TempDraftModel model = new TempDraftModel(receiptNo: receiptNoController.text
+                                , receiptFrom: receiptFromController.text, receiptDate: receiptDateController.text
+                                , paymentDate: paymentDateController.text, paymentMethod: paymentMethodController.text
+                                , chequeNo: chequeNoController.text, paymentAmount: paymentAmountController.text);
+
+                            TempDraftDBHelper dbHelper = new TempDraftDBHelper();
+                            List<TempDraftModel> items =  <TempDraftModel>[];
+                            items.add(model);
+                            dbHelper.insertTemps(items);
+
+                            showToastMessage(context, "Saved !!!", "Ok");
+                          }
+
+                          //Navigator.pop(context);
                         },
                         child: Text("Save Draft"),
                       ),
@@ -74,7 +116,11 @@ class _ReceiptState extends State<Receipt> {
             children: [
               Expanded(child: Container()),
               Expanded(
-                  child:TempInputForm(Strings.temporary_receipt_no , Strings.new_document)
+                  child:TempInputForm(Strings.temporary_receipt_no
+                      , Strings.new_document
+                      , receiptNoFocusNode
+                      , receiptFromFocusNode
+                      , receiptNoController)
               )
             ],
           ),
@@ -82,7 +128,11 @@ class _ReceiptState extends State<Receipt> {
           Row(
             children: [
               Expanded(
-                  child:TempInputForm(Strings.receive_from , Strings.company_name)
+                  child:TempInputForm(Strings.receive_from
+                      , Strings.company_name
+                      , receiptFromFocusNode
+                      , receiptDateFocusNode
+                      , receiptFromController)
               ),
               Icon(Icons.search , color: MyColors.textBorderColor ,),
             ],
@@ -91,10 +141,10 @@ class _ReceiptState extends State<Receipt> {
           Row(
             children: [
               Expanded(
-                  child:TempInputForm(Strings.received_date , "Received Date")
+                  child:TempInputForm(Strings.received_date , "Received Date", receiptDateFocusNode, paymentDateFocusNode, receiptDateController)
               ),
               Expanded(
-                  child:TempInputForm(Strings.payment_date , "Payment Date")
+                  child:TempInputForm(Strings.payment_date , "Payment Date", paymentDateFocusNode, paymentMethodFocusNode, paymentDateController)
               )
             ],
           ),
@@ -102,10 +152,10 @@ class _ReceiptState extends State<Receipt> {
           Row(
             children: [
               Expanded(
-                  child:TempInputForm(Strings.payment_method , "Payment method")
+                  child:TempInputForm(Strings.payment_method , "Payment method", paymentMethodFocusNode, chequeNoFocusNode , paymentMethodController)
               ),
               Expanded(
-                  child:TempInputForm(Strings.cheque_no , Strings.cheque_no)
+                  child:TempInputForm(Strings.cheque_no , Strings.cheque_no , chequeNoFocusNode, paymentAmountFocusNode, chequeNoController)
               )
             ],
           ),
@@ -113,7 +163,7 @@ class _ReceiptState extends State<Receipt> {
           Row(
             children: [
               Expanded(
-                  child:TempInputForm(Strings.payment_amount , Strings.amount)
+                  child:TempInputForm(Strings.payment_amount , Strings.amount, paymentAmountFocusNode, paymentAmountFocusNode , paymentAmountController)
               ),
               Expanded(
                   child:Container()
