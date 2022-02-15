@@ -34,7 +34,6 @@ class ItemDBHelper{
     return database;
   }
 
-
   Future<int> insertItems(List<SoList> items) async {
     int result = 0;
     final Database db = await initializeDB();
@@ -54,6 +53,21 @@ class ItemDBHelper{
     final List<Map<String, dynamic>> queryResult = await db.query('item', orderBy: 'id', );
     return queryResult.map((e) => SoList.fromMap(e)).toList();
   }
+
+
+  Future<List<SoList>> retrieveItemsByOrderId(int id) async {
+    final Database db = await initializeDB();
+    final List<Map<String, dynamic>> queryResult = await db.query('item',
+      where: 'order_id = ?',
+      whereArgs: [id],
+      orderBy: 'id', );
+    return queryResult.map((e) => SoList.fromMap(e)).toList();
+  }
+
+
+
+
+
   Future<void> deleteItems() async {
     final db = await initializeDB();
     await db.delete(

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 
 class ConfirmDialog extends StatefulWidget {
+
   final String title;
-  VoidCallback clickSuccess;
+  final VoidCallback clickSuccess;
   ConfirmDialog(this.title , this.clickSuccess );
   //const ConfirmDialog({Key? key}) : super(key: key);
   @override

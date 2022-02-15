@@ -3,7 +3,7 @@
 class Validations {
   static String? validateName(String value) {
     if (value.isEmpty) return 'Name is Required.';
-    final RegExp nameExp = new RegExp(r'^[A-za-zğüşöçİĞÜŞÖÇ ]+$');
+    final RegExp nameExp = new RegExp(r'^(?=[a-zA-Z0-9._]{2,20}$)(?!.*[_.]{2})[^_.].*[^_.]$');
     if (!nameExp.hasMatch(value))
       return 'Please enter only alphabetical characters.';
     return null;
@@ -23,6 +23,7 @@ class Validations {
     if (value.isEmpty || value.length < 6) return 'Please enter a valid password.';
     return null;
   }
+
   static String? validateForm(String value) {
     return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
   }

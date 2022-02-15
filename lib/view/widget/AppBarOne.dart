@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/storage.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/constants/globals.dart';
 
 class AppBarOne extends StatefulWidget with PreferredSizeWidget {

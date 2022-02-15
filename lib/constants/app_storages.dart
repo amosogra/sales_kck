@@ -85,4 +85,44 @@ class Storage {
     }
   }
 
+  static setShowCompany(value) async {
+    localStorage = await SharedPreferences.getInstance();
+    localStorage!.setBool('showCompany', value);
+  }
+
+  static getShowCompany() async {
+    try{
+      localStorage = await SharedPreferences.getInstance();
+      bool? stringValue = localStorage!.getBool('showCompany');
+      return stringValue == null ? false : stringValue;
+    }catch(e){
+      return false;
+    }
+  }
+
+
+
+  static setCompany(value) async {
+    localStorage = await SharedPreferences.getInstance();
+    localStorage!.setString('company', value);
+  }
+
+  static getCompany() async {
+    localStorage = await SharedPreferences.getInstance();
+    String? stringValue = localStorage!.getString('company');
+    return stringValue;
+  }
+
+
+  static setSalesAgent(value) async {
+    localStorage = await SharedPreferences.getInstance();
+    localStorage!.setString('salesagentcode', value);
+  }
+
+  static getSalesAgent() async {
+    localStorage = await SharedPreferences.getInstance();
+    String? stringValue = localStorage!.getString('salesagentcode');
+    return stringValue;
+  }
+
 }

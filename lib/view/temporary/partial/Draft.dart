@@ -3,9 +3,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/TempDraftModel.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/temporary/partial/draft_item.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class Draft extends StatefulWidget {
 
@@ -19,10 +20,13 @@ class _DraftState extends State<Draft> {
 
   late final SlidableController slidableController;
   List<TempDraftModel> items = <TempDraftModel>[];
+  late TempDraftModel selectedItem ;
+  String selectedId = "";
+  int selectedIndex = -1;
 
   void loadItems() async{
     TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
-    List<TempDraftModel> response = await tempDraftDBHelper.retrieveTemps() as List<TempDraftModel>;
+    List<TempDraftModel> response = await tempDraftDBHelper.retrieveOrdersBySaved("0") as List<TempDraftModel>;
 
     if(response.length > 0){
       setState(() {
@@ -71,6 +75,9 @@ class _DraftState extends State<Draft> {
         Container(
           child: Column(
             children: [
+              SizedBox(
+                height: 100,
+              ),
               Image(image: AssetImage(Assets.iconEdit) , width: 70,),
               Text(Strings.not_add_order, style:  TextStyle(color: MyColors.textBorderColor) ),
             ],
@@ -94,6 +101,16 @@ class _DraftState extends State<Draft> {
         child: LoginButton(
           title: Strings.add_item,
           onPressed: (){
+            if(selectedId.isNotEmpty){
+              TempDraftDBHelper helper = new TempDraftDBHelper();
+              selectedItem.isSaved = "1";
+              helper.updateTemp(selectedItem);
+
+              setState(() {
+                items.removeAt(selectedIndex);
+              });
+
+            }
           },
         ),
       ),
@@ -112,7 +129,6 @@ class _DraftState extends State<Draft> {
       itemCount: items.length,
     );
   }
-
 
 
   Widget _getSlidableWithLists( BuildContext context, int index, Axis direction) {
@@ -135,7 +151,17 @@ class _DraftState extends State<Draft> {
       actionPane: SlidableScrollActionPane(),
       actionExtentRatio: 0.25,
       child: direction == Axis.horizontal
-          ? VerticalListItem(items[index])
+          ? DraftItem(
+              model: items[index] ,
+              isTap: items[index].isTap,
+              onTap: (id) {
+                setState(() {
+                  selectedItem = items[index];
+                  selectedId = id.toString();
+                  selectedIndex = index;
+                });
+              },
+          )
           : HorizontalListItem(items[index]),
       secondaryActions: <Widget>[
         IconSlideAction(
@@ -155,8 +181,10 @@ class _DraftState extends State<Draft> {
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(title)));
 
-    setState(() {
+    setState(() async {
 
+      TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
+      await tempDraftDBHelper.deleteTemp(items[index].id);
       items.removeAt(index);
 
     });
@@ -197,6 +225,7 @@ class HorizontalListItem extends StatelessWidget {
   }
 }
 
+
 class VerticalListItem extends StatelessWidget {
   VerticalListItem(this.item);
   final TempDraftModel item;
@@ -209,8 +238,7 @@ class VerticalListItem extends StatelessWidget {
         child: InkResponse(
           onTap: (){
             debugPrint("render..");
-            Navigator.pop(context, item.toMap());
-
+            //Navigator.pop(context, item.toMap());
           },
           child: Container(
             color: Colors.white,

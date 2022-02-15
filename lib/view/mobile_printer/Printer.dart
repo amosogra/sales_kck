@@ -1,17 +1,15 @@
 
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:sales_kck/view/mobile_printer/BluetoothDeviceListEntry.dart';
 
 class Printer extends StatefulWidget {
-  const Printer({Key? key}) : super(key: key);
 
+  const Printer({Key? key}) : super(key: key);
   @override
   _PrinterState createState() => _PrinterState();
+
 }
 
 class _PrinterState extends State<Printer> {
@@ -24,7 +22,6 @@ class _PrinterState extends State<Printer> {
   @override
   void initState() {
     super.initState();
-
     isDiscovering = true;
     if (isDiscovering) {
       _startDiscovery();
@@ -102,7 +99,6 @@ class _PrinterState extends State<Printer> {
             device: device,
             rssi: result.rssi,
             onTap: () async{
-
 
               bool bonded = false;
               if (device.isBonded) {

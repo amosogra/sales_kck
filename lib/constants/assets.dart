@@ -21,5 +21,6 @@ class Assets {
   static const String iconLogout = "assets/icons/logout.png";
   static const String iconEdit = "assets/icons/icon-edit.png";
   static const String iconProfile = "assets/icons/profile.png";
+  static const String iconTrash = "assets/icons/delete.png";
   
 }

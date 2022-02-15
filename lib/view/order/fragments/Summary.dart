@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:sales_kck/constants/strings.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/constants/app_strings.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class Summary extends StatefulWidget {
   const Summary({Key? key}) : super(key: key);

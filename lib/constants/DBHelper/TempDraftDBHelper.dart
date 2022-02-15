@@ -40,6 +40,15 @@ class TempDraftDBHelper{
     return queryResult.map((e) => TempDraftModel.fromMap(e)).toList();
   }
 
+  Future<List<TempDraftModel>> retrieveOrdersBySaved(saved) async {
+    final Database db = await initializeDB();
+    final List<Map<String, dynamic>> queryResult = await db.query('temp_draft',
+      where: 'isSaved = ?',
+      whereArgs: [saved], orderBy: 'id', );
+    return queryResult.map((e) => TempDraftModel.fromDBMap(e)).toList();
+  }
+
+
   Future<void> deleteTemps() async {
     final db = await initializeDB();
     await db.delete(
@@ -47,13 +56,13 @@ class TempDraftDBHelper{
     );
   }
 
-  Future<void> updateTemp(CreateTempModel item) async {
+  Future<void> updateTemp(TempDraftModel item) async {
     final db = await initializeDB();
     await db.update(
       'temp_draft',
       item.toMap(),
       where: 'id = ?',
-      whereArgs: [item.docno],
+      whereArgs: [item.id],
     );
   }
 

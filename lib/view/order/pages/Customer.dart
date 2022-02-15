@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:blinking_text/blinking_text.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
@@ -11,7 +14,9 @@ import 'package:sales_kck/view/order/pages/Order.dart';
 import 'package:sales_kck/view/order/partial/CustomerItemInput.dart';
 import 'package:sales_kck/view/order/partial/CustomerItemView.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
+import 'package:intl/intl.dart';
+import 'dart:math';
 
 class Customer extends StatefulWidget {
 
@@ -30,7 +35,6 @@ class _CustomerState extends State<Customer> {
   attention: '', defDisplayTerm: '', taxType: '', phone1: '', phone2: '', isActive: 1,rev: 0,deleted: 0, custId: 0,
   docNumber: '', docDate: ''
   );
-
 
   late String docNo;
   late String docDate;
@@ -61,13 +65,29 @@ class _CustomerState extends State<Customer> {
   goToCustomerLists() async{
     var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList() ));
     if(result != null){
-      setState(() {
+      setState(() async {
 
-        var date = new DateTime.now().toString();
-        var dateParse = DateTime.parse(date);
+        DateTime now = DateTime.now();
+        String formattedDate = DateFormat('yyyyMMdd').format(now);
+        String userId  = "";//(await Storage.getUserId()) as String;
+        var rnd = Random();
+        String number = '';
+        for(int i = 0; i < 6; i++){
+          number = number + rnd.nextInt(9).toString();
+        }
+
+        String tmp = await Storage.getUser();
+        if(tmp != null){
+          userId =  jsonDecode(tmp)['salesAgentCode'];
+        }
+        if(userId == null){
+          userId = "";
+        }
+
         customerModel = CustomerModel.fromMap(result);
-        customerModel.docNumber = "SO" + "${dateParse.year}${dateParse.month}${dateParse.day}";
-        customerModel.docDate = "${dateParse.year}-${dateParse.month}-${dateParse.day}";
+        customerModel.docNumber = "SO" + formattedDate + userId.toString() +  number.toString();
+        debugPrint(customerModel.docNumber);
+        customerModel.docDate = formattedDate;
 
         this.loadTerms(customerModel.companyCode);
 
@@ -100,15 +120,15 @@ class _CustomerState extends State<Customer> {
               docNumber: '', docDate: ''
           );
         }else{
-          customerModel = new CustomerModel(custId: widget.saleOrderModel.soId, companyCode: widget.saleOrderModel.companyCode, accNo: widget.saleOrderModel.companyCode,
+
+          customerModel = new CustomerModel(custId: widget.saleOrderModel.soId, companyCode: widget.saleOrderModel.companyCode, accNo: widget.saleOrderModel.custAccNo,
               name: widget.saleOrderModel.custName, addr1: widget.saleOrderModel.invAddr1, addr2: widget.saleOrderModel.invAddr2, addr3: widget.saleOrderModel.invAddr3,
               addr4: widget.saleOrderModel.invAddr4, attention: widget.saleOrderModel.attention, defDisplayTerm: widget.saleOrderModel.displayTerm, taxType: widget.saleOrderModel.taxAmt,
               phone1: "", phone2: "", isActive: 1, rev: 0, deleted: 0, docNumber: widget.saleOrderModel.docNo, docDate: widget.saleOrderModel.docDate);
           remark1 = widget.saleOrderModel.remark1 != null ? widget.saleOrderModel.remark1 : '';
           remark2 = widget.saleOrderModel.remark2 != null ? widget.saleOrderModel.remark2 : '' ;
           remark3 = widget.saleOrderModel.remark3 != null ? widget.saleOrderModel.remark3 : '' ;
-          remark4 = widget.saleOrderModel.remark4 != null ? widget.saleOrderModel.remark1 : '' ;
-
+          remark4 = widget.saleOrderModel.remark4 != null ? widget.saleOrderModel.remark4 : '' ;
         }
 
         remark1Controller = TextEditingController(text: remark1);
@@ -298,6 +318,8 @@ class _CustomerState extends State<Customer> {
 
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>
                             Order(
+                              type: widget.saleOrderModel.companyCode.isEmpty ? 'add' : 'edit' ,
+                                orderId: widget.saleOrderModel.companyCode.isEmpty ? '' : widget.saleOrderModel.soId.toString(),
                               customerModel: customerModel,
                               termModel: termModel,
                               remark1: remark1,

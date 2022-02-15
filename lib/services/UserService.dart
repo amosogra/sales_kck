@@ -8,7 +8,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/globals.dart';
-import 'package:sales_kck/constants/storage.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:dio/dio.dart';
 
 Future<bool> login(BuildContext context,  String username, String password) async {
@@ -26,18 +26,21 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
     if(jsonDecode(response.toString())['result'] ){
       print(response);
       String user = await Storage.getUser();
+
       if(user.isEmpty || user == ""){
         OrderDBHelper orderDBHelper = new OrderDBHelper();
         orderDBHelper.initializeTotalDB();
       }
 
       Storage.saveUser(response.toString());
+
       await pr.hide();
       return true;
 
     }else{
 
     }
+
   } catch (e) {
     debugPrint("error -- " + e.toString());
     print(e);

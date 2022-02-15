@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/services/UserService.dart';
 import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/main/HomePage.dart';
-import 'package:sales_kck/widget/InputForm.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/widget/InputForm.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
 

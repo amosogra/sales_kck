@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
-import 'package:sales_kck/constants/storage.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:dio/dio.dart';
 
 Future<bool> updateCustomer(BuildContext context) async {

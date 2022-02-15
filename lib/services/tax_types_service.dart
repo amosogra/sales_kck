@@ -7,8 +7,9 @@ import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/app_storages.dart';
 import 'package:dio/dio.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
+import 'package:sales_kck/model/post/tax_types_model.dart';
 
-Future<List<CustomerModel>> getCustomers(BuildContext context) async {
+Future<List<TaxTypes>> getTaxTypes(BuildContext context) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
   pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
@@ -24,20 +25,16 @@ Future<List<CustomerModel>> getCustomers(BuildContext context) async {
     debugPrint("my token"+  token);
 
     Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode };
-    var response = await Dio().post(Api.baseUrl + "/api/v1/customers", queryParameters: queryParameters );
-    List<CustomerModel> customers = [];
+    var response = await Dio().post(Api.baseUrl + "/api/v1/taxTypes", queryParameters: queryParameters );
+    List<TaxTypes> taxTypes = [];
 
     final jsonRes = json.decode(response.toString());
+    debugPrint( response.toString());
+
     if(jsonRes['result']){
 
-      debugPrint("called");
-      for(var customerJson in jsonRes["customers"]) {
-        CustomerModel customer = CustomerModel.fromMap(customerJson);
-        customers.add(customer);
-      }
       await pr.hide();
-      debugPrint(customers.length.toString());
-      return customers;
+
     }else{
       await pr.hide();
       return [];
@@ -49,6 +46,7 @@ Future<List<CustomerModel>> getCustomers(BuildContext context) async {
     return [];
   }
 
+  return [];
   //await pr.hide();
 
 }

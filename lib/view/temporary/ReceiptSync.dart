@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/TemporaryReceiptModel.dart';
-import 'package:sales_kck/services/TemporaryReceipt.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/services/temporary_receipt_service.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class ReceiptSync extends StatefulWidget {
   const ReceiptSync({Key? key}) : super(key: key);

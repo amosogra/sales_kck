@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/assets.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/view/customer/ItemList.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class Order extends StatefulWidget {
   const Order({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class _OrderState extends State<Order> {
           child: LoginButton(
             title: Strings.add_item,
             onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ItemList() ));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ItemList(pageType: "order",) ));
             },
           ),
         )

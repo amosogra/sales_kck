@@ -9,7 +9,7 @@ class InputForm extends StatefulWidget{
   final FocusNode? nextFocusNode;
   final TextEditingController? controller;
   final TextInputType textInputTye;
-
+  final bool enabled;
   final bool secure;
   final String? Function(String?) validateFunction;
   void Function(String?) onChange;
@@ -20,6 +20,7 @@ class InputForm extends StatefulWidget{
     this.nextFocusNode,
     this.controller ,
     this.secure = false ,
+    this.enabled = true,
     this.textInputTye = TextInputType.text,
     required this.validateFunction,
     required this.onChange,
@@ -53,6 +54,7 @@ class _InputFormState extends State<InputForm> {
 
     return Container(
         child:TextFormField(
+          enabled: widget.enabled,
           obscureText: widget.secure,
           focusNode: widget.myFocusNode,
           controller: widget.controller,

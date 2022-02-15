@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 
 import 'CompanySelectorDialog.dart';
 

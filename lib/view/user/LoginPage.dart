@@ -6,13 +6,13 @@ import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/font_family.dart';
 import 'package:sales_kck/constants/globals.dart';
-import 'package:sales_kck/constants/storage.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_storages.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/services/UserService.dart';
 import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/main/HomePage.dart';
-import 'package:sales_kck/widget/InputForm.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/widget/InputForm.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 import 'ForgotPasswordPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,8 +23,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   String email = 'test_sales',password = 'admin!@#123';
-  TextEditingController emailController = TextEditingController(text: 'test_sales');
-  TextEditingController passwordController = TextEditingController(text: 'admin!@#123');
+  // user: ashrafckss
+  // pass: AM9VAtmT#n
+  //
+  TextEditingController emailController = TextEditingController(text: 'ashrafckss');
+  TextEditingController passwordController = TextEditingController(text: 'AM9VAtmT#n');
+
+  // TextEditingController emailController = TextEditingController(text: '');
+  // TextEditingController passwordController = TextEditingController(text: '');
+
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
 
@@ -41,9 +48,8 @@ class _LoginPageState extends State<LoginPage> {
        Permission.location,
      ].request();
    }
-
-
   }
+
 
   @override
   void initState(){
@@ -51,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       initView();
       requestPermission();
-
     });
   }
 

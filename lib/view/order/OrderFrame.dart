@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/view/order/fragments/Customer.dart';
 import 'package:sales_kck/view/order/fragments/Order.dart';
 import 'package:sales_kck/view/order/fragments/Summary.dart';

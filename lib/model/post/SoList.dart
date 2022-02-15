@@ -1,8 +1,7 @@
 
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 
 class SoList {
-
 
   String itemcode;
   String location;
@@ -11,14 +10,14 @@ class SoList {
   String uom;
   String rate;
   String qty;
-  int focqty;
+  String focqty;
   String smallestunitprice;
   String unitprice;
   String discount;
-  int discountamt;
+  String discountamt;
   String taxtype;
-  int taxrate;
-  int tempid;
+  String taxrate;
+  String tempid;
   int orderId;
 
   SoList({
@@ -40,7 +39,6 @@ class SoList {
     required this.orderId,
   });
 
-
   factory SoList.fromMap(Map<String, dynamic> json) => SoList(
     itemcode: json["itemcode"],
     location: json["location"],
@@ -57,9 +55,8 @@ class SoList {
     taxtype: json["taxtype"],
     taxrate: json["taxrate"],
     tempid: json["tempid"],
-    orderId: json["order_id"],
+    orderId: int.parse(json["order_id"]),
   );
-
 
   Map<String, dynamic> toMap() => {
     "itemcode": itemcode,
@@ -79,6 +76,7 @@ class SoList {
     "taxrate" : taxrate,
     "tempid" : tempid,
     "order_id" : orderId,
+
   };
 
 }

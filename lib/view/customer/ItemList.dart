@@ -1,17 +1,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/services/ItemService.dart';
 import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/dialog/ItemListConfirmDialog.dart';
-import 'package:sales_kck/widget/InputForm.dart';
+import 'package:sales_kck/view/widget/InputForm.dart';
 import 'package:sales_kck/constants/globals.dart' as globals;
 
 
 class ItemList extends StatefulWidget {
-  const ItemList({Key? key}) : super(key: key);
+
+  String pageType;
+  ItemList({Key? key , required this.pageType}) : super(key: key);
   @override
   _ItemListState createState() => _ItemListState();
 }
@@ -64,6 +66,9 @@ class _ItemListState extends State<ItemList> {
         loadItems();
       }else{
         setState(() {
+          globals.items.forEach((element) {
+            element.qty = 0;
+          });
           originalItems =  globals.items;
           items = globals.items;
         });
@@ -140,31 +145,39 @@ class _ItemListState extends State<ItemList> {
     return InkResponse(
       onTap: () async{
 
+        if(widget.pageType == "price_history"){
+          Navigator.pop(context, item.toMap() );
+        }else{
+          debugPrint(item.toMap().toString());
+          showDialog(context: context,
+              builder: (BuildContext context){
 
-        showDialog(context: context,
-            builder: (BuildContext context){
-              List<String> uoms = <String>[];
-              item.uom.forEach((element) {
-                uoms.add(element.uom);
-              });
+                List<String> uoms = <String>[];
+                item.uom.forEach((element) {
+                  uoms.add(element.uom);
+                });
+                return ItemListConfirmDialog(
+                    "",
+                    uoms,
+                    item,
+                    "Success",
+                        (qty, price){
+                      Navigator.pop(context);
+                      debugPrint(item.toMap().toString());
+                      setState(() {
+                        item.qty = int.parse(qty);
+                        item.uom[0].price = price;
+                      });
+                      debugPrint(item.toMap().toString());
+                      Navigator.pop(context, item.toMap() );
 
-              return ItemListConfirmDialog(
-                  uoms,
-                  item,
-                  "Success",
-                      (value){
+                    }
+                );
+              }
+          );
+        }
 
-                    Navigator.pop(context);
-                    debugPrint(item.toMap().toString());
-                    item.qty = int.parse(value);
-                    debugPrint(item.toMap().toString());
 
-                    Navigator.pop(context, item.toMap() );
-
-                  }
-              );
-            }
-        );
 
         // debugPrint(item.toMap().toString());
         // debugPrint(item.uom.toList().toString());

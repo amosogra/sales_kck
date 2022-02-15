@@ -1,21 +1,27 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/dimens.dart';
 import 'package:sales_kck/constants/globals.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
+import 'package:sales_kck/model/post/company_model.dart';
+import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
+import 'package:sales_kck/view/dialog/company_list_dialog.dart';
 import 'package:sales_kck/view/main/partial/SlideMenu.dart';
 import 'package:sales_kck/view/mobile_printer/Printer.dart';
 import 'package:sales_kck/view/order/OrderFrame.dart';
 import 'package:sales_kck/view/order/pages/Customer.dart';
-import 'package:sales_kck/view/price_history/PriceHistory.dart';
+import 'package:sales_kck/view/price_history/price_history_page.dart';
 import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
 import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
-import 'package:sales_kck/view/sync/Sync.dart';
-import 'package:sales_kck/view/temporary/Receipt.dart';
-import 'package:sales_kck/view/temporary/ReceiptPending.dart';
+import 'package:sales_kck/view/sync/sync_page.dart';
+import 'package:sales_kck/view/temporary/temp_receipt_page.dart';
+import 'package:sales_kck/view/temporary/temp_receipt_pending_page.dart';
 import 'package:sales_kck/view/temporary/ReceiptSync.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,8 +30,43 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initView();
+  }
+
+  initView() async{
+
+    bool isShown = await Storage.getShowCompany();
+    var data = await Storage.getUser();
+    List<CompanyModel> models = [];
+
+    jsonDecode(data.toString())['user']['companies'].forEach((item) {
+      CompanyModel model = CompanyModel.fromMap(item);
+      models.add(model);
+    });
+
+    //if(!isShown){
+      showDialog(context: context,
+          builder: (BuildContext context){
+            return CompanyListDialog(
+              models,
+              (val1, val2, salesAgent){
+                  Storage.setShowCompany(true);
+                  Storage.setCompany(val1);
+                  Storage.setSalesAgent(salesAgent);
+                  Navigator.pop(context);
+              }
+            );
+          }
+      );
+    //}
+  }
+
   @override
   Widget build(BuildContext context) {
 

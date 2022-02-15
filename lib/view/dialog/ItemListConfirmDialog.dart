@@ -7,26 +7,44 @@ import 'package:sales_kck/view/order/partial/CustomerItemInput.dart';
 
 class ItemListConfirmDialog extends StatefulWidget {
 
-  List<String> uoms;
-  ItemModel itemModel;
+  final List<String> uoms;
+  final ItemModel itemModel;
   final String title;
-  void Function(dynamic) clickSuccess;
+  final String price;
+  final void Function(dynamic, dynamic) clickSuccess;
 
-  ItemListConfirmDialog(this.uoms, this.itemModel, this.title , this.clickSuccess );
+  ItemListConfirmDialog(this.price , this.uoms, this.itemModel, this.title , this.clickSuccess  );
   //const ItemListConfirmDialog({Key? key}) : super(key: key);
   @override
   _ItemListConfirmDialogState createState() => _ItemListConfirmDialogState();
-
 }
+
 
 class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
 
   String _selectedLocation = 'A';
-  late TextEditingController priceController = TextEditingController(text : widget.itemModel.uom.length > 0 ? widget.itemModel.uom[0].price : '');
+  late TextEditingController priceController = TextEditingController(text : initialPrice());
   FocusNode priceNode = FocusNode();
-  late TextEditingController qtyController = TextEditingController(text: '');
+  late TextEditingController qtyController = TextEditingController(text: widget.itemModel.qty != null ? widget.itemModel.qty.toString() : '');
   FocusNode qtyFocus = FocusNode();
   bool isFilled = false;
+
+  String minPrice = "";
+  String maxPrice = "";
+
+  String initialPrice(){
+    if(widget.price.isNotEmpty){
+      return widget.price;
+    }
+    return widget.itemModel.uom.length > 0 && double.parse(widget.itemModel.uom[0].minPrice) != -1 ? double.parse(widget.itemModel.uom[0].minPrice).toStringAsFixed(2) : '';
+  }
+
+  String showPrice(price){
+    if(price == -1){
+      return "Not Define";
+    }
+    return price.toStringAsFixed(2);
+  }
 
   contentBox(context){
     return Stack(
@@ -58,7 +76,11 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                   child: Text(widget.itemModel.description , style: Theme.of(context).textTheme.bodyText2,),
                 ),
 
-
+                Container(
+                  alignment:Alignment.centerLeft,
+                  margin: EdgeInsets.only(top: 0, bottom: 0,left: 25, right: 15),
+                  child: Text("Min Price: " + showPrice(double.parse(minPrice)) + " Max Price: "  + showPrice(double.parse(maxPrice)) , style: TextStyle(fontSize: 12)),
+                ),
 
                 Container(
                   alignment:Alignment.centerLeft,
@@ -80,7 +102,15 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                     }).toList(),
                     onChanged: (newValue) {
                       setState(() {
+                        debugPrint(newValue);
                         _selectedLocation = newValue.toString();
+                        for(var i = 0; i < widget.itemModel.uom.length; i++){
+                          if(widget.itemModel.uom[i].uom == newValue){
+                            minPrice = widget.itemModel.uom[i].minPrice;
+                            maxPrice = widget.itemModel.uom[i].maxPrice;
+                          }
+                        }
+
                       });
                     },
                   ),
@@ -99,8 +129,12 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                     controller: qtyController, focusNode: qtyFocus, nextFocusNode: priceNode, hint: "Enter Qty",
                     onChange: (value){
                       setState(() {
-                        if(qtyController.text.isNotEmpty){
+
+                        if(qtyController.text.isNotEmpty && priceController.text.isNotEmpty && double.parse(minPrice) <= double.parse(priceController.text)
+                            && ( double.parse(priceController.text) < double.parse(maxPrice) ||  double.parse(maxPrice) == -1 )){
                           this.isFilled = true;
+                        }else{
+                          this.isFilled = false;
                         }
                       });
                     },
@@ -120,27 +154,19 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                     controller: priceController, focusNode: priceNode, nextFocusNode: priceNode, hint: "Enter Price",
                     onChange: (value){
                       setState(() {
+                        debugPrint(value);
+                        debugPrint(double.parse(minPrice).toString());
+                        if(qtyController.text.isNotEmpty && double.parse(minPrice) < double.parse(value!)
+                            && (double.parse(value) < double.parse(maxPrice) || double.parse(maxPrice) == -1)){
+                          this.isFilled = true;
+                        }else{
+                          this.isFilled = false;
+                        }
                       });
                     },
                   ),
                 ),
 
-
-                // DropdownButton(
-                //   hint: Text('Please choose a location'), // Not necessary for Option 1
-                //   value: _selectedLocation,
-                //   onChanged: (newValue) {
-                //     setState(() {
-                //       _selectedLocation = newValue.toString();
-                //     });
-                //   },
-                //   items: _locations.map((location) {
-                //     return DropdownMenuItem(
-                //       child: new Text(location),
-                //       value: location,
-                //     );
-                //   }).toList(),
-                // ),
 
 
                 Container(
@@ -162,8 +188,8 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                         child: ElevatedButton(
                           style: this.isFilled ?  ElevatedButton.styleFrom(primary: MyColors.primaryColor ) : ElevatedButton.styleFrom(primary: MyColors.greyColor ),
                           onPressed: () {
-                            if(qtyController.text.isNotEmpty){
-                              widget.clickSuccess( qtyController.text);
+                            if(this.isFilled){
+                              widget.clickSuccess( qtyController.text , priceController.text);
                             }
                           },
                           child: Text("Add to Cart"),
@@ -183,50 +209,19 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
   @override
   Widget build(BuildContext context) {
 
+    minPrice = widget.itemModel.uom.length > 0 ? widget.itemModel.uom[0].minPrice : "0";
+    maxPrice = widget.itemModel.uom.length > 0 ? widget.itemModel.uom[0].maxPrice : "0";
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: contentBox(context),
+      child: SingleChildScrollView(
+        child: contentBox(context),
+      )
     );
 
-
-    //
-    // return Container(
-    //   child: Container(
-    //       // margin: EdgeInsets.only(top: 40, bottom: 50, left: 30, right: 30),
-    //       color: MyColors.bgColor,
-    //       child: Column(
-    //         children: [
-    //           Text(widget.title , style: Theme.of(context).textTheme.bodyText2,),
-    //           Row(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: [
-    //               ElevatedButton(
-    //                 onPressed: (){
-    //                   Navigator.pop(context);
-    //                 },
-    //                 child: Text("Cancel"),
-    //               ),
-    //
-    //               Container(
-    //                 margin: EdgeInsets.only(left: 20),
-    //                 child: ElevatedButton(
-    //                   onPressed: (){
-    //                     Navigator.pop(context);
-    //                   },
-    //                   child: Text("Done"),
-    //                 ),
-    //               )
-    //             ],
-    //           )
-    //
-    //
-    //         ],
-    //       ),
-    //   ),
-    // );
   }
 }

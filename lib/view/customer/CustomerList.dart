@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/services/CustomerService.dart';
 
@@ -16,7 +16,7 @@ class _CustomerListState extends State<CustomerList> {
 
   void loadCustomers() async{
     List<CustomerModel> response = await getCustomers(context);
-    debugPrint("length");
+
     debugPrint(response.length.toString());
     if(response.length > 0){
       debugPrint(customers.length.toString());

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:sales_kck/constants/assets.dart';
-import 'package:sales_kck/constants/storage.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/view/main/HomePage.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
 

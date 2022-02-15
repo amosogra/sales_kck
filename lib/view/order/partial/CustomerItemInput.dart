@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/utils/Validations.dart';
-import 'package:sales_kck/widget/InputForm.dart';
+import 'package:sales_kck/view/widget/InputForm.dart';
 
 // ignore: must_be_immutable
 class CustomerItemInput extends StatefulWidget {

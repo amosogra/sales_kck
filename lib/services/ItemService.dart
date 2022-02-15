@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sales_kck/constants/Api.dart';
-import 'package:sales_kck/constants/storage.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:dio/dio.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 
@@ -20,9 +20,10 @@ Future<List<ItemModel>> getItems(BuildContext context) async {
 
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
+    String companyCode = await Storage.getCompany();
 
     debugPrint("my token"+  token);
-    Map<String, dynamic>? queryParameters = { 'token': token };
+    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode };
     var response = await Dio().post(Api.baseUrl + "/api/v1/items", queryParameters: queryParameters );
 
     debugPrint(response.toString());

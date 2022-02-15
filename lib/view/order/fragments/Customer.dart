@@ -1,7 +1,7 @@
 import 'package:blinking_text/blinking_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/TermModel.dart';
 import 'package:sales_kck/services/TermService.dart';
@@ -9,7 +9,7 @@ import 'package:sales_kck/view/customer/CustomerList.dart';
 import 'package:sales_kck/view/order/partial/CustomerItemInput.dart';
 import 'package:sales_kck/view/order/partial/CustomerItemView.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class Customer extends StatefulWidget {
 

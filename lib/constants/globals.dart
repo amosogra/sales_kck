@@ -19,7 +19,7 @@ initializeSaleOrder(){
       branchCode: "", salesLocation: "", shipVia: "", shipInfo: "", attention: "",
       displayTerm: "" , salesAgent: "", inclusiveTax: 0, subtotalAmt: "0", taxAmt: "0", totalAmt: "0",
       remark1: "", remark2: "", remark3: "", remark4: "",
-      cancelled: 0, rev: 0, deleted: 0);
+      cancelled: 0, rev: 0, deleted: 0,synced: "0");
 
 }
 

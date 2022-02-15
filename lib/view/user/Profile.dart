@@ -1,15 +1,18 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sales_kck/constants/colors.dart';
-import 'package:sales_kck/constants/storage.dart';
-import 'package:sales_kck/constants/strings.dart';
+import 'package:sales_kck/constants/app_storages.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/User.dart';
+import 'package:sales_kck/model/post/company_model.dart';
 import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
+import 'package:sales_kck/view/dialog/company_list_dialog.dart';
 import 'package:sales_kck/view/user/ChangePassword.dart';
 import 'package:sales_kck/view/user/LoginPage.dart';
 import 'package:sales_kck/view/user/partial/ProfileItemView.dart';
-import 'package:sales_kck/widget/LoginButton.dart';
+import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late User myUser;
+  String company = '';
   @override
   void initState(){
     super.initState();
@@ -32,6 +36,36 @@ class _ProfileState extends State<Profile> {
     if(user.isNotEmpty){
       myUser = User.fromMap(jsonDecode(user)['user']);
     }
+    company = await Storage.getCompany();
+  }
+
+  void openCompany() async{
+
+    bool isShown = await Storage.getShowCompany();
+    var data = await Storage.getUser();
+    List<CompanyModel> models = [];
+
+    jsonDecode(data.toString())['user']['companies'].forEach((item) {
+      CompanyModel model = CompanyModel.fromMap(item);
+      models.add(model);
+    });
+
+    //if(!isShown){
+    showDialog(context: context,
+        builder: (BuildContext context){
+          return CompanyListDialog(
+              models,
+                  (val1, val2, salesAgent){
+                Storage.setShowCompany(true);
+                Storage.setCompany(val1);
+                company = val1;
+                Storage.setSalesAgent(salesAgent);
+                Navigator.pop(context);
+              }
+          );
+        }
+    );
+    //}
   }
 
   final Future<String> _calculation = Future<String>.delayed(
@@ -120,7 +154,12 @@ class _ProfileState extends State<Profile> {
         ProfileItemView(title: Strings.displayName, content: myUser.name),
         ProfileItemView(title: Strings.email, content: myUser.email),
         ProfileItemView(title: Strings.role, content: "Role"),
-        ProfileItemView(title: Strings.company, content: "Company"),
+        InkResponse(
+          onTap: () {
+            openCompany();
+          },
+          child: ProfileItemView(title: Strings.company, content: company),
+        )
 
       ],
     );

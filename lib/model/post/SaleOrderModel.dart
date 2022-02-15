@@ -30,7 +30,7 @@ class SaleOrderModel{
   int cancelled;
   int rev;
   int deleted;
-
+  String synced;
 
   SaleOrderModel({
     required this.soId,
@@ -61,6 +61,7 @@ class SaleOrderModel{
     required this.cancelled,
     required this.rev,
     required this.deleted,
+    required this.synced,
   });
 
   factory SaleOrderModel.fromMap(Map<String, dynamic> json) => SaleOrderModel(
@@ -91,7 +92,8 @@ class SaleOrderModel{
     remark4: json["remark4"],
     cancelled: int.parse(json["cancelled"].toString()) ,
     rev: int.parse(json["rev"].toString()) ,
-    deleted: int.parse(json["deleted"].toString())
+    deleted: int.parse(json["deleted"].toString()),
+    synced: json['synced']
   );
 
 
@@ -123,7 +125,8 @@ class SaleOrderModel{
       remark4: json["remark4"],
       cancelled: int.parse(json["cancelled"].toString()) ,
       rev: int.parse(json["rev"].toString()) ,
-      deleted: json["deleted"] != null ? int.parse(json["deleted"].toString()) : 0
+      deleted: json["deleted"] != null ? int.parse(json["deleted"].toString()) : 0,
+      synced: json['synced']
   );
 
 
@@ -200,6 +203,7 @@ class SaleOrderModel{
     "remark4" : remark4,
     "cancelled" : cancelled,
     "rev" : rev,
+    "synced": synced
   };
 
 
