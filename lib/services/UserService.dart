@@ -33,6 +33,8 @@ Future<bool> login(BuildContext context,  String username, String password) asyn
       }
 
       Storage.saveUser(response.toString());
+      Storage.savePassword(password);
+      Storage.setLogin(true);
 
       await pr.hide();
       return true;

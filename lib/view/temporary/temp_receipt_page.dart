@@ -1,16 +1,24 @@
 import 'dart:async';
+
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
+import 'package:sales_kck/constants/DBHelper/TempDraftInvoiceDBHelper.dart';
+import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/TempDraftModel.dart';
+import 'package:sales_kck/model/post/outstanding_model.dart';
+import 'package:sales_kck/services/outstanding_ars_service.dart';
+import 'package:sales_kck/services/temporary_receipt_service.dart';
 import 'package:sales_kck/view/customer/CustomerList.dart';
 import 'package:sales_kck/view/dialog/payment_method_dialog.dart';
 import 'package:sales_kck/view/temporary/partial/TempInputForm.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:sales_kck/view/temporary/partial/receipt_draft_section.dart';
+import 'package:intl/intl.dart';
 
 class Receipt extends StatefulWidget {
   const Receipt({Key? key}) : super(key: key);
@@ -36,13 +44,27 @@ class _ReceiptState extends State<Receipt> {
   FocusNode chequeNoFocusNode =  FocusNode();
   FocusNode paymentAmountFocusNode = FocusNode();
   String companyName = "Customer Name";
-  List<TempDraftModel> draftItems =  <TempDraftModel>[];
+  List<OutstandingARS> draftItems =  <OutstandingARS>[];
+  String companyCode = "";
+  String accNo = "";
+
+  Future<String> generateTRNumber() async{
+    var rnd = Random();
+    String number = '';
+    for(int i = 0; i < 4; i++){
+      number = number + rnd.nextInt(9).toString();
+    }
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyyMMdd').format(now);
+    var saleAgentsCode = await Storage.getSalesAgent();
+    return "TR" + formattedDate + saleAgentsCode + number;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadDraftData();
+    //loadDraftData();
   }
 
   @override
@@ -58,12 +80,11 @@ class _ReceiptState extends State<Receipt> {
 
       bottomSheet: Container(
         alignment: Alignment.bottomCenter,
-        height: 90,
+        height: 60,
         child: saveDraftButtonSection()
       ),
 
       body: Container(
-
           constraints: BoxConstraints.expand(),
           child: Column(
             children: <Widget>[
@@ -86,7 +107,6 @@ class _ReceiptState extends State<Receipt> {
     );
   }
 
-
   buildForm(){
     return Container(
       margin: EdgeInsets.all(25),
@@ -100,7 +120,7 @@ class _ReceiptState extends State<Receipt> {
                       , Strings.new_document
                       , receiptNoFocusNode
                       , receiptFromFocusNode
-                      , receiptNoController, true, TextInputType.text)
+                      , receiptNoController, false, TextInputType.text)
               )
             ],
           ),
@@ -109,13 +129,18 @@ class _ReceiptState extends State<Receipt> {
            onTap: () async{
              var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList() ));
              if(result != null){
-               setState(() {
-                 CustomerModel customerModel = CustomerModel.fromMap(result);
-                 setState(() {
-                   companyName = customerModel.name;
-                   receiptFromController.text = customerModel.name;
-                 });
+               var number = await generateTRNumber();
+               CustomerModel customerModel = CustomerModel.fromMap(result);
+               setState((){
+                 companyName = customerModel.name;
+                 receiptFromController.text = customerModel.name;
+                 receiptNoController.text = number;
+                 companyCode = customerModel.companyCode;
+                 accNo = customerModel.accNo;
                });
+               debugPrint("customerModel.accNo--" + customerModel.toMap().toString());
+               loadDraftData(customerModel.accNo);
+
              }
            },
            child:  Row(
@@ -180,8 +205,9 @@ class _ReceiptState extends State<Receipt> {
                   child: InkResponse(
                     onTap: (){
                       List<String> paymentMethodLists = [];
-                      paymentMethodLists.add("Bank");
-                      paymentMethodLists.add("Cash");
+                      paymentMethodLists.add("BANK");
+                      paymentMethodLists.add("CASH");
+                      paymentMethodLists.add("CHEQUE");
 
                       showDialog(context: context,
                           builder: (BuildContext context){
@@ -220,7 +246,6 @@ class _ReceiptState extends State<Receipt> {
 
   saveDraftButtonSection() {
     return Container(
-
       //bottom: 80,
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -236,27 +261,12 @@ class _ReceiptState extends State<Receipt> {
                     style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
                     onPressed: () async{
                       if(receiptNoController.text.isEmpty || receiptFromController.text.isEmpty || receiptDateController.text.isEmpty
-                          || paymentDateController.text.isEmpty || paymentMethodController.text.isEmpty || chequeNoController.text.isEmpty
+                          || paymentDateController.text.isEmpty || paymentMethodController.text.isEmpty || (chequeNoController.text.isEmpty && paymentMethodController.text == "CHEQUE")
                           || paymentAmountController.text.isEmpty){
                         showToastMessage(context, "Input Data - " + receiptFromController.text, "Ok");
                       }else{
-                        TempDraftModel model = new TempDraftModel(receiptNo: receiptNoController.text
-                            , receiptFrom: receiptFromController.text, receiptDate: receiptDateController.text
-                            , paymentDate: paymentDateController.text, paymentMethod: paymentMethodController.text
-                            , chequeNo: chequeNoController.text, paymentAmount: paymentAmountController.text, id: -1, isSaved: '0');
 
-                        TempDraftDBHelper dbHelper = new TempDraftDBHelper();
-                        List<TempDraftModel> items =  <TempDraftModel>[];
-                        items.add(model);
-                        dbHelper.insertTemps(items);
-                        showToastMessage(context, "Saved !!!", "Ok");
-
-                        List<TempDraftModel> response = await dbHelper.retrieveTemps() as List<TempDraftModel>;
-                        if(response.length > 0){
-                          setState(() {
-                            draftItems = response;
-                          });
-                        }
+                        saveData("draft");
                       }
                       //Navigator.pop(context);
                     },
@@ -270,8 +280,9 @@ class _ReceiptState extends State<Receipt> {
                   padding: EdgeInsets.only(left: 5,right: 5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: MyColors.primaryColor ),
-                    onPressed: (){
+                    onPressed: () async{
                       Navigator.pop(context);
+                      saveData("save");
                     },
                     child: Text("Done and Save"),
                   ),
@@ -284,14 +295,76 @@ class _ReceiptState extends State<Receipt> {
 
   }
 
-  void loadDraftData() async{
-    TempDraftDBHelper dbHelper = new TempDraftDBHelper();
-    List<TempDraftModel> response = await dbHelper.retrieveTemps() as List<TempDraftModel>;
-    if(response.length > 0){
-      setState(() {
-        draftItems = response;
-      });
+  bool isInvoiceSelected() {
+    bool flag = false;
+    for(var i  = 0; i < draftItems.length; i++){
+      if(draftItems[i].isSelected){
+        flag = true;
+      }
     }
+    return flag;
+  }
+
+  void loadDraftData(String accNo) async{
+    List<OutstandingARS> response = await getOutstanding(context , accNo);
+    setState(() {
+      response.sort((a, b) => -a.docDate.compareTo(b.docDate));
+      draftItems = response;
+    });
+  }
+
+  void saveData(type) async{
+    if(companyCode.isNotEmpty && accNo.isNotEmpty && isInvoiceSelected()){
+      TempDraftModel model = new TempDraftModel( companyCode: companyCode, accNo: accNo, receiptNo: receiptNoController.text
+          , receiptFrom: receiptFromController.text, receiptDate: receiptDateController.text
+          , paymentDate: paymentDateController.text, paymentMethod: paymentMethodController.text
+          , chequeNo: chequeNoController.text, paymentAmount: paymentAmountController.text, id: -1, isSaved: type == "save" ? '2' : '0');
+
+      TempDraftDBHelper dbHelper = new TempDraftDBHelper();
+      List<TempDraftModel> items =  <TempDraftModel>[];
+      items.add(model);
+      var id = await dbHelper.insertTemps(items);
+
+      List<OutstandingARS> insertData = [];
+
+      for(var i  = 0; i < draftItems.length; i++){
+        if(draftItems[i].isSelected){
+          draftItems[i].trId = id.toString();
+          insertData.add(draftItems[i]);
+        }
+        draftItems[i].isSelected = false;
+      }
+
+      insertData.sort((a, b) => a.docDate.compareTo(b.docDate));
+
+      // Save Invoice Data
+      TempDraftInvoiceDBHelper invoiceHelper = new TempDraftInvoiceDBHelper();
+      await invoiceHelper.insertTempInvoice(insertData);
+
+      showToastMessage(context, "Saved !!!", "Ok");
+      companyCode = "";
+      accNo ="";
+      receiptNoController.text = "";
+      receiptFromController.text = "";
+      receiptDateController.text = "";
+      paymentDateController.text = "";
+      paymentMethodController.text = "";
+      chequeNoController.text = "";
+      paymentAmountController.text = "";
+
+      if(type == "save"){
+        String response = await saveTemporaryReceipt(context, model , "save");
+
+        if(response == "true"){
+          showToastMessage(context, "Create new Temporary Receipt.", "Ok");
+        }else{
+          showToastMessage(context, response, "Ok");
+        }
+      }
+    }else{
+      showToastMessage(context, "Select Invoice Data", "Ok");
+    }
+
   }
 
 

@@ -3,6 +3,8 @@
 class TempDraftModel{
 
   int id;
+  String companyCode;
+  String accNo;
   String receiptNo;
   String receiptFrom;
   String receiptDate;
@@ -15,6 +17,8 @@ class TempDraftModel{
 
   TempDraftModel({
     required this.id,
+    required this.companyCode,
+    required this.accNo,
     required this.receiptNo,
     required this.receiptFrom,
     required this.receiptDate,
@@ -28,6 +32,8 @@ class TempDraftModel{
 
   factory TempDraftModel.fromMap(Map<String, dynamic> json) => TempDraftModel(
       id: json["id"],
+      companyCode: json["companyCode"],
+      accNo: json["accNo"],
       receiptNo: json["receipt_no"],
       receiptFrom: json["receipt_from"],
       receiptDate: json["receipt_date"],
@@ -40,6 +46,8 @@ class TempDraftModel{
 
   factory TempDraftModel.fromDBMap(Map<String, dynamic> json) => TempDraftModel(
       id: json["id"],
+      companyCode: json["companyCode"],
+      accNo: json["accNo"],
       receiptNo: json["receipt_no"],
       receiptFrom: json["receipt_from"],
       receiptDate: json["receipt_date"],
@@ -52,6 +60,8 @@ class TempDraftModel{
   );
 
   Map<String, dynamic> toMap() => {
+    "companyCode": companyCode,
+    "accNo": accNo,
     "receipt_no": receiptNo,
     "receipt_from": receiptFrom,
     "receipt_date" : receiptDate,

@@ -36,6 +36,7 @@ class _InputFormState extends State<InputForm> {
 
     final inputDecoration =  InputDecoration(
         //icon: Icon(Icons.person),
+
         hintText: widget.myHint,
         hintStyle: TextStyle(fontSize: 14),
         border: InputBorder.none,
@@ -53,12 +54,14 @@ class _InputFormState extends State<InputForm> {
     );
 
     return Container(
+
         child:TextFormField(
           enabled: widget.enabled,
           obscureText: widget.secure,
           focusNode: widget.myFocusNode,
           controller: widget.controller,
           keyboardType: widget.textInputTye,
+
           style: new TextStyle(
             fontFamily: FontFamily.verdana,
           ),

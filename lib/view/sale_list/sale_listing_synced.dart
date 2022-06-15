@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/app_strings.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
-import 'package:sales_kck/services/order_service.dart';
 import 'package:sales_kck/utils/Validations.dart';
-import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'package:sales_kck/view/sale_list/partial/NoItem.dart';
+import 'package:sales_kck/view/sale_list/sale_listing_synced_details.dart';
 import 'package:sales_kck/view/widget/InputForm.dart';
 
 class SaleListingSynced extends StatefulWidget {
@@ -28,7 +28,7 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
   void loadItems() async{
 
     OrderDBHelper orderDBHelper = new OrderDBHelper();
-    List<SaleOrderModel> response = await orderDBHelper.retrieveOrdersBySynced() as List<SaleOrderModel>;
+    List<SaleOrderModel> response = await orderDBHelper.retrieveOrdersBySynced("1") as List<SaleOrderModel>;
     //List<SaleOrderModel> response = await getSaleOrders(context);
     if(response.length > 0){
       setState(() {
@@ -54,13 +54,18 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
     });
   }
 
+  String getDate(String code){
+    String subString = code.substring(2,10);
+    debugPrint(subString);
+    return subString.substring(subString.length - 2, subString.length) + "/" + getMonth(subString.substring(subString.length - 4, subString.length-2)) + "/" + subString.substring(0,4);
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     myController.addListener(_printLatestValue);
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadItems();
     });
   }
@@ -150,21 +155,52 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
         },
         child: InkResponse(
           onTap: (){
-            debugPrint("render..");
-            Navigator.pop(context, item.toMap());
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
-            );
+
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                SaleListingSyncedDetails( orderId: item.soId.toString() )
+            ));
+
+            // Navigator.pop(context, item.toMap());
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item, isEdit: false,))
+            // );
           },
           child: Container(
             color: Colors.white,
             child: ListTile(
-              leading: CircleAvatar(
-                child: Text('S'),
-                foregroundColor: Colors.white,
+              // leading: CircleAvatar(
+              //   child: Text('S'),
+              //   foregroundColor: Colors.white,
+              // ),
+              title: Container(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //getDate(item.docNo.trim())
+                    Text(item.docDate , style: TextStyle(fontSize: 14),),
+                    Text(item.custName , style: TextStyle(fontSize: 14),),
+                  ],
+                ),
               ),
-              title: Text(item.custName),
-              subtitle: Text(item.companyCode),
+              subtitle: Container(
+                child: Row(
+                  children: [
+                    Text(item.companyCode ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(item.docNo , style: TextStyle(fontWeight: FontWeight.bold , ),),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(item.totalAmt , style: TextStyle(fontWeight: FontWeight.bold , color: MyColors.blackColor ),)
+                      ),
+                    )
+                  ],
+                )
+              ),
             ),
           ),
         )

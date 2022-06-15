@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/view/temporary/partial/Draft.dart';
@@ -42,3 +42,4 @@ class _ReceiptPendingState extends State<ReceiptPending> {
     );
   }
 }
+ */

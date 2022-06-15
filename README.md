@@ -59,3 +59,8 @@ TR is connected to SO and Invoice
 
 
 
+# printer link
+https://madewithflutter.net/best-printer-packages-for-flutter/
+
+new link
+https://github.com/andrey-ushakov/esc_pos_printer

@@ -50,16 +50,16 @@ class CreateTempModel{
 
   //List<dynamic>.from(solists.map((x) => x.toMap() ))
   Map<String, dynamic> toMap() => {
-    "docno": docno,
-    "debtorcode": debtorcode,
-    "projectcode" : projectcode,
-    "departmentcode" : departmentcode,
-    "currencycode" : currencycode,
-    "description": description,
-    "secondreceiptno" : secondreceiptno,
-    "salesagent" : salesagent,
-    "receiveddate" : receiveddate,
-    "chequedate" : chequedate,
+    "docno": docno.toString(),
+    "debtorcode": debtorcode.toString(),
+    "projectcode" : projectcode.toString(),
+    "departmentcode" : departmentcode.toString(),
+    "currencycode" : currencycode.toString(),
+    "description": description.toString(),
+    "secondreceiptno" : secondreceiptno.toString(),
+    "salesagent" : salesagent.toString(),
+    "receiveddate" : receiveddate.toString(),
+    "chequedate" : chequedate.toString(),
     "flexpdclist" : List<dynamic>.from(flexpdclist.map((x) => x.toMap() )),
     "flexpdcknockofflist" : List<dynamic>.from(flexpdcknockofflist.map((x) => x.toMap() ))
   };

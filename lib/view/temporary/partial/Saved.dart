@@ -1,4 +1,4 @@
-
+/* 
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,6 +6,7 @@ import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/app_strings.dart';
+import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/model/post/TempDraftModel.dart';
 import 'package:sales_kck/services/temporary_receipt_service.dart';
 import 'package:sales_kck/view/temporary/partial/Draft.dart';
@@ -107,8 +108,23 @@ class _SavedState extends State<Saved> {
           onPressed: () async{
             if(selectedId.isNotEmpty){
 
-              //await saveTemporaryReceipt(context, "customerModel", "receiveDate", "chequeDate", "save");
+              String response = await saveTemporaryReceipt(context, items[selectedIndex] , "save");
 
+              if(response == "true"){
+                showToastMessage(context, "Create new Temporary Receipt.", "Ok");
+                TempDraftDBHelper helper = new TempDraftDBHelper();
+                items[selectedIndex].isSaved = "2";
+                helper.updateTemp(items[selectedIndex]);
+                // TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
+                // await tempDraftDBHelper.deleteTemp(items[selectedIndex].id);
+                setState(()  {
+                  items.removeAt(selectedIndex);
+                });
+                _showSnackBar(context, "Delete", selectedIndex);
+
+              }else{
+                showToastMessage(context, response, "Ok");
+              }
               // TempDraftDBHelper helper = new TempDraftDBHelper();
               // selectedItem.isSaved = "1";
               // helper.updateTemp(selectedItem);
@@ -170,6 +186,8 @@ class _SavedState extends State<Saved> {
             items[index].isTap = true;
             selectedIndex = index;
           });
+
+
         },
       )
           : HorizontalListItem(items[index]),
@@ -179,7 +197,14 @@ class _SavedState extends State<Saved> {
           color: Colors.red,
           icon: Icons.delete,
           closeOnTap: true,
-          onTap: () => _showSnackBar(context, "Delete", index),
+          onTap: () async{
+            TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
+            await tempDraftDBHelper.deleteTemp(items[index].id);
+            setState(()  {
+              items.removeAt(index);
+            });
+            _showSnackBar(context, "Delete", index);
+            },
         ),
       ],
     );
@@ -191,13 +216,8 @@ class _SavedState extends State<Saved> {
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(title)));
 
-    setState(() async {
 
-      TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
-      await tempDraftDBHelper.deleteTemp(items[index].id);
-      items.removeAt(index);
-
-    });
   }
 
 }
+ */

@@ -32,6 +32,7 @@ class Summary extends StatefulWidget {
 
 class _SummaryState extends State<Summary> {
 
+  bool isSubmit = false;
   String getTotalPrice() {
     double total = 0;
     for(var i = 0;i < widget.itemModels.length; i++){
@@ -55,7 +56,9 @@ class _SummaryState extends State<Summary> {
                 child: Text("Selected Items", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
               ),
 
-              Container(
+              Flexible(
+                flex: 1,
+                //height: MediaQuery.of(context).size.height/2,
                 child: renderItemLists(),
               ),
 
@@ -121,21 +124,71 @@ class _SummaryState extends State<Summary> {
                 child: Column(
                   children: [
                     LoginButton(
+                      isActive: !this.isSubmit,
                       title: Strings.save,
                       onPressed: () async{
-                        bool flag = await saveOrder(context,
-                            widget.customerModel,
-                            widget.termModel,
-                            widget.remark1,
-                            widget.remark2,
-                            widget.remark3,
-                            widget.remark4,
-                            widget.itemModels,
-                          getTotalPrice(),
-                          "save"
-                        );
 
-                        if(flag){
+                        if(!this.isSubmit){
+                          bool flag = await saveOrder(context,
+                              widget.customerModel,
+                              widget.termModel,
+                              widget.remark1,
+                              widget.remark2,
+                              widget.remark3,
+                              widget.remark4,
+                              widget.itemModels,
+                              getTotalPrice(),
+                              "save"
+                          );
+
+                          if(flag){
+                            setState(() {
+                              this.isSubmit = true;
+                            });
+                            showDialog(context: context,
+                                builder: (BuildContext context){
+                                  return ConfirmDialog(
+                                      "Your order has been saved",
+                                          (){
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      }
+                                  );
+                                }
+                            );
+
+                          }else{
+                            // showToastMessage(context, "Failed", "Ok");
+                          }
+                        }else{
+                          showToastMessage(context, "Already Submitted", "Ok");
+                        }
+
+                      },
+                    ),
+                    LoginButton(
+                      isActive: !this.isSubmit,
+                      title: Strings.draft,
+                      onPressed: () async{
+
+                        if(!this.isSubmit){
+                          bool flag = await saveOrder(context,
+                              widget.customerModel,
+                              widget.termModel,
+                              widget.remark1,
+                              widget.remark2,
+                              widget.remark3,
+                              widget.remark4,
+                              widget.itemModels,
+                              getTotalPrice(),
+                              "draft"
+                          );
+
+                          setState(() {
+                            this.isSubmit = true;
+                          });
                           showDialog(context: context,
                               builder: (BuildContext context){
                                 return ConfirmDialog(
@@ -149,42 +202,10 @@ class _SummaryState extends State<Summary> {
                                 );
                               }
                           );
-
                         }else{
-                         // showToastMessage(context, "Failed", "Ok");
+                          showToastMessage(context, "Already Submitted", "Ok");
                         }
 
-                      },
-                    ),
-                    LoginButton(
-                      title: Strings.draft,
-                      onPressed: () async{
-
-                        bool flag = await saveOrder(context,
-                            widget.customerModel,
-                            widget.termModel,
-                            widget.remark1,
-                            widget.remark2,
-                            widget.remark3,
-                            widget.remark4,
-                            widget.itemModels,
-                          getTotalPrice(),
-                          "draft"
-                        );
-
-                        showDialog(context: context,
-                            builder: (BuildContext context){
-                              return ConfirmDialog(
-                                  "Your order has been saved",
-                                      (){
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  }
-                              );
-                            }
-                        );
 
                       },
                     ),
@@ -258,6 +279,5 @@ class _SummaryState extends State<Summary> {
       ),
     );
   }
-
 
 }

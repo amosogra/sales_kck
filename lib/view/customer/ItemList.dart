@@ -60,7 +60,7 @@ class _ItemListState extends State<ItemList> {
     // TODO: implement initState
     super.initState();
     myController.addListener(_printLatestValue);
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
       if(globals.items.length == 0){
         loadItems();
@@ -157,17 +157,19 @@ class _ItemListState extends State<ItemList> {
                   uoms.add(element.uom);
                 });
                 return ItemListConfirmDialog(
-                    "",
+                    item.uom[0].price.toString(),
                     uoms,
                     item,
                     "Success",
                         (qty, price){
+
                       Navigator.pop(context);
                       debugPrint(item.toMap().toString());
                       setState(() {
                         item.qty = int.parse(qty);
                         item.uom[0].price = price;
                       });
+
                       debugPrint(item.toMap().toString());
                       Navigator.pop(context, item.toMap() );
 

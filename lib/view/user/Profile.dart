@@ -10,7 +10,7 @@ import 'package:sales_kck/model/post/company_model.dart';
 import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/view/dialog/company_list_dialog.dart';
 import 'package:sales_kck/view/user/ChangePassword.dart';
-import 'package:sales_kck/view/user/LoginPage.dart';
+import 'package:sales_kck/view/user/login_page.dart';
 import 'package:sales_kck/view/user/partial/ProfileItemView.dart';
 import 'package:sales_kck/view/widget/LoginButton.dart';
 
@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState(){
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       initView();
     });
   }
@@ -58,8 +58,10 @@ class _ProfileState extends State<Profile> {
                   (val1, val2, salesAgent){
                 Storage.setShowCompany(true);
                 Storage.setCompany(val1);
-                company = val1;
                 Storage.setSalesAgent(salesAgent);
+                setState(() {
+                  company = val1;
+                });
                 Navigator.pop(context);
               }
           );

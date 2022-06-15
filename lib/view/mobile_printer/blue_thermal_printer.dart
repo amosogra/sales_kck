@@ -1,23 +1,23 @@
 
-import 'dart:async';
-import 'dart:convert';
+
+
 import 'dart:io';
+
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
-class Printer extends StatefulWidget {
-  const Printer({Key? key}) : super(key: key);
+class BlueThermalPrinterPage extends StatefulWidget {
+  const BlueThermalPrinterPage({Key? key}) : super(key: key);
 
   @override
-  _PrinterState createState() => _PrinterState();
+  _BlueThermalPrinterPageState createState() => _BlueThermalPrinterPageState();
 }
 
-class _PrinterState extends State<Printer> {
+class _BlueThermalPrinterPageState extends State<BlueThermalPrinterPage> {
 
   BlueThermalPrinter bluetooth = BlueThermalPrinter.instance;
-
   List<BluetoothDevice> _devices = [];
   BluetoothDevice? _device;
   bool _connected = false;
@@ -27,29 +27,25 @@ class _PrinterState extends State<Printer> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      initPlatformState();
-      initSavetoPath();
-    });
+    initPlatformState();
+    initSavetoPath();
   }
 
   initSavetoPath()async{
     //read and write
     //image max 300px X 300px
-    final filename = 'yourlogo.png';
-    var bytes = await rootBundle.load("assets/icons/app_icon.png");
+    final filename = 'kck_logo.png';
+    var bytes = await rootBundle.load("assets/images/kck_logo.png");
     String dir = (await getApplicationDocumentsDirectory()).path;
-
-//    String dir = "";// await getApplicationDocumentsDirectory().path;
     writeToFile(bytes,'$dir/$filename');
     setState(() {
       pathImage='$dir/$filename';
     });
   }
 
-
   Future<void> initPlatformState() async {
     List<BluetoothDevice> devices = [];
+
     try {
       devices = await bluetooth.getBondedDevices();
     } on PlatformException {
@@ -81,6 +77,7 @@ class _PrinterState extends State<Printer> {
       _devices = devices;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +137,7 @@ class _PrinterState extends State<Printer> {
     } else {
       _devices.forEach((device) {
         items.add(DropdownMenuItem(
-          child: Text(device.name.toString()),
+          child: Text(device.name!.toString()),
           value: device,
         ));
       });
@@ -148,14 +145,12 @@ class _PrinterState extends State<Printer> {
     return items;
   }
 
-
   void _connect() {
     if (_device == null) {
       show('No device selected.');
     } else {
       bluetooth.isConnected.then((isConnected) {
         if (!isConnected!) {
-
           bluetooth.connect(_device!).catchError((error) {
             setState(() => _pressed = false);
           });
@@ -165,15 +160,12 @@ class _PrinterState extends State<Printer> {
     }
   }
 
-
-
-
   void _disconnect() {
     bluetooth.disconnect();
     setState(() => _pressed = true);
   }
 
-//write to app path
+
   Future<void> writeToFile(ByteData data, String path) {
     final buffer = data.buffer;
     return new File(path).writeAsBytes(
@@ -191,7 +183,7 @@ class _PrinterState extends State<Printer> {
     // 1- ESC_ALIGN_CENTER
     // 2- ESC_ALIGN_RIGHT
     bluetooth.isConnected.then((isConnected) {
-      if (isConnected != null) {
+      if (isConnected!) {
         bluetooth.printNewLine();
         bluetooth.printCustom("HEADER",3,1);
         bluetooth.printNewLine();
@@ -229,7 +221,6 @@ class _PrinterState extends State<Printer> {
   }
 
 
-
   Future show(
       String message, {
         Duration duration: const Duration(seconds: 3),
@@ -247,10 +238,6 @@ class _PrinterState extends State<Printer> {
       ),
     );
   }
-
-
-
-
 
 
 

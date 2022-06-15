@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:sales_kck/model/post/outstanding_model.dart';
 import 'package:sales_kck/model/post/tax_types_model.dart';
 
-Future<List<OutstandingARS>> getOutstanding(BuildContext context) async {
+Future<List<OutstandingARS>> getOutstanding(BuildContext context, String accNo) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
   pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
@@ -23,8 +23,10 @@ Future<List<OutstandingARS>> getOutstanding(BuildContext context) async {
     String token = jsonDecode(user)['token'];
     String companyCode = await Storage.getCompany();
     debugPrint("my token"+  token);
+    debugPrint("company code = " +  companyCode);
+    debugPrint("accNo code = " +  accNo);
 
-    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode };
+    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode , "accNo" : accNo };
     var response = await Dio().post(Api.baseUrl + "/api/v1/outstandingARs", queryParameters: queryParameters );
     List<OutstandingARS> outs = [];
     final jsonRes = json.decode(response.toString());

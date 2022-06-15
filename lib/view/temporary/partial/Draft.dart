@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
 import 'package:sales_kck/constants/assets.dart';
@@ -108,6 +108,7 @@ class _DraftState extends State<Draft> {
 
               setState(() {
                 items.removeAt(selectedIndex);
+
               });
 
             }
@@ -159,6 +160,7 @@ class _DraftState extends State<Draft> {
                   selectedItem = items[index];
                   selectedId = id.toString();
                   selectedIndex = index;
+                  items[index].isTap = true;
                 });
               },
           )
@@ -169,25 +171,26 @@ class _DraftState extends State<Draft> {
           color: Colors.red,
           icon: Icons.delete,
           closeOnTap: true,
-          onTap: () => _showSnackBar(context, "Delete", index),
+          onTap: (){
+            setState(() async {
+              TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
+              await tempDraftDBHelper.deleteTemp(items[index].id);
+              items.removeAt(index);
+            });
+            _showSnackBar(context, "Delete", index);
+          }
         ),
       ],
     );
   }
-
 
   void _showSnackBar(BuildContext context, String title, int index) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(title)));
 
-    setState(() async {
 
-      TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
-      await tempDraftDBHelper.deleteTemp(items[index].id);
-      items.removeAt(index);
 
-    });
   }
 
 
@@ -258,3 +261,4 @@ class VerticalListItem extends StatelessWidget {
 
 
 
+ */

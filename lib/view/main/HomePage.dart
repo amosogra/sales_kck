@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/constants/assets.dart';
@@ -10,18 +9,13 @@ import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/model/post/company_model.dart';
-import 'package:sales_kck/view/dialog/ConfirmDialog.dart';
 import 'package:sales_kck/view/dialog/company_list_dialog.dart';
-import 'package:sales_kck/view/main/partial/SlideMenu.dart';
-import 'package:sales_kck/view/mobile_printer/Printer.dart';
-import 'package:sales_kck/view/order/OrderFrame.dart';
+import 'package:sales_kck/view/mobile_printer/PrinterTestPage.dart';
 import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'package:sales_kck/view/price_history/price_history_page.dart';
-import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
-import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
+import 'package:sales_kck/view/sale_list/sale_listing_synced.dart';
 import 'package:sales_kck/view/sync/sync_page.dart';
 import 'package:sales_kck/view/temporary/temp_receipt_page.dart';
-import 'package:sales_kck/view/temporary/temp_receipt_pending_page.dart';
 import 'package:sales_kck/view/temporary/ReceiptSync.dart';
 
 class HomePage extends StatefulWidget {
@@ -83,6 +77,7 @@ class _HomePageState extends State<HomePage> {
                     child:InkWell(
                       onTap: (){
                         SaleOrderModel saleOrderModel = initializeSaleOrder();
+                        debugPrint("companyCode"  + saleOrderModel.companyCode);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Customer(saleOrderModel: saleOrderModel,))
                         );
@@ -104,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                 ),
 
 
-                Flexible(
+                /* Flexible(
                     child:InkWell(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SaleListingPending()));
@@ -123,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                           )
                       ),
                     )
-                ),
+                ), */
               ],
             ),
 
@@ -201,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                     )
                 ),
 
-                Flexible(
+                /* Flexible(
                     child:InkWell(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>  ReceiptPending() ));
@@ -220,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                           )
                       ),
                     )
-                ),
+                ), */
               ],
             ),
 
@@ -250,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                 Flexible(
                     child:InkWell(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Printer() ));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PrinterTestPage() ));
                       },
                       child: Card(
                           child: Container(
@@ -301,7 +296,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      drawer: showSlideMenu(context)
+      //drawer: showSlideMenu(context)
     );
 
   }

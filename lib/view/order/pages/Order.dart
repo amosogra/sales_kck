@@ -292,7 +292,7 @@ class _OrderState extends State<Order> {
                 Text("Unit Price", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                 Container(
                   margin: EdgeInsets.only(left: 15),
-                  child: Text( double.parse(item.uom[0].price).toStringAsFixed(2) , style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),),
+                  child: Text(  item.uom[0].price == "" ? "0.00" : double.parse(item.uom[0].price).toStringAsFixed(2) , style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),),
                 )
               ],
             ),

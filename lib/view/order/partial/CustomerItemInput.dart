@@ -44,6 +44,7 @@ class _CustomerItemInputState extends State<CustomerItemInput> {
                     validateFunction: (value){
                       Validations.validateEmpty(value!);
                     },
+
                     onChange: widget.onChange,
                     controller: widget.controller,
                     myHint: widget.hint,

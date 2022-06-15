@@ -5,7 +5,7 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/app_storages.dart';
 import 'package:sales_kck/view/main/HomePage.dart';
-import 'package:sales_kck/view/user/LoginPage.dart';
+import 'package:sales_kck/view/user/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void initState(){
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async{
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
       await checkLogin();
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     });

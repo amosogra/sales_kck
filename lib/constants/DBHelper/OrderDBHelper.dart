@@ -33,7 +33,7 @@ class OrderDBHelper{
         );
 
         await database.execute(
-          'CREATE TABLE temp_draft(id INTEGER PRIMARY KEY, receipt_no TEXT, receipt_from TEXT, receipt_date TEXT, payment_date TEXT '
+          'CREATE TABLE temp_draft(id INTEGER PRIMARY KEY, companyCode TEXT, accNo TEXT, receipt_no TEXT, receipt_from TEXT, receipt_date TEXT, payment_date TEXT '
               + ' , payment_method TEXT , cheque_no TEXT , payment_amount TEXT , isSaved TEXT)',
         );
 
@@ -42,9 +42,9 @@ class OrderDBHelper{
         );
 
         await database.execute(
-          'CREATE TABLE temp_draft_customer(custId INTEGER PRIMARY KEY, companyCode TEXT, accNo TEXT, name TEXT, docNumber TEXT '
-              + ' , docDate TEXT , addr1 TEXT , addr2 TEXT , addr3 TEXT , addr4 TEXT '
-              + ' , attention TEXT , defDisplayTerm TEXT, taxType TEXT,  phone1 TEXT , phone2 TEXT , isActive TEXT, rev TEXT , deleted TEXT, temp_draft_id INTEGER)',
+          'CREATE TABLE temp_draft_invoice(id INTEGER PRIMARY KEY, companyCode TEXT, docType TEXT, docKey TEXT, docNo TEXT '
+              + ' , docDate TEXT , outstandingAmount TEXT , custAccNo TEXT , cancelled TEXT , deleted TEXT '
+              + ' , trId INTEGER)',
         );
 
       },
@@ -92,15 +92,13 @@ class OrderDBHelper{
     return queryResult.map((e) => SaleOrderModel.fromDBMap(e)).toList();
   }
 
-  Future<List<SaleOrderModel>> retrieveOrdersBySynced() async {
+  Future<List<SaleOrderModel>> retrieveOrdersBySynced(String sync) async {
     final Database db = await initializeDB();
     final List<Map<String, dynamic>> queryResult = await db.query('orders',
       where: 'synced = ?',
-      whereArgs: ["1"], orderBy: 'id', );
-
+      whereArgs: [sync], orderBy: 'id DESC', );
     return queryResult.map((e) => SaleOrderModel.fromDBMap(e)).toList();
   }
-
 
   Future<void> deleteOrders() async {
     final db = await initializeDB();

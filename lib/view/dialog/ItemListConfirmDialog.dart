@@ -129,9 +129,12 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                     controller: qtyController, focusNode: qtyFocus, nextFocusNode: priceNode, hint: "Enter Qty",
                     onChange: (value){
                       setState(() {
-
                         if(qtyController.text.isNotEmpty && priceController.text.isNotEmpty && double.parse(minPrice) <= double.parse(priceController.text)
-                            && ( double.parse(priceController.text) < double.parse(maxPrice) ||  double.parse(maxPrice) == -1 )){
+                            && double.parse(priceController.text) <= double.parse(maxPrice)
+                            || ( priceController.text.isNotEmpty && qtyController.text.isNotEmpty && double.parse(maxPrice) == -1 &&  double.parse(minPrice) == -1)
+                            || (priceController.text.isNotEmpty &&qtyController.text.isNotEmpty && double.parse(maxPrice) == 0 &&  double.parse(minPrice) == 0)
+                            || (priceController.text.isNotEmpty &&qtyController.text.isNotEmpty && double.parse(maxPrice) == -1 &&  double.parse(minPrice) <= double.parse(value!) )
+                        ){
                           this.isFilled = true;
                         }else{
                           this.isFilled = false;
@@ -156,8 +159,11 @@ class _ItemListConfirmDialogState extends State<ItemListConfirmDialog> {
                       setState(() {
                         debugPrint(value);
                         debugPrint(double.parse(minPrice).toString());
-                        if(qtyController.text.isNotEmpty && double.parse(minPrice) < double.parse(value!)
-                            && (double.parse(value) < double.parse(maxPrice) || double.parse(maxPrice) == -1)){
+                        if( priceController.text.isNotEmpty && qtyController.text.isNotEmpty && double.parse(minPrice) <= double.parse(value!) && double.parse(value) <= double.parse(maxPrice)
+                            || (priceController.text.isNotEmpty && qtyController.text.isNotEmpty && double.parse(maxPrice) == -1 &&  double.parse(minPrice) == -1)
+                            || (priceController.text.isNotEmpty && qtyController.text.isNotEmpty && double.parse(maxPrice) == 0 &&  double.parse(minPrice) == 0)
+                            || (priceController.text.isNotEmpty && qtyController.text.isNotEmpty && double.parse(maxPrice) == -1 &&  double.parse(minPrice) <= double.parse(value!) )
+                            ){
                           this.isFilled = true;
                         }else{
                           this.isFilled = false;

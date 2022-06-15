@@ -79,8 +79,8 @@ class Strings {
   static const String cheque_no = "Cheque No";
   static const String payment_amount = "Payment Amount";
   static const String date = "Date";
-  static const String invoice_number = "Invoice Number";
-  static const String outstanding_amt = "Outstanding AMT";
+  static const String invoice_number = "Invoice";
+  static const String outstanding_amt = "Outstanding";
   static const String save_draft = "Save Draft";
   static const String done_and_save =  "Done and Save";
   static const String amount = "Amount";
