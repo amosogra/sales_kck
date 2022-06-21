@@ -25,12 +25,16 @@ class _LoginPageState extends State<LoginPage> {
   String email = 'test_sales',password = 'admin!@#123';
   // user: ashrafckss
   // pass: AM9VAtmT#n
-  //
-  TextEditingController emailController = TextEditingController(text: 'ashrafckss');
-  TextEditingController passwordController = TextEditingController(text: 'AM9VAtmT#n');
 
-  // TextEditingController emailController = TextEditingController(text: '');
-  // TextEditingController passwordController = TextEditingController(text: '');
+  // TextEditingController emailController = TextEditingController(text: 'ashrafckss');
+  // TextEditingController passwordController = TextEditingController(text: 'AM9VAtmT#n');
+
+  // TextEditingController emailController = TextEditingController(text: 'kim1');
+  // TextEditingController passwordController = TextEditingController(text: 'newpassword123!@#');
+
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
 
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
@@ -40,37 +44,45 @@ class _LoginPageState extends State<LoginPage> {
   bool isRemember = false;
 
   Future<void> requestPermission() async {
-
     var status = await Permission.location.status;
    if(status.isDenied){
-
      Map<Permission, PermissionStatus> statuses = await [
        Permission.location,
      ].request();
    }
   }
 
-
   @override
   void initState(){
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+
       initView();
       requestPermission();
     });
   }
 
   void initView() async{
+    bool isLogin = await Storage.isLogin();
+
     bool remember = await Storage.isRemember();
     String user = await Storage.getUser();
     String password = await Storage.getPassword();
-    if( remember){
-      emailController.text = jsonDecode(user)['email'];
+
+    if(isLogin){
+      handleLogin(jsonDecode(user)['user']['username'], password);
+      return;
+    }
+
+    if( remember ){
+      emailController.text = jsonDecode(user)['user']['username'];
       passwordController.text = password;
+    //  handleLogin();
     }
     setState(() {
       this.isRemember = remember;
     });
+
   }
 
   void showInSnackBar(String value) {
@@ -78,14 +90,14 @@ class _LoginPageState extends State<LoginPage> {
     _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(value)));
   }
 
-  void handleLogin() async{
+  void handleLogin( email, password) async{
     FormState? form = formKey.currentState;
     form!.save();
     if(!form.validate()){
       showInSnackBar('Please fix the errors in red before submitting.');
     }else{
       //login(email, password);
-      bool response  = await login(context, emailController.text, passwordController.text);
+      bool response  = await login(context, email, password);
       if(response){ // Call Async Data
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
@@ -171,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                           title: Strings.login,
                           onPressed: (){
                             Storage.setRemember(this.isRemember);
-                            handleLogin();
+                            handleLogin(emailController.text, passwordController.text);
                           },
                         ),
                       )

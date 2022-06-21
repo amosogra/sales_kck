@@ -21,10 +21,10 @@ import 'dart:math';
 class Customer extends StatefulWidget {
 
   SaleOrderModel saleOrderModel;
-
+  bool isEdit;
   @override
   _CustomerState createState() => _CustomerState();
-  Customer({Key? key, required this.saleOrderModel}) : super(key: key);
+  Customer({Key? key, required this.saleOrderModel, this.isEdit = true}) : super(key: key);
 
 }
 
@@ -110,7 +110,7 @@ class _CustomerState extends State<Customer> {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
 
         if(widget.saleOrderModel.companyCode.isEmpty){
@@ -122,14 +122,14 @@ class _CustomerState extends State<Customer> {
         }else{
 
           customerModel = new CustomerModel(custId: widget.saleOrderModel.soId, companyCode: widget.saleOrderModel.companyCode, accNo: widget.saleOrderModel.custAccNo,
-              name: widget.saleOrderModel.custName, addr1: widget.saleOrderModel.invAddr1, addr2: widget.saleOrderModel.invAddr2, addr3: widget.saleOrderModel.invAddr3,
-              addr4: widget.saleOrderModel.invAddr4, attention: widget.saleOrderModel.attention, defDisplayTerm: widget.saleOrderModel.displayTerm, taxType: widget.saleOrderModel.taxAmt,
-              phone1: "", phone2: "", isActive: 1, rev: 0, deleted: 0, docNumber: widget.saleOrderModel.docNo, docDate: widget.saleOrderModel.docDate);
-          remark1 = widget.saleOrderModel.remark1 != null ? widget.saleOrderModel.remark1 : '';
-          remark2 = widget.saleOrderModel.remark2 != null ? widget.saleOrderModel.remark2 : '' ;
-          remark3 = widget.saleOrderModel.remark3 != null ? widget.saleOrderModel.remark3 : '' ;
-          remark4 = widget.saleOrderModel.remark4 != null ? widget.saleOrderModel.remark4 : '' ;
-        }
+                name: widget.saleOrderModel.custName, addr1: widget.saleOrderModel.invAddr1, addr2: widget.saleOrderModel.invAddr2, addr3: widget.saleOrderModel.invAddr3,
+                addr4: widget.saleOrderModel.invAddr4, attention: widget.saleOrderModel.attention, defDisplayTerm: widget.saleOrderModel.displayTerm, taxType: widget.saleOrderModel.taxAmt,
+                phone1: "", phone2: "", isActive: 1, rev: 0, deleted: 0, docNumber: widget.saleOrderModel.docNo, docDate: widget.saleOrderModel.docDate);
+            remark1 = widget.saleOrderModel.remark1 != null ? widget.saleOrderModel.remark1 : '';
+            remark2 = widget.saleOrderModel.remark2 != null ? widget.saleOrderModel.remark2 : '' ;
+            remark3 = widget.saleOrderModel.remark3 != null ? widget.saleOrderModel.remark3 : '' ;
+            remark4 = widget.saleOrderModel.remark4 != null ? widget.saleOrderModel.remark4 : '' ;
+          }
 
         remark1Controller = TextEditingController(text: remark1);
         remark2Controller = TextEditingController(text: remark2);
@@ -163,7 +163,9 @@ class _CustomerState extends State<Customer> {
                   CustomerItemView(
                       hintText: "Select Customer", title: customerModel != null ?  customerModel.name + " - " + customerModel.accNo :"",
                       onTap: (){
-                        this.goToCustomerLists();
+                        if(widget.isEdit){
+                          this.goToCustomerLists();
+                        }
                       }),
                   Row(
                     children: [
@@ -256,17 +258,20 @@ class _CustomerState extends State<Customer> {
                         ),
                         InkWell(
                             onTap: (){
-                              showMaterialRadioPicker<TermModel>(
-                                context: context,
-                                title: 'Pick Your Term',
-                                items: terms,
-                                transformer: (item) => item.displayTerm,
-                                //selectedItem: terms.length > 0 ? terms[0] : '',
-                                onChanged: (value) => setState(() => termModel = value),
-                              );
+                              if(widget.isEdit){
+                                showMaterialRadioPicker<TermModel>(
+                                  context: context,
+                                  title: 'Pick Your Term',
+                                  items: terms,
+                                  transformer: (item) => item.displayTerm,
+                                  //selectedItem: terms.length > 0 ? terms[0] : '',
+                                  onChanged: (value) => setState(() => termModel = value),
+                                );
+                              }
+
                             },
 
-                            child: termModel.termId == 0 && customerModel.custId != 0 ?
+                            child:  termModel.displayTerm.isEmpty ?
                             BlinkText(
                               termModel.displayTerm.isEmpty? 'Select Term': termModel.displayTerm,
                               beginColor: MyColors.textBorderColor,
@@ -278,7 +283,7 @@ class _CustomerState extends State<Customer> {
                               ),
                             ):
                             Text(
-                              termModel.displayTerm.isEmpty? 'Select Term': termModel.displayTerm,
+                              termModel.displayTerm.isEmpty? 'Select Term ' + termModel.termId.toString(): termModel.displayTerm,
                               style: TextStyle(color: termModel.displayTerm.isEmpty ? MyColors.textGreyColor: MyColors.textColor),
                             )
                         )
@@ -310,7 +315,7 @@ class _CustomerState extends State<Customer> {
                     }),
                   ),
 
-                  if (remark1.isNotEmpty && customerModel.custId != 0 && termModel.termId != 0) Container(
+                  if ( widget.isEdit == true && customerModel.custId != 0 ) Container(
                     margin: EdgeInsets.only(top: 10),
                     child: LoginButton(
                       title: Strings.next,

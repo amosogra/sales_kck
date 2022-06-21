@@ -20,8 +20,8 @@ class SaleListingPending extends StatefulWidget {
   const SaleListingPending({Key? key}) : super(key: key);
   @override
   _SaleListingPendingState createState() => _SaleListingPendingState();
-
 }
+
 
 class _SaleListingPendingState extends State<SaleListingPending> {
 
@@ -33,7 +33,7 @@ class _SaleListingPendingState extends State<SaleListingPending> {
 
     //List<SaleOrderModel> response = await getSaleOrders(context);
     OrderDBHelper orderDBHelper = new OrderDBHelper();
-    List<SaleOrderModel> response = await orderDBHelper.retrieveOrders() as List<SaleOrderModel>;
+    List<SaleOrderModel> response = await orderDBHelper.retrieveOrdersBySynced("0") as List<SaleOrderModel>;
 
     if(response.length > 0){
       setState(() {
@@ -52,7 +52,7 @@ class _SaleListingPendingState extends State<SaleListingPending> {
       onSlideIsOpenChanged: handleSlideIsOpenChanged,
     );
     loadItems();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
     });
   }
@@ -115,12 +115,10 @@ class _SaleListingPendingState extends State<SaleListingPending> {
 
     return InkResponse(
       onTap: () async{
-
         Navigator.pop(context, item.toMap());
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
         );
-
       },
       child: Container(
         padding: EdgeInsets.only(left: 20, top: 12, bottom: 12),

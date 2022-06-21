@@ -44,10 +44,9 @@ class TempDraftDBHelper{
     final Database db = await initializeDB();
     final List<Map<String, dynamic>> queryResult = await db.query('temp_draft',
       where: 'isSaved = ?',
-      whereArgs: [saved], orderBy: 'id', );
+      whereArgs: [saved], orderBy: 'id DESC', );
     return queryResult.map((e) => TempDraftModel.fromDBMap(e)).toList();
   }
-
 
   Future<void> deleteTemps() async {
     final db = await initializeDB();

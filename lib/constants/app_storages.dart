@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:sales_kck/model/post/company_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Storage {
-
   Storage._();
   static SharedPreferences? localStorage;
 
@@ -25,48 +25,49 @@ class Storage {
     localStorage = await SharedPreferences.getInstance();
     localStorage!.setString('user', value);
   }
+
   static getUser() async {
     localStorage = await SharedPreferences.getInstance();
     String? stringValue = localStorage!.getString('user');
-    if(stringValue == null){
+    if (stringValue == null) {
       return "";
     }
     return stringValue;
   }
 
   static Future<int> getUserId() async {
-     String tmp = await Storage.getUser();
-      if(tmp != null){
-        return jsonDecode(tmp)['id'];
-      }
-      return 0;
+    String tmp = await Storage.getUser();
+    if (tmp != null) {
+      return jsonDecode(tmp)['id'];
+    }
+    return 0;
   }
+
   static Future<String> getEmail() async {
     String tmp = await Storage.getUser();
-    if(tmp != null){
+    if (tmp != null) {
       return jsonDecode(tmp)['email'].toString();
     }
     return "";
   }
 
   static setRemember(value) async {
-    try{
+    try {
       localStorage = await SharedPreferences.getInstance();
       localStorage!.setBool('remember', value);
-    }catch(e){
-    }
+    } catch (e) {}
   }
 
   static isRemember() async {
-    try{
+    try {
       localStorage = await SharedPreferences.getInstance();
       bool? stringValue = localStorage!.getBool('remember');
-      if(stringValue == null){
+      if (stringValue == null) {
         return false;
       }
       return stringValue;
-    }catch(e){
-      return  false;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -76,11 +77,11 @@ class Storage {
   }
 
   static isLogin() async {
-    try{
+    try {
       localStorage = await SharedPreferences.getInstance();
       bool? stringValue = localStorage!.getBool('isLogin');
       return stringValue;
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
@@ -91,16 +92,25 @@ class Storage {
   }
 
   static getShowCompany() async {
-    try{
+    try {
       localStorage = await SharedPreferences.getInstance();
       bool? stringValue = localStorage!.getBool('showCompany');
       return stringValue == null ? false : stringValue;
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
 
+  static setCompanyModel(CompanyModel model) async {
+    localStorage = await SharedPreferences.getInstance();
+    localStorage!.setString('company_model', jsonEncode(model.toJson()));
+  }
 
+  static Future<CompanyModel> getCompanyModel() async {
+    localStorage = await SharedPreferences.getInstance();
+    String? jsonString = localStorage!.getString('company_model');
+    return CompanyModel.fromJson(jsonDecode(jsonString!));
+  }
 
   static setCompany(value) async {
     localStorage = await SharedPreferences.getInstance();
@@ -113,7 +123,6 @@ class Storage {
     return stringValue;
   }
 
-
   static setSalesAgent(value) async {
     localStorage = await SharedPreferences.getInstance();
     localStorage!.setString('salesagentcode', value);
@@ -124,5 +133,4 @@ class Storage {
     String? stringValue = localStorage!.getString('salesagentcode');
     return stringValue;
   }
-
 }

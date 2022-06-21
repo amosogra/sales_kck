@@ -40,9 +40,9 @@ class _SyncState extends State<Sync> {
   void loadItems() async{
     SyncTableDBHelper helper = new SyncTableDBHelper();
     List<SyncModel> response = await helper.retrieveSyncs() as List<SyncModel>;
-    debugPrint("----");
-    debugPrint(response.length.toString());
+
     if(response.length == 0){
+      debugPrint("oks");
       List<SyncModel>  syncModels = [];
       SyncModel customerModel = SyncModel(title: "Customer", totalCount: "0", lastSyncedDate: "", slug: "customer");
       SyncModel productModel = SyncModel(title: "Products", totalCount: "0", lastSyncedDate: "", slug: "product");
@@ -50,6 +50,7 @@ class _SyncState extends State<Sync> {
       SyncModel priceHistoryModel = SyncModel(title: "Price History", totalCount: "0", lastSyncedDate: "", slug: "pricehistory");
       SyncModel taxModel = SyncModel(title: "Tax Type", totalCount: "0", lastSyncedDate: "", slug: "tax");
       SyncModel invoiceModel = SyncModel(title: "Invoice", totalCount: "0", lastSyncedDate: "", slug: "invoice");
+
       syncModels.add(customerModel);
       syncModels.add(productModel);
       syncModels.add(termModel);
@@ -58,20 +59,62 @@ class _SyncState extends State<Sync> {
       syncModels..add(invoiceModel);
       helper.insertSyncs(syncModels);
       response = await helper.retrieveSyncs() as List<SyncModel>;
+      setState(() {
+        isSync = false;
+      });
+
+    }else{
+      debugPrint("oks---");
+      debugPrint(response.length.toString());
+      if(response.length > 0){
+        if(response[0].totalCount == "0"){
+          setState(() {
+            isSync = false;
+          });
+        }else{
+          setState(() {
+            isSync = true;
+          });
+        }
+      }
+
     }
 
     setState(() {
       debugPrint(response[0].toMap().toString());
       models =  response;
     });
-
   }
 
   syncAll () async{
+
+    List<CustomerModel> customerResponse = await getCustomers(context);
+    List<ItemModel> productResponse = await getItems(context);
+    List<TermModel> termResponse = await getTerms(context,"");
+    List<SaleOrderModel> orderResponse = await getSaleOrders(context);
+    List<TaxTypes> taxResponse = await getTaxTypes(context);
+    List<OutstandingARS> invoiceResponse = await getOutstanding(context , "");
+
+    setState(() {
+      models[0].totalCount = customerResponse.length.toString();
+      models[1].totalCount = productResponse.length.toString();
+      models[2].totalCount = termResponse.length.toString();
+      models[3].totalCount = orderResponse.length.toString();
+      models[4].totalCount = taxResponse.length.toString();
+      models[5].totalCount = invoiceResponse.length.toString();
+    });
+
+    save(customerResponse, 0);
+    save(productResponse, 1);
+    save(termResponse, 2);
+    save(orderResponse, 3);
+    save(taxResponse, 4);
+    save(invoiceResponse, 5);
+    
     //loadCustomers(0);
     // loadProduct(1);
     // loadTerm(2);
-    loadPriceHistory(3);
+    //loadPriceHistory(3);
     // loadTax(4);
     // loadInvoice(5);
   }
@@ -96,18 +139,18 @@ class _SyncState extends State<Sync> {
                     child: Text("Full Sync" , style: Theme.of(context).textTheme.headline2,),
                   ),
 
-                  // Switch(
-                  //     value: isSync,
-                  //     onChanged: (value){
-                  //       debugPrint(value.toString());
-                  //       setState(() {
-                  //         isSync = value;
-                  //       });
-                  //       if(value){
-                  //         syncAll();
-                  //       }
-                  //     }
-                  // )
+                  Switch(
+                      value: isSync,
+                      onChanged: (value){
+                        debugPrint(value.toString());
+                        setState(() {
+                          isSync = value;
+                        });
+                        if(value){
+                          syncAll();
+                        }
+                      }
+                  )
                 ],
               ),
             ),
@@ -191,14 +234,12 @@ class _SyncState extends State<Sync> {
 
   void loadInvoice(index) async {
     debugPrint("invocie");
-    List<OutstandingARS> response = await getOutstanding(context);
+    List<OutstandingARS> response = await getOutstanding(context , "");
     setState(() {
       models[index].totalCount = response.length.toString();
     });
     save(response, index);
   }
-
-
 
   Widget _buildItem(int index){
 

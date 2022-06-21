@@ -11,7 +11,6 @@ class ReceiptPending extends StatefulWidget {
 }
 
 class _ReceiptPendingState extends State<ReceiptPending> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,20 +22,19 @@ class _ReceiptPendingState extends State<ReceiptPending> {
             bottom: const TabBar(
               indicatorColor: MyColors.whiteColor,
               tabs: [
-                Tab( text: Strings.saved,), // icon: Icon(Icons.directions_car) ,
-                Tab( text: Strings.draft ),
+                Tab(text: Strings.draft),
+                Tab(text: Strings.saved), 
+                // icon: Icon(Icons.directions_car) ,
               ],
             ),
             title: const Text(Strings.temp_receipt_pending_title),
           ),
-
-          body:  const TabBarView(
+          body: const TabBarView(
             children: [
-              Saved(),
               Draft(),
+              Saved(),
             ],
           ),
-
         ),
       ),
     );

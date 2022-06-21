@@ -33,7 +33,6 @@ Future<bool> saveOrder(BuildContext context
         message: "Please wait..."
     );
     await pr.show();
-
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
     String salesAgent = await Storage.getSalesAgent();
@@ -47,10 +46,10 @@ Future<bool> saveOrder(BuildContext context
 
     List<SoList> solists = <SoList>[];
     for(var item in itemModels){
-      SoList so = SoList(itemcode: item.code, location: "HQ", description: item.description, furtherdescription: item.description,
-          uom: item.uom[0].uom , rate: "1.0000000", qty: item.qty.toString(), focqty: item.rev.toString(), smallestunitprice: item.uom[0].price,
-          unitprice: item.uom[0].price, discount: item.uom[0].price, discountamt: item.rev.toString(), taxtype: item.companyCode,
-          taxrate: item.rev.toString(), tempid: item.itemId.toString(),
+      SoList so = SoList(itemcode: item.code, location: "HQ", description: item.description, furtherdescription: "",
+          uom: item.uom[0].uom , rate: "1.0000000", qty: item.qty.toString(), focqty: "0", smallestunitprice: item.uom[0].price,
+          unitprice: item.uom[0].price, discount: "", discountamt: "0", taxtype: "",
+          taxrate: "0", tempid: "0",
           orderId: 0
       ) ;
       solists.add(so);
@@ -84,7 +83,10 @@ Future<bool> saveOrder(BuildContext context
     };
     debugPrint(jsonEncode(data));
 
+    String sync = "1";
     if(type.endsWith("draft")){
+      sync = "0";
+    }
 
       DateTime now = DateTime.now();
       String formattedDate = DateFormat('yyyy-MM-dd').format(now);
@@ -94,25 +96,26 @@ Future<bool> saveOrder(BuildContext context
           branchCode: customerModel.companyCode, salesLocation: "", shipVia: "", shipInfo: "", attention: "attention",
           displayTerm: termModel.displayTerm , salesAgent: salesAgent , inclusiveTax: 0, subtotalAmt: "0", taxAmt: "0", totalAmt: totalPrice,
           remark1: remark1, remark2: remark2, remark3: remark3, remark4: remark4,
-          cancelled: 0, rev: 0, deleted: 0 , synced: "0");
+          cancelled: 0, rev: 0, deleted: 0 , synced: sync);
 
       List<SaleOrderModel> saleOrders = <SaleOrderModel>[];
       saleOrders.add(saleOrderModel);
 
       OrderDBHelper orderDBHelper = new OrderDBHelper();
       int  insertedId = await orderDBHelper.insertOrders(saleOrders);
-
       ItemDBHelper itemDBHelper = new  ItemDBHelper();
       for(var item in solists){
         item.orderId = int.parse(insertedId.toString());
       }
+
       itemDBHelper.insertItems(solists);
-      await pr.hide();
-      return false;
+      if(type.endsWith("draft")){
+        await pr.hide();
+        return false;
+      }
 
-    }else{
 
-      //{"Content-Type":"application/json"}
+      debugPrint(jsonEncode(data));
       var response = await Dio().post(Api.baseUrl + "/api/v1/createSalesOrder",
           queryParameters: queryParameters,
           data: jsonEncode(data),
@@ -140,7 +143,7 @@ Future<bool> saveOrder(BuildContext context
         showToastMessage(context, jsonRes['error'], "Ok");
         return false;
       }
-    }
+
 
   } catch (e) {
     print(e);
@@ -213,20 +216,19 @@ Future<bool> syncOrder(BuildContext context
       'companyCode': saleOrderModel.companyCode,
     };
 
-    List<SoList> solists = <SoList>[];
-    for(var item in itemModels){
-      SoList so = SoList(itemcode: item.itemcode, location: "", description: item.description, furtherdescription: item.description,
-          uom: item.uom , rate: item.rate.toString(), qty: item.qty.toString(), focqty: item.focqty.toString(), smallestunitprice: item.smallestunitprice,
-          unitprice: item.unitprice, discount: item.unitprice, discountamt: item.discountamt.toString(), taxtype: item.taxtype,
-          taxrate: item.taxrate.toString(), tempid: item.tempid.toString(),
+    List<SoList> solists = <SoList>[];for(var item in itemModels){
+      SoList so = SoList(itemcode: item.itemcode, location: "", description: item.description, furtherdescription: "",
+          uom: item.uom , rate: item.rate.toString(), qty: item.qty.toString(), focqty: "0", smallestunitprice: item.smallestunitprice,
+          unitprice: item.unitprice, discount: "", discountamt: "0", taxtype: item.taxtype,
+          taxrate: "0", tempid: "0",
           orderId: 0
-      ) ;
+      );
       solists.add(so);
     }
 
     var uuid = Uuid();
     var doc_number = saleOrderModel.docNo + uuid.v4().toString().substring(0,4);
-
+    saleOrderModel.displayTerm = "CASH";
     Map<String, dynamic>? data = {
       "docno":doc_number,
       "docdate":saleOrderModel.docDate,

@@ -12,12 +12,12 @@ import 'package:sales_kck/view/order/OrderFrame.dart';
 import 'package:sales_kck/view/order/pages/Customer.dart';
 import 'package:sales_kck/view/price_history/price_history_page.dart';
 import 'package:sales_kck/view/sale_list/SaleListingPending.dart';
-import 'package:sales_kck/view/sale_list/SaleListingSynced.dart';
+import 'package:sales_kck/view/sale_list/sale_listing_synced.dart';
 import 'package:sales_kck/view/sync/sync_page.dart';
 import 'package:sales_kck/view/temporary/temp_receipt_page.dart';
 import 'package:sales_kck/view/temporary/temp_receipt_pending_page.dart';
 import 'package:sales_kck/view/temporary/ReceiptSync.dart';
-import 'package:sales_kck/view/user/LoginPage.dart';
+import 'package:sales_kck/view/user/login_page.dart';
 import 'package:sales_kck/view/user/Profile.dart';
 
 Widget showSlideMenu(BuildContext context){

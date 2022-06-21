@@ -3,7 +3,7 @@ library globals;
 import 'package:flutter/material.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
-import 'package:sales_kck/view/user/LoginPage.dart';
+import 'package:sales_kck/view/user/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool isLoggedIn = false;
@@ -21,6 +21,36 @@ initializeSaleOrder(){
       remark1: "", remark2: "", remark3: "", remark4: "",
       cancelled: 0, rev: 0, deleted: 0,synced: "0");
 
+}
+
+String getMonth (value) {
+
+  if(value == "01"){
+    return "JAN";
+  }else if(value == "02"){
+    return "FEB";
+  }else if(value == "03"){
+    return "MAR";
+  }else if(value == "04"){
+    return "APR";
+  }else if(value == "05"){
+    return "MAY";
+  }else if(value == "06"){
+    return "JUN";
+  }else if(value == "07"){
+    return "JUL";
+  }else if(value == "08"){
+    return "AUG";
+  }else if(value == "09"){
+    return "SEP";
+  }else if(value == "10"){
+    return "OCT";
+  }else if(value == "11"){
+    return "NOV";
+  }else if(value == "12"){
+    return "DEC";
+  }
+  return value;
 }
 
 showAlertDialog(BuildContext context) {

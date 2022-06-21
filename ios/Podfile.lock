@@ -1,6 +1,12 @@
 PODS:
   - blue_thermal_printer (0.0.1):
     - Flutter
+  - bluetooth_print (0.0.1):
+    - Flutter
+  - bluetooth_thermal_printer (0.0.1):
+    - Flutter
+  - charset_converter (0.0.1):
+    - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -36,7 +42,7 @@ PODS:
     - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
-  - flutter_bluetooth_basic (0.0.1):
+  - flutter_sunmi_printer (0.0.1):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -57,9 +63,12 @@ PODS:
 
 DEPENDENCIES:
   - blue_thermal_printer (from `.symlinks/plugins/blue_thermal_printer/ios`)
+  - bluetooth_print (from `.symlinks/plugins/bluetooth_print/ios`)
+  - bluetooth_thermal_printer (from `.symlinks/plugins/bluetooth_thermal_printer/ios`)
+  - charset_converter (from `.symlinks/plugins/charset_converter/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
-  - flutter_bluetooth_basic (from `.symlinks/plugins/flutter_bluetooth_basic/ios`)
+  - flutter_sunmi_printer (from `.symlinks/plugins/flutter_sunmi_printer/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -76,12 +85,18 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   blue_thermal_printer:
     :path: ".symlinks/plugins/blue_thermal_printer/ios"
+  bluetooth_print:
+    :path: ".symlinks/plugins/bluetooth_print/ios"
+  bluetooth_thermal_printer:
+    :path: ".symlinks/plugins/bluetooth_thermal_printer/ios"
+  charset_converter:
+    :path: ".symlinks/plugins/charset_converter/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
-  flutter_bluetooth_basic:
-    :path: ".symlinks/plugins/flutter_bluetooth_basic/ios"
+  flutter_sunmi_printer:
+    :path: ".symlinks/plugins/flutter_sunmi_printer/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
@@ -92,12 +107,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  blue_thermal_printer: e0f989c1ba2cae289f6472ebae0a22611958f2bc
+  blue_thermal_printer: c83405103d2c17f8d67aaa43fcff94df5d616a66
+  bluetooth_print: da8f47e8881a0b1f0fd8d73cd6fa84c9bd41ac28
+  bluetooth_thermal_printer: 65b8304b3a1d8c67d466642a28cc2b4984409346
+  charset_converter: 215c7b04932ec2b9ba43be96a9bc34afed3e5322
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  flutter_bluetooth_basic: 0e4e27e22b50b3a25cc1d1e131953feb4af414f4
+  flutter_sunmi_printer: 2ad8e9f3e7c7c25671bce322594b30a3b4ce5af4
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0

@@ -1,18 +1,19 @@
 
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+
 import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/app_storages.dart';
-import 'package:dio/dio.dart';
 import 'package:sales_kck/model/post/outstanding_model.dart';
-import 'package:sales_kck/model/post/tax_types_model.dart';
 
-Future<List<OutstandingARS>> getOutstanding(BuildContext context) async {
+Future<List<OutstandingARS>> getOutstanding(BuildContext context, String accNo) async {
 
   ProgressDialog pr;// = new ProgressDialog(context);
-  pr = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+  pr = new ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
   try {
     pr.style(
         message: "Please wait..."
@@ -22,9 +23,11 @@ Future<List<OutstandingARS>> getOutstanding(BuildContext context) async {
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
     String companyCode = await Storage.getCompany();
-    debugPrint("my token"+  token);
+    debugPrint("my token: "+  token);
+    debugPrint("company code = " +  companyCode);
+    debugPrint("accNo code = " +  accNo);
 
-    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode };
+    Map<String, dynamic>? queryParameters = { 'token': token , 'companyCode' : companyCode , "accNo" : accNo };
     var response = await Dio().post(Api.baseUrl + "/api/v1/outstandingARs", queryParameters: queryParameters );
     List<OutstandingARS> outs = [];
     final jsonRes = json.decode(response.toString());
@@ -50,10 +53,6 @@ Future<List<OutstandingARS>> getOutstanding(BuildContext context) async {
     await pr.hide();
     return [];
   }
-
-  return [];
-  //await pr.hide();
-
 }
 
 
