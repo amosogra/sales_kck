@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     var data = await Storage.getUser();
     List<CompanyModel> models = [];
 
-    debugPrint("${jsonDecode(data.toString())['user']['companies']}");
+    //debugPrint("${jsonDecode(data.toString())['user']['companies']}");
     jsonDecode(data.toString())['user']['companies'].forEach((item) {
       CompanyModel model = CompanyModel.fromJson(item);
       models.add(model);

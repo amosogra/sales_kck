@@ -334,18 +334,6 @@ class _ReceiptState extends State<Receipt> {
       // Save Invoice Data
       TempDraftInvoiceDBHelper invoiceHelper = new TempDraftInvoiceDBHelper();
       await invoiceHelper.insertTempInvoice(insertData);
-//..........................print.............................
-      var printer = Printer();
-      await printer.start();
-      await printer.setCopies(1);
-
-      var companyModel = await Storage.getCompanyModel();
-      await printer.printCenter(companyModel.displayName ?? '');
-      await printer.printCenter("E-mail: ${companyModel.email}");
-      await printer.printCenter(companyModel.website ?? '');
-      //await printer.printCenter(text)
-
-//..........................end................................
 
       showToastMessage(context, "Saved !!!", "Ok");
       companyCode = "";
@@ -359,6 +347,13 @@ class _ReceiptState extends State<Receipt> {
       paymentAmountController.text = "";
 
       if (type == "save") {
+        //..........................print.............................
+        await printInvoice(model, insertData);
+        //..........................end................................
+
+        //..........................print.............................
+        await printInvoice(model, insertData, merchant: true);
+        //..........................end................................
         String response = await saveTemporaryReceipt(context, model, "save");
 
         if (response == "true") {
@@ -372,5 +367,57 @@ class _ReceiptState extends State<Receipt> {
     } else {
       showToastMessage(context, "Select Invoice Data", "Ok");
     }
+  }
+
+  Future<void> printInvoice(TempDraftModel model, List<OutstandingARS> insertData, {bool merchant = false}) async {
+    var printer = Printer();
+    await printer.start();
+    await printer.setCopies(1);
+
+    var companyModel = await Storage.getCompanyModel();
+    await printer.printCenter(companyModel.displayName ?? '');
+    await printer.printCenter("E-mail: ${companyModel.email ?? ''}");
+    await printer.printCenter(companyModel.website ?? '');
+    await printer.printCenter("L.B.B. NO. ${companyModel.lbbNo}");
+
+    await printer.ln(1);
+    await printer.printCenter("${!merchant ? 'Customer' : 'Merchant'} Copy");
+    await printer.ln(2);
+
+    await printer.printBold("Temporary Receipt");
+    await printer.drawLine('-');
+    await printer.println("TR No.: ${model.receiptNo}");
+    await printer.println("Date  : ${model.receiptDate}");
+    await printer.println("Received From: ${model.receiptFrom}");
+    await printer.ln(1);
+
+    await printer.println("Invoices");
+    await printer.drawLine('-');
+
+    insertData.forEach((invoice) async {
+      await printer.println("Date: ${invoice.docDate}");
+      await printer.println("Invoice No.: ${invoice.docNo}");
+      await printer.println("Amount: ${invoice.outstandingAmount}");
+      await printer.ln(1);
+    });
+
+    var total = insertData.map((e) => double.tryParse(e.outstandingAmount) ?? 0).reduce((value, element) => value + element);
+    await printer.drawLine('-');
+    await printer.println("Total: $total");
+    await printer.drawLine('-');
+    await printer.ln(1);
+
+    await printer.println("Payment");
+    await printer.drawLine('-');
+    await printer.println("Received Date: ${model.receiptDate}");
+    await printer.println("Payment Date: ${model.paymentDate}");
+    await printer.println("Payment Method: ${model.paymentMethod}");
+    await printer.println("Cheque No.: ${model.chequeNo}");
+    await printer.println("Payment Amount: ${model.paymentAmount}");
+
+    await printer.ln(8);
+    await printer.println("---------------------------");
+    await printer.println("Chop & Signature");
+    await printer.flush();
   }
 }
