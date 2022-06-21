@@ -420,10 +420,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "520be4475c78186b092178b54ea71cdc3ae54ff2"
+      resolved-ref: a13e899f34e36da074a7cac4537840685046b578
       url: "https://github.com/amosogra/printer.git"
     source: git
-    version: "1.0.0"
+    version: "1.0.1"
   process:
     dependency: transitive
     description:
