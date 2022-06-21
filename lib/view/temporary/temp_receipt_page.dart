@@ -343,6 +343,7 @@ class _ReceiptState extends State<Receipt> {
       await printer.printCenter(companyModel.displayName ?? '');
       await printer.printCenter("E-mail: ${companyModel.email}");
       await printer.printCenter(companyModel.website ?? '');
+      //await printer.printCenter(text)
 
 //..........................end................................
 
