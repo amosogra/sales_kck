@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:printer/printer.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftInvoiceDBHelper.dart';
 import 'package:sales_kck/constants/app_storages.dart';
@@ -333,6 +334,17 @@ class _ReceiptState extends State<Receipt> {
       // Save Invoice Data
       TempDraftInvoiceDBHelper invoiceHelper = new TempDraftInvoiceDBHelper();
       await invoiceHelper.insertTempInvoice(insertData);
+//..........................print.............................
+      var printer = Printer();
+      await printer.start();
+      await printer.setCopies(1);
+
+      var companyModel = await Storage.getCompanyModel();
+      await printer.printCenter(companyModel.displayName ?? '');
+      await printer.printCenter("E-mail: ${companyModel.email}");
+      await printer.printCenter(companyModel.website ?? '');
+
+//..........................end................................
 
       showToastMessage(context, "Saved !!!", "Ok");
       companyCode = "";
@@ -353,7 +365,7 @@ class _ReceiptState extends State<Receipt> {
         } else {
           showToastMessage(context, response, "Ok");
         }
-      }else{
+      } else {
         Navigator.push(context, MaterialPageRoute(builder: (context) => ReceiptPending()));
       }
     } else {
