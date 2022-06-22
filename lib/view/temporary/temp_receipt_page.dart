@@ -390,11 +390,26 @@ class _ReceiptState extends State<Receipt> {
         await printInvoice(model, insertData, merchant: true);
         //..........................end................................
         if (response == "true") {
-          showToastMessage(context, "Create new Temporary Receipt.", "Ok");
+          showToastMessage(
+            context,
+            "Created new Temporary Receipt.",
+            "Ok",
+            dismissible: false,
+            press: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReceiptSync()));
+            },
+          );
         } else {
-          showToastMessage(context, response, "Ok");
+          showToastMessage(
+            context,
+            response,
+            "Ok",
+            dismissible: false,
+            press: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReceiptSync()));
+            },
+          );
         }
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReceiptSync()));
       } else {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReceiptPending()));
       }

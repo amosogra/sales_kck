@@ -85,67 +85,49 @@ class _ReceiptSyncState extends State<ReceiptSync> {
         backgroundColor: MyColors.primaryColor,
       ),
       body: Container(
-          alignment: Alignment.topCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // items.length == 0 ?
-              // Container(
-              //   margin: EdgeInsets.only(top:200),
-              //   child: Column(
-              //     children: [
-              //       Image(image: AssetImage(Assets.iconEdit) , width: 70,),
-              //       Text(Strings.not_add_order, style:  TextStyle(color: MyColors.textBorderColor ) ),
-              //     ],
-              //   ),
-              // )
-              //     :
-              Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap: () async {
-                          var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList()));
-                          if (result != null) {
-                            CustomerModel customerModel = CustomerModel.fromMap(result);
-                            setState(() {
-                              companyName = customerModel.name;
+        alignment: Alignment.topCenter,
+        margin: EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: () async {
+                var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList()));
+                if (result != null) {
+                  CustomerModel customerModel = CustomerModel.fromMap(result);
+                  setState(() {
+                    companyName = customerModel.name;
+                  });
 
-                              // setState(() {
-                              //   companyName = customerModel.name;
-                              // });
-                            });
-
-                            loadItems(customerModel.accNo);
-                          }
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(companyName, style: Theme.of(context).textTheme.bodyText2),
-                              ),
-                              Icon(Icons.search)
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                          child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: draftItems.length,
-                        itemBuilder: (context, index) {
-                          return _buildItem2(draftItems[index], index);
-                        },
-                      )),
-                    ],
-                  ))
-            ],
-          )),
+                  loadItems(customerModel.accNo);
+                }
+              },
+              child: Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(companyName, style: Theme.of(context).textTheme.bodyText2),
+                    ),
+                    Icon(Icons.search)
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: AlwaysScrollableScrollPhysics(),
+                itemCount: draftItems.length,
+                itemBuilder: (context, index) {
+                  return _buildItem2(draftItems[index], index);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
 
       // bottomNavigationBar: Container(
       //   margin: EdgeInsets.only(left: 30, right: 30),
@@ -160,29 +142,30 @@ class _ReceiptSyncState extends State<ReceiptSync> {
 
   Widget _buildItem(TemporaryReceiptModel item, int index) {
     return GestureDetector(
-        onTap: () => {
-              //Slidable.of(context)?.renderingMode == SlidableRenderingMode.none ? Slidable.of(context)?.open() : Slidable.of(context)?.close()
-            },
-        child: InkResponse(
-          onTap: () {
-            debugPrint("render..");
-            //Navigator.pop(context, item.toMap());
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
-            // );
-          },
-          child: Container(
-            color: Colors.white,
-            child: ListTile(
-              leading: CircleAvatar(
-                child: Text('TR'),
-                foregroundColor: Colors.white,
-              ),
-              title: Text(item.trNo),
-              subtitle: Text(item.companyCode),
+      onTap: () => {
+        //Slidable.of(context)?.renderingMode == SlidableRenderingMode.none ? Slidable.of(context)?.open() : Slidable.of(context)?.close()
+      },
+      child: InkResponse(
+        onTap: () {
+          debugPrint("render..");
+          //Navigator.pop(context, item.toMap());
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
+          // );
+        },
+        child: Container(
+          color: Colors.white,
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Text('TR'),
+              foregroundColor: Colors.white,
             ),
+            title: Text(item.trNo),
+            subtitle: Text(item.companyCode),
           ),
-        ));
+        ),
+      ),
+    );
 
     // return InkResponse(
     //   onTap: () async{
@@ -219,35 +202,36 @@ class _ReceiptSyncState extends State<ReceiptSync> {
 
   Widget _buildItem2(TempDraftModel item, int index) {
     return GestureDetector(
-        onTap: () => {},
-        child: InkResponse(
-          onTap: () {
-            debugPrint("render..");
-            //Navigator.pop(context, item.toMap());
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
-            // );
-          },
-          child: Container(
-            color: Colors.white,
-            child: ListTile(
-              leading: CircleAvatar(
-                child: Text('TR'),
-                foregroundColor: Colors.white,
-              ),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.receiptDate,
-                    style: TextStyle(color: MyColors.textGreyColor),
-                  ),
-                  Text(item.companyCode)
-                ],
-              ),
-              subtitle: Text(item.receiptNo),
+      onTap: () => {},
+      child: InkResponse(
+        onTap: () {
+          debugPrint("render..");
+          //Navigator.pop(context, item.toMap());
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item,))
+          // );
+        },
+        child: Container(
+          color: Colors.white,
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Text('TR'),
+              foregroundColor: Colors.white,
             ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.receiptDate,
+                  style: TextStyle(color: MyColors.textGreyColor),
+                ),
+                Text(item.companyCode)
+              ],
+            ),
+            subtitle: Text(item.receiptNo),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
