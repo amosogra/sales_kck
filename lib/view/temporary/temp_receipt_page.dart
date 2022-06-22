@@ -30,6 +30,7 @@ class Receipt extends StatefulWidget {
 }
 
 class _ReceiptState extends State<Receipt> {
+  var printer = Printer();
   late TextEditingController receiptNoController = TextEditingController();
   late TextEditingController receiptFromController = TextEditingController();
   late TextEditingController receiptDateController = TextEditingController();
@@ -49,6 +50,8 @@ class _ReceiptState extends State<Receipt> {
   List<OutstandingARS> draftInvoiceItems = <OutstandingARS>[];
   String companyCode = "";
   String accNo = "";
+
+  String trId = "-1";
 
   Future<String> generateTRNumber() async {
     var rnd = Random();
@@ -265,8 +268,17 @@ class _ReceiptState extends State<Receipt> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: MyColors.primaryColor),
                   onPressed: () async {
-                    Navigator.pop(context);
-                    saveData("save");
+                    if (receiptNoController.text.isEmpty ||
+                        receiptFromController.text.isEmpty ||
+                        receiptDateController.text.isEmpty ||
+                        paymentDateController.text.isEmpty ||
+                        paymentMethodController.text.isEmpty ||
+                        (chequeNoController.text.isEmpty && paymentMethodController.text == "CHEQUE") ||
+                        paymentAmountController.text.isEmpty) {
+                      showToastMessage(context, "Please input the required fields", "Ok");
+                    } else {
+                      saveData("save");
+                    }
                   },
                   child: Text("Save & Print"),
                 ),
@@ -290,6 +302,18 @@ class _ReceiptState extends State<Receipt> {
 
   Future loadDraftData(String accNo) async {
     List<OutstandingARS> response = await getOutstanding(context, accNo);
+
+    if (widget.model != null) {
+      TempDraftInvoiceDBHelper helper = new TempDraftInvoiceDBHelper();
+      List<OutstandingARS> models = await helper.retrieveTRInvoicesBySaved(widget.model!.id);
+      for (var model in response) {
+        if (models.any((element) => element.docNo == model.docNo)) {
+          model.isSelected = true;
+          trId = models[0].trId;
+        }
+      }
+    }
+
     response.sort((a, b) => -a.docDate.compareTo(b.docDate));
     if (response.isNotEmpty) {
       setState(() {
@@ -317,7 +341,13 @@ class _ReceiptState extends State<Receipt> {
       TempDraftDBHelper dbHelper = new TempDraftDBHelper();
       List<TempDraftModel> items = <TempDraftModel>[];
       items.add(model);
-      var id = await dbHelper.insertTemps(items);
+
+      int id = int.tryParse(trId) ?? -1;
+      if (widget.model != null) {
+        await dbHelper.updateTemp(model);
+      } else {
+        id = await dbHelper.insertTemps(items);
+      }
 
       List<OutstandingARS> insertData = [];
 
@@ -351,11 +381,10 @@ class _ReceiptState extends State<Receipt> {
         await printInvoice(model, insertData);
         //..........................end................................
 
+        String response = await saveTemporaryReceipt(context, model, "save");
         //..........................print.............................
         await printInvoice(model, insertData, merchant: true);
         //..........................end................................
-        String response = await saveTemporaryReceipt(context, model, "save");
-
         if (response == "true") {
           showToastMessage(context, "Create new Temporary Receipt.", "Ok");
         } else {
@@ -370,7 +399,6 @@ class _ReceiptState extends State<Receipt> {
   }
 
   Future<void> printInvoice(TempDraftModel model, List<OutstandingARS> insertData, {bool merchant = false}) async {
-    var printer = Printer();
     await printer.start();
     await printer.setCopies(1);
 

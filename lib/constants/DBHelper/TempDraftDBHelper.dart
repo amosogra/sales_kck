@@ -3,9 +3,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
-import 'package:sales_kck/model/post/CreateTempModel.dart';
-import 'package:sales_kck/model/post/SaleOrderModel.dart';
-import 'package:sales_kck/model/post/SoList.dart';
 import 'package:sales_kck/model/post/TempDraftModel.dart';
 import 'package:sqflite/sqflite.dart';
 
