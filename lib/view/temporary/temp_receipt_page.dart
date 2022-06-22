@@ -16,6 +16,7 @@ import 'package:sales_kck/services/outstanding_ars_service.dart';
 import 'package:sales_kck/services/temporary_receipt_service.dart';
 import 'package:sales_kck/view/customer/CustomerList.dart';
 import 'package:sales_kck/view/dialog/payment_method_dialog.dart';
+import 'package:sales_kck/view/temporary/ReceiptSync.dart';
 import 'package:sales_kck/view/temporary/partial/TempInputForm.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:sales_kck/view/temporary/partial/receipt_draft_section.dart';
@@ -50,8 +51,6 @@ class _ReceiptState extends State<Receipt> {
   List<OutstandingARS> draftInvoiceItems = <OutstandingARS>[];
   String companyCode = "";
   String accNo = "";
-
-  String trId = "-1";
 
   Future<String> generateTRNumber() async {
     var rnd = Random();
@@ -307,9 +306,8 @@ class _ReceiptState extends State<Receipt> {
       TempDraftInvoiceDBHelper helper = new TempDraftInvoiceDBHelper();
       List<OutstandingARS> models = await helper.retrieveTRInvoicesBySaved(widget.model!.id);
       for (var model in response) {
-        if (models.any((element) => element.docNo == model.docNo)) {
+        if (models.any((element) => element.docNo == model.docNo && element.trId == widget.model!.id.toString())) {
           model.isSelected = true;
-          trId = models[0].trId;
         }
       }
     }
@@ -342,12 +340,11 @@ class _ReceiptState extends State<Receipt> {
       List<TempDraftModel> items = <TempDraftModel>[];
       items.add(model);
 
-      int id = int.tryParse(trId) ?? -1;
       if (widget.model != null) {
-        await dbHelper.updateTemp(model);
-      } else {
-        id = await dbHelper.insertTemps(items);
+        await dbHelper.deleteTemp(widget.model!.id);
       }
+
+      var id = await dbHelper.insertTemps(items);
 
       List<OutstandingARS> insertData = [];
 
@@ -356,13 +353,20 @@ class _ReceiptState extends State<Receipt> {
           draftInvoiceItems[i].trId = id.toString();
           insertData.add(draftInvoiceItems[i]);
         }
-        draftInvoiceItems[i].isSelected = false;
+        //draftInvoiceItems[i].isSelected = false;
       }
 
       insertData.sort((a, b) => a.docDate.compareTo(b.docDate));
 
-      // Save Invoice Data
       TempDraftInvoiceDBHelper invoiceHelper = new TempDraftInvoiceDBHelper();
+      //delete old invoice data
+      if (widget.model != null) {
+        var tempInvoicesToDelete = draftInvoiceItems.where((element) => element.isSelected).toList();
+        int count = await invoiceHelper.deleteTempInvoice(tempInvoicesToDelete[0].trId);
+        print("--------------------- count = $count deleted ----------------------");
+      }
+
+      // Save Invoice Data
       await invoiceHelper.insertTempInvoice(insertData);
 
       showToastMessage(context, "Saved !!!", "Ok");
@@ -390,8 +394,9 @@ class _ReceiptState extends State<Receipt> {
         } else {
           showToastMessage(context, response, "Ok");
         }
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReceiptSync()));
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ReceiptPending()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReceiptPending()));
       }
     } else {
       showToastMessage(context, "Select Invoice Data", "Ok");

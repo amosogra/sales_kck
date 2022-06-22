@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
+import 'package:sales_kck/constants/DBHelper/TempDraftInvoiceDBHelper.dart';
 import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/app_strings.dart';
@@ -186,6 +187,12 @@ class _SavedState extends State<Saved> {
           onTap: () async {
             TempDraftDBHelper tempDraftDBHelper = new TempDraftDBHelper();
             await tempDraftDBHelper.deleteTemp(items[index].id);
+
+            TempDraftInvoiceDBHelper draftInvoiceHelper = new TempDraftInvoiceDBHelper();
+            var draftInvoices = await draftInvoiceHelper.retrieveTRInvoicesBySaved(items[index].id);
+            int count = await draftInvoiceHelper.deleteTempInvoice(draftInvoices[0].trId);
+            print("--------------------- count = $count deleted ----------------------");
+
             setState(() {
               items.removeAt(index);
             });

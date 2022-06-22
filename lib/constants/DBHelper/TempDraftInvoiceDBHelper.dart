@@ -45,16 +45,16 @@ class TempDraftInvoiceDBHelper{
   }
 
 
-  Future<void> deleteTempInvoice() async {
+  Future<int> deleteTempInvoices() async {
     final db = await initializeDB();
-    await db.delete(
+    return await db.delete(
       'temp_draft_invoice',
     );
   }
 
-  Future<void> updateTempInvoice(OutstandingARS item) async {
+  Future<int> updateTempInvoice(OutstandingARS item) async {
     final db = await initializeDB();
-    await db.update(
+    return await db.update(
       'temp_draft_invoice',
       item.toMap(),
       where: 'trId = ?',
@@ -62,13 +62,21 @@ class TempDraftInvoiceDBHelper{
     );
   }
 
-  Future<void> deleteTemp(int id) async {
+  Future<int> deleteTemp(int id) async {
     final db = await initializeDB();
-    await db.delete(
+    return await db.delete(
       'temp_draft_invoice',
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
+  Future<int> deleteTempInvoice(String trId) async {
+    final db = await initializeDB();
+   return  await db.delete(
+      'temp_draft_invoice',
+      where: 'trId = ?',
+      whereArgs: [trId],
+    );
+  }
 }

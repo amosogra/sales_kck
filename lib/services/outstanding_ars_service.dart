@@ -23,7 +23,7 @@ Future<List<OutstandingARS>> getOutstanding(BuildContext context, String accNo) 
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
     String companyCode = await Storage.getCompany();
-    debugPrint("my token: "+  token);
+    debugPrint("my token = "+  token);
     debugPrint("company code = " +  companyCode);
     debugPrint("accNo code = " +  accNo);
 
