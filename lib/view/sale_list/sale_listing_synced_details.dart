@@ -22,7 +22,7 @@ class _SaleListingSyncedDetailsState extends State<SaleListingSyncedDetails> {
   initData() async{
 
       ItemDBHelper  itemDBHelper = new ItemDBHelper();
-      List<SoList> tmp = await itemDBHelper.retrieveItemsByOrderId(int.parse(widget.orderId)) as List<SoList>;
+      List<SoList> tmp = await itemDBHelper.retrieveItemsByOrderId(int.parse(widget.orderId));
 
       tmp.forEach((element) {
         UomModel uomModel = new UomModel(
@@ -66,7 +66,6 @@ class _SaleListingSyncedDetailsState extends State<SaleListingSyncedDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initData();
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sales_kck/model/post/ItemModel.dart';
 import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sales_kck/view/user/login_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 bool isLoggedIn = false;
 String page = '';

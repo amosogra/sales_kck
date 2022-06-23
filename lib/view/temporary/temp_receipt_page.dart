@@ -25,7 +25,8 @@ import 'package:sales_kck/view/temporary/temp_receipt_pending_page.dart';
 
 class Receipt extends StatefulWidget {
   final TempDraftModel? model;
-  const Receipt({Key? key, this.model}) : super(key: key);
+  final bool viewOnly;
+  const Receipt({Key? key, this.model, this.viewOnly = false}) : super(key: key);
   @override
   _ReceiptState createState() => _ReceiptState();
 }
@@ -87,26 +88,28 @@ class _ReceiptState extends State<Receipt> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: MyColors.primaryColor,
-          title: Text(Strings.temporary_receipt),
+      appBar: AppBar(
+        backgroundColor: MyColors.primaryColor,
+        centerTitle: true,
+        title: Text(widget.viewOnly ? Strings.synced_receipt : Strings.temporary_receipt),
+      ),
+      bottomSheet: widget.viewOnly ? null : Container(alignment: Alignment.bottomCenter, height: 60, child: saveDraftButtonSection()),
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: buildForm(),
+              ),
+            ),
+            Expanded(flex: 3, child: ReceiptDraftSection(models: draftInvoiceItems, paymentAmountController: paymentAmountController, viewOnly: widget.viewOnly)),
+          ],
         ),
-        bottomSheet: Container(alignment: Alignment.bottomCenter, height: 60, child: saveDraftButtonSection()),
-        body: Container(
-          constraints: BoxConstraints.expand(),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                  flex: 4,
-                  child: SingleChildScrollView(
-                    child: buildForm(),
-                  )),
-              Expanded(flex: 3, child: ReceiptDraftSection(models: draftInvoiceItems, paymentAmountController: paymentAmountController)),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   buildForm() {
@@ -118,12 +121,13 @@ class _ReceiptState extends State<Receipt> {
             children: [
               Expanded(child: Container()),
               Expanded(
-                  child: TempInputForm(
-                      Strings.temporary_receipt_no, Strings.new_document, receiptNoFocusNode, receiptFromFocusNode, receiptNoController, false, TextInputType.text))
+                  child: TempInputForm(Strings.temporary_receipt_no, Strings.new_document, receiptNoFocusNode, receiptFromFocusNode, receiptNoController,
+                      widget.viewOnly, TextInputType.text))
             ],
           ),
           InkResponse(
             onTap: () async {
+              if (widget.viewOnly) return;
               var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerList()));
               if (result != null) {
                 var number = await generateTRNumber();
@@ -148,13 +152,14 @@ class _ReceiptState extends State<Receipt> {
                   receiptFromFocusNode,
                   receiptDateFocusNode,
                   receiptFromController,
-                  false,
+                  widget.viewOnly,
                   TextInputType.text,
                 )),
-                Icon(
-                  Icons.search,
-                  color: MyColors.textBorderColor,
-                ),
+                if (!widget.viewOnly)
+                  Icon(
+                    Icons.search,
+                    color: MyColors.textBorderColor,
+                  ),
               ],
             ),
           ),
@@ -163,6 +168,7 @@ class _ReceiptState extends State<Receipt> {
               Expanded(
                 child: InkResponse(
                     onTap: () {
+                      if (widget.viewOnly) return;
                       DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(2018, 3, 5), maxTime: DateTime(2025, 6, 7), onChanged: (date) {
                         print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
                       }, onConfirm: (date) {
@@ -170,12 +176,13 @@ class _ReceiptState extends State<Receipt> {
                         receiptDateController.text = '$date'.substring(0, 10);
                       }, currentTime: DateTime.now(), locale: LocaleType.en);
                     },
-                    child: TempInputForm(
-                        Strings.received_date, "Received Date", receiptDateFocusNode, paymentDateFocusNode, receiptDateController, false, TextInputType.text)),
+                    child: TempInputForm(Strings.received_date, "Received Date", receiptDateFocusNode, paymentDateFocusNode, receiptDateController, widget.viewOnly,
+                        TextInputType.text)),
               ),
               Expanded(
                 child: InkResponse(
                     onTap: () {
+                      if (widget.viewOnly) return;
                       DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(2018, 3, 5), maxTime: DateTime(2025, 6, 7), onChanged: (date) {
                         print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
                       }, onConfirm: (date) {
@@ -183,44 +190,55 @@ class _ReceiptState extends State<Receipt> {
                         paymentDateController.text = '$date'.substring(0, 10);
                       }, currentTime: DateTime.now(), locale: LocaleType.en);
                     },
-                    child: TempInputForm(
-                        Strings.payment_date, "Payment Date", paymentDateFocusNode, paymentMethodFocusNode, paymentDateController, false, TextInputType.text)),
+                    child: TempInputForm(Strings.payment_date, "Payment Date", paymentDateFocusNode, paymentMethodFocusNode, paymentDateController, widget.viewOnly,
+                        TextInputType.text)),
               ),
             ],
           ),
           Row(
             children: [
               Expanded(
-                  child: InkResponse(
-                onTap: () {
-                  List<String> paymentMethodLists = [];
-                  paymentMethodLists.add("BANK");
-                  paymentMethodLists.add("CASH");
-                  paymentMethodLists.add("CHEQUE");
+                child: InkResponse(
+                  onTap: () {
+                    if (widget.viewOnly) return;
+                    List<String> paymentMethodLists = [];
+                    paymentMethodLists.add("BANK");
+                    paymentMethodLists.add("CASH");
+                    paymentMethodLists.add("CHEQUE");
 
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return PaymentMethodDialog(
-                            paymentMethodLists: paymentMethodLists,
-                            clickSuccess: (value) {
-                              paymentMethodController.text = value;
-                              Navigator.pop(context);
-                            });
-                      });
-                },
-                child: TempInputForm(
-                    Strings.payment_method, "Payment method", paymentMethodFocusNode, chequeNoFocusNode, paymentMethodController, false, TextInputType.text),
-              )),
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PaymentMethodDialog(
+                              paymentMethodLists: paymentMethodLists,
+                              clickSuccess: (value) {
+                                paymentMethodController.text = value;
+                                Navigator.pop(context);
+                              });
+                        });
+                  },
+                  child: TempInputForm(Strings.payment_method, "Payment method", paymentMethodFocusNode, chequeNoFocusNode, paymentMethodController, widget.viewOnly,
+                      TextInputType.text),
+                ),
+              ),
               Expanded(
-                  child: TempInputForm(Strings.cheque_no, Strings.cheque_no, chequeNoFocusNode, paymentAmountFocusNode, chequeNoController, true, TextInputType.text))
+                  child: TempInputForm(
+                      Strings.cheque_no, Strings.cheque_no, chequeNoFocusNode, paymentAmountFocusNode, chequeNoController, widget.viewOnly, TextInputType.text))
             ],
           ),
           Row(
             children: [
               Expanded(
-                  child: TempInputForm(
-                      Strings.payment_amount, Strings.amount, paymentAmountFocusNode, paymentAmountFocusNode, paymentAmountController, true, TextInputType.number)),
+                child: TempInputForm(
+                  Strings.payment_amount,
+                  Strings.amount,
+                  paymentAmountFocusNode,
+                  paymentAmountFocusNode,
+                  paymentAmountController,
+                  widget.viewOnly,
+                  TextInputType.number,
+                ),
+              ),
               Expanded(child: Container())
             ],
           ),

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
 import 'package:sales_kck/constants/colors.dart';
@@ -14,25 +12,22 @@ import 'package:sales_kck/view/sale_list/sale_listing_synced_details.dart';
 import 'package:sales_kck/view/widget/InputForm.dart';
 
 class SaleListingSynced extends StatefulWidget {
-
   const SaleListingSynced({Key? key}) : super(key: key);
   @override
   _SaleListingSyncedState createState() => _SaleListingSyncedState();
 }
 
 class _SaleListingSyncedState extends State<SaleListingSynced> {
-
   String searchKey = '';
   final myController = TextEditingController();
 
   List<SaleOrderModel> originalItems = <SaleOrderModel>[];
   List<SaleOrderModel> items = <SaleOrderModel>[];
-  void loadItems() async{
-
+  void loadItems() async {
     OrderDBHelper orderDBHelper = new OrderDBHelper();
-    List<SaleOrderModel> response = await orderDBHelper.retrieveOrdersBySynced("1") as List<SaleOrderModel>;
+    List<SaleOrderModel> response = await orderDBHelper.retrieveOrdersBySynced("1");
     //List<SaleOrderModel> response = await getSaleOrders(context);
-    if(response.length > 0){
+    if (response.length > 0) {
       setState(() {
         items = response;
         originalItems = response;
@@ -47,7 +42,9 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
   void searchItem(String key) {
     List<SaleOrderModel> tmp = <SaleOrderModel>[];
     originalItems.forEach((element) {
-      if(element.companyCode.toLowerCase().contains(key.toLowerCase()) || element.custName.toLowerCase().contains(key.toLowerCase())  || element.custAccNo.toLowerCase().contains(key.toLowerCase()) ){
+      if (element.companyCode.toLowerCase().contains(key.toLowerCase()) ||
+          element.custName.toLowerCase().contains(key.toLowerCase()) ||
+          element.custAccNo.toLowerCase().contains(key.toLowerCase())) {
         tmp.add(element);
       }
     });
@@ -56,10 +53,14 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
     });
   }
 
-  String getDate(String code){
-    String subString = code.substring(2,10);
+  String getDate(String code) {
+    String subString = code.substring(2, 10);
     debugPrint(subString);
-    return subString.substring(subString.length - 2, subString.length) + "/" + getMonth(subString.substring(subString.length - 4, subString.length-2)) + "/" + subString.substring(0,4);
+    return subString.substring(subString.length - 2, subString.length) +
+        "/" +
+        getMonth(subString.substring(subString.length - 4, subString.length - 2)) +
+        "/" +
+        subString.substring(0, 4);
   }
 
   @override
@@ -81,133 +82,128 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: MyColors.primaryColor,
-        title: Text(Strings.sales_list_synced_title),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  InputForm(
-                                    controller: myController,
-                                    myHint: "Search Item", validateFunction: (value){
-                                    return Validations.validateEmpty(value!);
-                                  },
-                                    onChange: (value){},
-                                  ),
-                                ],
+        appBar: AppBar(
+          backgroundColor: MyColors.primaryColor,
+          title: Text(Strings.sales_list_synced_title),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InputForm(
+                                      controller: myController,
+                                      myHint: "Search Item",
+                                      validateFunction: (value) {
+                                        return Validations.validateEmpty(value!);
+                                      },
+                                      onChange: (value) {},
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Icon(
+                                Icons.search,
+                                color: MyColors.textGreyColor,
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: MyColors.greyColor,
+                          )
+                        ],
+                      )),
+                  Container(
+                    margin: EdgeInsets.only(top: 0),
+                    child: items.length == 0
+                        ? showNoItem(context)
+                        : Container(
+                            child: Container(
+                              child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  return _buildItem(items[index], index);
+                                },
                               ),
                             ),
-                            Icon(Icons.search, color: MyColors.textGreyColor,),
-                          ],
-                        ),
-                        Divider(color: MyColors.greyColor,)
-                      ],
-                    )
-                ),
-
-                Container(
-                    margin: EdgeInsets.only(top: 0),
-                    child: items.length == 0 ?
-                    showNoItem(context)
-                        :
-                    Container(
-                        child: Container(
-                            child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: items.length,
-                              itemBuilder: (context, index){
-                                return _buildItem(items[index], index);
-                              },
-                            )
-                        )
-                    )
-
-                )
-
-              ],
-            )
-        ),
-
-      )
-    );
+                          ),
+                  ),
+                ],
+              )),
+        ));
   }
 
   Widget _buildItem(SaleOrderModel item, int index) {
-
     return GestureDetector(
-        onTap: () => {
-
+      onTap: () => {},
+      child: InkResponse(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SaleListingSyncedDetails(orderId: item.soId.toString())));
         },
-        child: InkResponse(
-          onTap: (){
-
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                SaleListingSyncedDetails( orderId: item.soId.toString() )
-            ));
-
-            // Navigator.pop(context, item.toMap());
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => Customer(saleOrderModel: item, isEdit: false,))
-            // );
-          },
-          child: Container(
-            color: Colors.white,
-            child: ListTile(
-              // leading: CircleAvatar(
-              //   child: Text('S'),
-              //   foregroundColor: Colors.white,
-              // ),
-              title: Container(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //getDate(item.docNo.trim())
-                    Text(item.docDate , style: TextStyle(fontSize: 14),),
-                    Text(item.custName , style: TextStyle(fontSize: 14),),
-                  ],
-                ),
+        child: Container(
+          color: Colors.white,
+          child: ListTile(
+            title: Container(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.docDate,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  Text(
+                    item.custName,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ],
               ),
-              subtitle: Container(
-                child: Row(
-                  children: [
-                    Text(item.companyCode ),
-                    SizedBox(
-                      width: 10,
+            ),
+            subtitle: Container(
+              child: Row(
+                children: [
+                  Text(item.companyCode),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    item.docNo,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(item.docNo , style: TextStyle(fontWeight: FontWeight.bold , ),),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        alignment: Alignment.centerRight,
-                        child: Text(item.totalAmt , style: TextStyle(fontWeight: FontWeight.bold , color: MyColors.blackColor ),)
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        item.totalAmt,
+                        style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.blackColor),
                       ),
-                    )
-                  ],
-                )
+                    ),
+                  )
+                ],
               ),
             ),
           ),
-        )
+        ),
+      ),
     );
-
 
     // return InkResponse(
     //   onTap: () async{
@@ -241,7 +237,4 @@ class _SaleListingSyncedState extends State<SaleListingSynced> {
     //   ),
     // );
   }
-
-
-
 }

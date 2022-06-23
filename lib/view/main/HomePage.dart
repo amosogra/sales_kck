@@ -77,37 +77,41 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   Flexible(
-                      child: InkWell(
-                          onTap: () {
-                            SaleOrderModel saleOrderModel = initializeSaleOrder();
-                            debugPrint("companyCode" + saleOrderModel.companyCode);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Customer(
-                                          saleOrderModel: saleOrderModel,
-                                        )));
-                          },
-                          child: Card(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: Dimens.item_height,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image(
-                                    image: AssetImage(Assets.iconSalesOrder),
-                                    width: Dimens.iconSize,
-                                    height: Dimens.iconSize,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 10),
-                                    child: Text(Strings.sales_order, style: Theme.of(context).textTheme.headline1),
-                                  )
-                                ],
-                              ),
+                    child: InkWell(
+                      onTap: () {
+                        SaleOrderModel saleOrderModel = initializeSaleOrder();
+                        debugPrint("companyCode" + saleOrderModel.companyCode);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Customer(
+                              saleOrderModel: saleOrderModel,
                             ),
-                          ))),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: Dimens.item_height,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: AssetImage(Assets.iconSalesOrder),
+                                width: Dimens.iconSize,
+                                height: Dimens.iconSize,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text(Strings.sales_order, style: Theme.of(context).textTheme.headline1),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Flexible(
                       child: InkWell(
                     onTap: () {

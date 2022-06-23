@@ -4,7 +4,6 @@ import 'package:sales_kck/utils/Validations.dart';
 import 'package:sales_kck/view/widget/InputForm.dart';
 
 class TempInputForm extends StatefulWidget {
-
   final String title;
   final String hint;
   final FocusNode currentNode;
@@ -12,21 +11,12 @@ class TempInputForm extends StatefulWidget {
   final TextEditingController? controller;
   final bool enabled;
   final TextInputType textInputTye;
-  TempInputForm(
-      this.title ,
-      this.hint ,
-      this.currentNode,
-      this.nextFocusNode,
-      this.controller,
-      this.enabled,
-      this.textInputTye
-      );
+  TempInputForm(this.title, this.hint, this.currentNode, this.nextFocusNode, this.controller, this.enabled, this.textInputTye);
 
   //const TempInputForm({Key? key}) : super(key: key);
 
   @override
   _TempInputFormState createState() => _TempInputFormState();
-
 }
 
 class _TempInputFormState extends State<TempInputForm> {
@@ -38,19 +28,20 @@ class _TempInputFormState extends State<TempInputForm> {
         children: [
           Text(widget.title),
           InputForm(
-              enabled: widget.enabled,
-              textInputTye: widget.textInputTye,
-              myFocusNode: widget.currentNode,
-              nextFocusNode: widget.nextFocusNode,
-              controller: widget.controller,
-              myHint: widget.hint,
-              validateFunction: (value){
-                return Validations.validateEmpty(value!);
-              },
-            onChange: (value){},
-
+            enabled: !widget.enabled,
+            textInputTye: widget.textInputTye,
+            myFocusNode: widget.currentNode,
+            nextFocusNode: widget.nextFocusNode,
+            controller: widget.controller,
+            myHint: widget.hint,
+            validateFunction: (value) {
+              return Validations.validateEmpty(value!);
+            },
+            onChange: (value) {},
           ),
-          Divider(color: MyColors.greyColor,)
+          Divider(
+            color: MyColors.greyColor,
+          )
         ],
       ),
     );

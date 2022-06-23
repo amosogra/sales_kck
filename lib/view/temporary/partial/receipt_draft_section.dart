@@ -7,7 +7,8 @@ import 'package:sales_kck/view/dialog/tr_amount_dialog.dart';
 class ReceiptDraftSection extends StatefulWidget {
   final List<OutstandingARS> models;
   final TextEditingController paymentAmountController;
-  ReceiptDraftSection({Key? key, required this.models, required this.paymentAmountController}) : super(key: key);
+  final bool viewOnly;
+  ReceiptDraftSection({Key? key, required this.models, required this.paymentAmountController, required this.viewOnly}) : super(key: key);
   @override
   _ReceiptDraftSectionState createState() => _ReceiptDraftSectionState();
 }
@@ -78,6 +79,7 @@ class _ReceiptDraftSectionState extends State<ReceiptDraftSection> {
   Widget _buildItem(OutstandingARS model, int index) {
     return InkWell(
       onTap: () {
+        if(widget.viewOnly) return;
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -117,6 +119,7 @@ class _ReceiptDraftSectionState extends State<ReceiptDraftSection> {
               child: Checkbox(
                 value: model.isSelected,
                 onChanged: (bool? value) {
+                  if (widget.viewOnly) return;
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -150,24 +153,27 @@ class _ReceiptDraftSectionState extends State<ReceiptDraftSection> {
               ),
             ),
             Container(
-                child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                model.docDate.substring(0, 10),
-                style: TextStyle(color: MyColors.blackColor, fontSize: 12),
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  model.docDate.substring(0, 10),
+                  style: TextStyle(color: MyColors.blackColor, fontSize: 12),
+                ),
               ),
-            )),
+            ),
             Expanded(
-                flex: 3,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text(model.docNo, style: TextStyle(color: MyColors.blackColor, fontSize: 12)),
-                )),
+              flex: 3,
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(model.docNo, style: TextStyle(color: MyColors.blackColor, fontSize: 12)),
+              ),
+            ),
             Container(
-                child: Container(
-              alignment: Alignment.center,
-              child: Text(model.outstandingAmount, style: TextStyle(color: MyColors.blackColor, fontSize: 12)),
-            ))
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(model.outstandingAmount, style: TextStyle(color: MyColors.blackColor, fontSize: 12)),
+              ),
+            )
           ],
         ),
       ),

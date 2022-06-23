@@ -1,5 +1,3 @@
-
-
 class Strings {
   Strings._();
 
@@ -24,6 +22,7 @@ class Strings {
   static const String sales_list_synced_title = "Sales Listing  (Synced)";
   static const String price_history = "Price History";
   static const String temporary_receipt = "Temporary Receipt";
+  static const String synced_receipt = "Synced Receipt Details";
   static const String temp_receipt_pending = "Temp Receipt\n  (Pending)";
   static const String temp_receipt_pending_title = "Temp Receipt  (Pending)";
   static const String temp_receipt_synced = "Temp Receipt\n  (Synced)";
@@ -42,7 +41,7 @@ class Strings {
 
   // change password.
   static const String edit_profile = "Edit Profile";
-  static const String old_password =  "Old Password";
+  static const String old_password = "Old Password";
   static const String new_password = "New Password";
   static const String confirm_password = "Confirm Password";
   static const String enter_old_password = "Enter Old Password";
@@ -57,7 +56,7 @@ class Strings {
   static const String doc_number = "Doc Number";
   static const String doc_date = "Doc Date";
   static const String attention = "Attention";
-  static const String phone_number= "Phone Number";
+  static const String phone_number = "Phone Number";
   static const String terms = "Terms";
   static const String new_document = "New Document";
   static const String today = "Today";
@@ -68,7 +67,7 @@ class Strings {
   static const String no_pending_order = "No Pending Order";
   static const String profile = "Profile";
   static const String search = "Search";
-  static const String no_record =  "No Record";
+  static const String no_record = "No Record";
 
   // temporary
   static const String temporary_receipt_no = "Temporary Receipt No";
@@ -83,7 +82,7 @@ class Strings {
   static const String invoice_number = "Invoice";
   static const String outstanding_amt = "Outstanding";
   static const String save_draft = "Save Draft";
-  static const String done_and_save =  "Done and Save";
+  static const String done_and_save = "Done and Save";
   static const String amount = "Amount";
   static const String saved = "Saved";
   static const String draft = "Draft";
@@ -92,5 +91,4 @@ class Strings {
   static const String next = "Next";
 
   static const String item = "Item";
-
 }
