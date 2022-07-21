@@ -7,13 +7,15 @@ class PDCKnockModel{
   String paidamount;
   String discountamount;
   String tempid;
+   bool isSelected;
 
   PDCKnockModel({
     required this.doctype,
     required this.dockey,
     required this.paidamount,
     required this.discountamount,
-    required this.tempid
+    required this.tempid,
+     required this.isSelected,
   });
 
   factory PDCKnockModel.fromMap(Map<String, dynamic> json) => PDCKnockModel(
@@ -21,13 +23,15 @@ class PDCKnockModel{
     dockey: json["dockey"],
     paidamount: json["paidamount"],
     discountamount: json["discountamount"],
-    tempid: json["tempid"]
+    tempid: json["tempid"],
+    isSelected: json['isSelected'] ?? false,
   );
 
 
   Map<String, dynamic> toMap() => {
     "doctype": doctype,
     "dockey": dockey,
+    "isSelected": isSelected,
     "paidamount" : paidamount,
     "discountamount" : discountamount,
     "tempid" : tempid

@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
-import 'package:sales_kck/model/post/SaleOrderModel.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'package:sales_kck/model/post/SaleOrderModel.dart';
 
 class OrderDBHelper{
 
@@ -43,7 +45,7 @@ class OrderDBHelper{
 
         await database.execute(
           'CREATE TABLE temp_draft_invoice(id INTEGER PRIMARY KEY, companyCode TEXT, docType TEXT, docKey TEXT, docNo TEXT '
-              + ' , docDate TEXT , outstandingAmount TEXT , custAccNo TEXT , cancelled TEXT , deleted TEXT '
+              + ' , docDate TEXT , isSelected INTEGER, outstandingAmount TEXT , custAccNo TEXT , cancelled TEXT , deleted TEXT '
               + ' , trId INTEGER)',
         );
 

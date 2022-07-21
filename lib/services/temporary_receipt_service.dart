@@ -26,6 +26,7 @@ Future<String> saveTemporaryReceipt(BuildContext context, TempDraftModel tempDra
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
     debugPrint("com code" + tempDraftModel.companyCode);
+    debugPrint("*********token: $token*********");
     Map<String, dynamic>? queryParameters = {
       'token': token,
       'companyCode': tempDraftModel.companyCode,
@@ -61,7 +62,13 @@ Future<String> saveTemporaryReceipt(BuildContext context, TempDraftModel tempDra
     List<PDCKnockModel> flexpdcknockofflist = [];
     for (var i = 0; i < lists.length; i++) {
       PDCKnockModel pdcKnockModel = new PDCKnockModel(
-          doctype: lists[i].docType, dockey: lists[i].docKey.toString(), paidamount: lists[i].outstandingAmount.toString(), discountamount: "0.00", tempid: "0");
+        isSelected: lists[i].isSelected,
+        doctype: lists[i].docType,
+        dockey: lists[i].docKey.toString(),
+        paidamount: lists[i].outstandingAmount.toString(),
+        discountamount: "0.00",
+        tempid: "0",
+      );
       flexpdcknockofflist.add(pdcKnockModel);
     }
     String salesAgent = await Storage.getSalesAgent();
@@ -132,9 +139,9 @@ Future<List<TemporaryReceiptModel>> getTemporaryReceipt(BuildContext context, St
     await pr.show();
     String user = await Storage.getUser();
     String token = jsonDecode(user)['token'];
-    String company = await Storage.getCompany();
+    String companyCode = await Storage.getCompany();
 
-    Map<String, dynamic>? queryParameters = {'token': token, 'companyCode': company, 'accNo': accNo};
+    Map<String, dynamic>? queryParameters = {'token': token, 'companyCode': companyCode, 'accNo': accNo};
     var response = await Dio().post(Api.baseUrl + "/api/v1/temporaryReceipts", queryParameters: queryParameters);
     debugPrint(response.toString());
     List<TemporaryReceiptModel> lists = [];

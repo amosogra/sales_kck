@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
-import 'package:sales_kck/constants/assets.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
@@ -9,7 +8,6 @@ import 'package:sales_kck/model/post/TemporaryReceiptModel.dart';
 import 'package:sales_kck/services/temporary_receipt_service.dart';
 import 'package:sales_kck/view/customer/CustomerList.dart';
 import 'package:sales_kck/view/temporary/temp_receipt_page.dart';
-import 'package:sales_kck/view/widget/LoginButton.dart';
 
 class ReceiptSync extends StatefulWidget {
   const ReceiptSync({Key? key}) : super(key: key);

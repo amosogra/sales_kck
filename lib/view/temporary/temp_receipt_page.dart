@@ -1,14 +1,17 @@
 import 'dart:async';
-
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:printer/printer.dart';
+
 import 'package:sales_kck/constants/DBHelper/TempDraftDBHelper.dart';
 import 'package:sales_kck/constants/DBHelper/TempDraftInvoiceDBHelper.dart';
 import 'package:sales_kck/constants/app_storages.dart';
+import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/constants/colors.dart';
 import 'package:sales_kck/constants/globals.dart';
-import 'package:sales_kck/constants/app_strings.dart';
 import 'package:sales_kck/model/post/CustomerModel.dart';
 import 'package:sales_kck/model/post/TempDraftModel.dart';
 import 'package:sales_kck/model/post/outstanding_model.dart';
@@ -18,9 +21,7 @@ import 'package:sales_kck/view/customer/CustomerList.dart';
 import 'package:sales_kck/view/dialog/payment_method_dialog.dart';
 import 'package:sales_kck/view/temporary/ReceiptSync.dart';
 import 'package:sales_kck/view/temporary/partial/TempInputForm.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:sales_kck/view/temporary/partial/receipt_draft_section.dart';
-import 'package:intl/intl.dart';
 import 'package:sales_kck/view/temporary/temp_receipt_pending_page.dart';
 
 class Receipt extends StatefulWidget {
@@ -139,7 +140,7 @@ class _ReceiptState extends State<Receipt> {
                   companyCode = customerModel.companyCode;
                   accNo = customerModel.accNo;
                 });
-                debugPrint("customerModel.accNo--" + customerModel.toMap().toString());
+                debugPrint("****customerModel****:" + customerModel.toMap().toString());
                 loadDraftData(customerModel.accNo);
               }
             },

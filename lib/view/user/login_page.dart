@@ -56,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
   void initState(){
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
       initView();
       requestPermission();
     });

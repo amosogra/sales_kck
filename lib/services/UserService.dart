@@ -2,14 +2,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:progress_dialog/progress_dialog.dart';
+
 import 'package:sales_kck/constants/Api.dart';
 import 'package:sales_kck/constants/DBHelper/OrderDBHelper.dart';
-import 'package:sales_kck/constants/globals.dart';
 import 'package:sales_kck/constants/app_storages.dart';
-import 'package:dio/dio.dart';
+import 'package:sales_kck/constants/globals.dart';
 
 Future<bool> login(BuildContext context,  String username, String password) async {
   ProgressDialog pr;// = new ProgressDialog(context);
